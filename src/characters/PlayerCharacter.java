@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import game.DrawEngine;
+import game.ShooterGame;
 import particles.Particle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -25,8 +26,9 @@ public class PlayerCharacter extends Character {
 	
 	@Override
 	public void move() {
-		position.x += (right - left) * SPEED;
-		position.y += (down - up) * SPEED;
+		position.x = Math.min(ShooterGame.SCREEN_X, Math.max(0, position.x + (right - left) * SPEED));
+		position.y = Math.min(ShooterGame.SCREEN_Y, Math.max(0, position.y + (down - up) * SPEED));
+		
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
 	}

@@ -13,25 +13,6 @@ public class DrawEngine {
     	this.parent = parent;
     }
     
-//    /**
-//     * Draw the main game with the background, ground and all game objects.
-//     * @param context - contextual information of the game to draw
-//     */
-//    public void displayGame(GameContext context) {
-//        parent.background(255);
-//        drawGround();
-//        
-//        displayDrawables(context.meteors, 
-//        		context.missiles, 
-//        		context.explosions,
-//        		context.bombers,
-//        		context.bhms, 
-//        		context.blackholes, 
-//        		context.forcefields, 
-//        		context.cities, 
-//        		context.cannons);
-//    }
-    
     private void displayDrawables(ArrayList<? extends IDrawable>... drawables) {
         for (ArrayList<? extends IDrawable> drawList : drawables) {
         	for (IDrawable drawable : drawList) {
@@ -39,16 +20,6 @@ public class DrawEngine {
         	}
         }
     }
-    
-//    private void drawGround() {
-//        parent.fill(128);
-//        parent.beginShape();
-//        parent.vertex(0, GameConfig.GROUND_HEIGHT);
-//        parent.vertex(GameConfig.SCREEN_X, GameConfig.GROUND_HEIGHT);
-//        parent.vertex(GameConfig.SCREEN_X, GameConfig.SCREEN_Y);
-//        parent.vertex(0, GameConfig.SCREEN_Y);
-//        parent.endShape(PConstants.CLOSE);
-//    }
 
     /**
      * Generic draw text function for other classes to draw text to the screen
@@ -97,22 +68,6 @@ public class DrawEngine {
 		parent.rect(xPos, yPos, width, height);
 	}
 
-	/**
-	 * Draw information for the player. This includes:
-	 * 	- score
-	 * 	- number of missiles
-	 * 	- number of blackholes
-	 * 	- number of forcefields
-	 * @param info - player information of the game
-	 */
-//	public void displayInfo(GameInfo info, Level level) {
-//		drawText(16, "Level: " + level.levelNumber, 100, 25, 0);
-//		drawText(16, "Score: " + info.score, 100, 50, 0);
-//		drawText(16, "Missiles: " + info.missilesLeft, 100, 75, 0);
-//		drawText(16, "Blackholes: " + info.blackholesLeft, 600, 50, 0);
-//		drawText(16, "Forcefields: " + info.forcefieldsLeft, 600, 75, 0);
-//		
-//	}
 
 
 

@@ -1,7 +1,7 @@
 package game;
 import java.util.ArrayList;
 
-
+import characters.BasicChaseCharacter;
 import characters.PlayerCharacter;
 import particles.Particle;
 import processing.core.PApplet;
@@ -14,6 +14,7 @@ public class GameController {
 	public DrawEngine drawEngine; 
 	
 	PlayerCharacter player;
+	BasicChaseCharacter enemy;
 	
 	ArrayList<Particle> particles;
 	
@@ -24,13 +25,17 @@ public class GameController {
 		particles = new ArrayList<>();
 		
 		this.player = new PlayerCharacter(100, 100);
+		this.enemy = new BasicChaseCharacter(500, 500, player);
+		
 	}
 
 	public void step(int mouseX, int mouseY) {
 		parent.background(0);
 
 		player.display(drawEngine);
+		enemy.display(drawEngine);
 		player.move();
+		enemy.move();
 		player.facingDirection(mouseX, mouseY);
 		
 		for (Particle p : particles) {

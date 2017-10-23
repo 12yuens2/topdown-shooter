@@ -6,6 +6,9 @@ import processing.core.PConstants;
 
 public class ShooterGame extends PApplet{
 	
+	public static int SCREEN_X = 600;
+	public static int SCREEN_Y = 600;
+	
 	float xPos = 100;
 	float yPos = 100;
 	
