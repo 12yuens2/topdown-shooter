@@ -64,7 +64,7 @@ public class PlayerCharacter extends Character {
 	}
 
 	public void facingDirection(int mouseX, int mouseY) {
-		orientation = PApplet.atan2(mouseY - 300 , mouseX - 300);
+		orientation = PApplet.atan2(mouseY - position.y , mouseX - position.x);
 		
 	}
 
