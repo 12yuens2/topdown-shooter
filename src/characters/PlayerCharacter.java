@@ -1,11 +1,10 @@
 package characters;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import game.DrawEngine;
 import game.ShooterGame;
-import particles.Particle;
+
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -69,7 +68,6 @@ public class PlayerCharacter extends Character {
 
 	public void facingDirection(int mouseX, int mouseY) {
 		orientation = PApplet.atan2(mouseY - position.y , mouseX - position.x);
-		
 	}
 
 

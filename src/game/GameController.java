@@ -1,11 +1,8 @@
 package game;
-import java.util.ArrayList;
 
-import characters.BasicChaseCharacter;
-import characters.PlayerCharacter;
-import particles.Particle;
+import game.states.GameState;
+import game.states.impl.PlayingState;
 import processing.core.PApplet;
-import processing.core.PConstants;
 
 public class GameController {
 
@@ -13,44 +10,28 @@ public class GameController {
 	
 	public DrawEngine drawEngine; 
 	
-	PlayerCharacter player;
-	BasicChaseCharacter enemy;
-	
-	ArrayList<Particle> particles;
+	private GameContext context;
+	private GameState state;
+
 	
 	public GameController(PApplet parent) {
 		this.parent = parent;
 		this.drawEngine = new DrawEngine(parent);
-		
-		particles = new ArrayList<>();
-		
-		this.player = new PlayerCharacter(100, 100);
-		this.enemy = new BasicChaseCharacter(500, 500, player);
+		this.context = new GameContext();
+
+		this.state = new PlayingState(context, drawEngine);
 		
 	}
 
 	public void step(int mouseX, int mouseY) {
-		parent.background(0);
+		state.display();
+		state = state.update(mouseX, mouseY);
 
-		player.display(drawEngine);
-		enemy.display(drawEngine);
-		player.move();
-		enemy.move();
-		player.facingDirection(mouseX, mouseY);
-		
-		for (Particle p : particles) {
-			p.display(drawEngine);
-			p.integrate();
-		}
 	}
 	
 	public void handleInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {
-		if (keyDown) player.directionPress(keyCode);
-		else player.directionRelease(keyCode);
-		
-		if (mouseButton == parent.LEFT) {
-			particles.add(new Particle(player.facing.copy(), mouseX, mouseY));
-		}
+		GameInput input = new GameInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+		state.handleInput(input);
 
 	}
 }

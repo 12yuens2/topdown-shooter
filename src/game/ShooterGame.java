@@ -1,8 +1,7 @@
 package game;
-import java.awt.event.KeyEvent;
 
 import processing.core.PApplet;
-import processing.core.PConstants;
+
 
 public class ShooterGame extends PApplet{
 	

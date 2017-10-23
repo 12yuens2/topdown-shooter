@@ -13,9 +13,9 @@ public class Particle implements IDrawable {
 		this.velocity = velocity;
 	}
 	
-	public Particle(PVector position, int destX, int destY) {
+	public Particle(PVector position, float mouseX, float mouseY) {
 		this.position = position;
-		this.velocity = new PVector((destX - position.x), (destY - position.y)).normalize().mult(10f);
+		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
 	}
 	
 	
