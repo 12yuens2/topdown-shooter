@@ -1,8 +1,10 @@
 package characters;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import game.DrawEngine;
+import particles.Particle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -10,7 +12,7 @@ public class PlayerCharacter extends Character {
 
 	public static final float SPEED = 5.0f;
 
-	private PVector facing;
+	public PVector facing;
 	
 	private float orientation;
 	private float up, down, left, right;
@@ -67,6 +69,7 @@ public class PlayerCharacter extends Character {
 		orientation = PApplet.atan2(mouseY - position.y , mouseX - position.x);
 		
 	}
+
 
 	
 }
