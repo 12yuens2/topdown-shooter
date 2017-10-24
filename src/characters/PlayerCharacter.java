@@ -17,8 +17,9 @@ public class PlayerCharacter extends Character {
 	private float orientation;
 	private float up, down, left, right;
 	
-	public PlayerCharacter(float xPos, float yPos) {
-		super(xPos, yPos);
+	public PlayerCharacter(float xPos, float yPos, float radius) {
+		super(xPos, yPos, radius);
+		this.friendly = true;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 	}
@@ -35,8 +36,9 @@ public class PlayerCharacter extends Character {
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		drawEngine.drawEllipse(drawEngine.parent.color(255, 0, 0), position.x, position.y, 30, 30);
-		drawEngine.drawEllipse(drawEngine.parent.color(0, 255, 0), facing.x, facing.y, 10, 10);		
+		float size = radius * 2;
+		drawEngine.drawEllipse(drawEngine.parent.color(255, 0, 0), position.x, position.y, size, size);
+		drawEngine.drawEllipse(drawEngine.parent.color(0, 255, 0), facing.x, facing.y, size/3, size/3);		
 	}
 	
 	

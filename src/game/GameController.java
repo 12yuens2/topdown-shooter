@@ -32,6 +32,5 @@ public class GameController {
 	public void handleInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {
 		GameInput input = new GameInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
 		state.handleInput(input);
-
 	}
 }

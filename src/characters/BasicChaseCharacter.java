@@ -7,15 +7,15 @@ public class BasicChaseCharacter extends Character {
 
 	public PlayerCharacter target;
 	
-	public BasicChaseCharacter(float xPos, float yPos, PlayerCharacter target) {
-		super(xPos, yPos);
+	public BasicChaseCharacter(float xPos, float yPos, float radius, PlayerCharacter target) {
+		super(xPos, yPos, radius);
 		this.target = target;
 	}
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		drawEngine.drawEllipse(drawEngine.parent.color(0,255,0), position.x, position.y, 30, 30);
-		
+		float size = radius * 2;
+		drawEngine.drawEllipse(drawEngine.parent.color(0,255,0), position.x, position.y, size, size);
 	}
 
 	@Override
