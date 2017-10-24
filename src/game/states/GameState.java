@@ -1,5 +1,6 @@
 package game.states;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import characters.Character;
@@ -8,6 +9,7 @@ import game.GameContext;
 import game.GameInput;
 import particles.Particle;
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public abstract class GameState {
 
@@ -38,8 +40,7 @@ public abstract class GameState {
 		
 		context.player.display(drawEngine);
 		
-		for (Character enemy : context.enemies) enemy.display(drawEngine);
-		for (Particle particle : context.particles) particle.display(drawEngine);		
+		drawEngine.displayDrawables(context.enemies, context.particles);
 	}
 	
 	public void updateStep(int mouseX, int mouseY) {
@@ -50,6 +51,22 @@ public abstract class GameState {
 			enemy.move();
 			enemy.checkCollisions(context.enemies);
 		}
+		
+		Iterator<Character> it = context.enemies.iterator();
+		
+		while(it.hasNext()) {
+			Character enemy = it.next();
+			enemy.move();
+			enemy.checkCollisions(context.enemies);
+			
+			for (Particle p : context.particles) {
+				float collide = p.radius + enemy.radius;
+				float distance = PVector.dist(p.position, enemy.position);
+				
+				if (distance < collide) it.remove();
+			}
+		}
+		
 		for (Particle particle : context.particles) particle.integrate();
 	}
 	

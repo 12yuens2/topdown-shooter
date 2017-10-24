@@ -2,7 +2,6 @@ package game;
 
 import processing.core.PApplet;
 
-
 public class ShooterGame extends PApplet{
 	
 	public static int SCREEN_X = 600;

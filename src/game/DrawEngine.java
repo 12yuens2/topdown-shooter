@@ -13,7 +13,7 @@ public class DrawEngine {
     	this.parent = parent;
     }
     
-    private void displayDrawables(ArrayList<? extends IDrawable>... drawables) {
+    public void displayDrawables(ArrayList<? extends IDrawable>... drawables) {
         for (ArrayList<? extends IDrawable> drawList : drawables) {
         	for (IDrawable drawable : drawList) {
         		drawable.display(this);

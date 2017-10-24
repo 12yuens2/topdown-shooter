@@ -41,7 +41,11 @@ public class PlayingState extends GameState {
 		else context.player.directionRelease(input.keyCode);
 		
 		if (input.mouseButton == PConstants.LEFT) {
-			context.particles.add(new Particle(context.player.facing.copy(), input.mouseX, input.mouseY));
+			context.particles.add(new Particle(context.player.facing.copy(), input.mouseX, input.mouseY, 5));
+			context.player.stopMoving();
+		}
+		if (input.mouseButton == PConstants.RIGHT) {
+			context.player.moveTo(input.mouseX, input.mouseY);
 		}
 		
 		return this;
