@@ -3,11 +3,11 @@ package game.states;
 import java.util.Iterator;
 import java.util.Random;
 
-import characters.Character;
 import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
-import particles.Particle;
+import objs.characters.Character;
+import objs.particles.Particle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -59,11 +59,16 @@ public abstract class GameState {
 			enemy.move();
 			enemy.checkCollisions(context.enemies);
 			
-			for (Particle p : context.particles) {
+			Iterator<Particle> iter = context.particles.iterator();
+			while(iter.hasNext()) {
+				Particle p = iter.next();
 				float collide = p.radius + enemy.radius;
 				float distance = PVector.dist(p.position, enemy.position);
 				
-				if (distance < collide) it.remove();
+				if (distance < collide) {
+					it.remove();
+					iter.remove();
+				}
 			}
 		}
 		

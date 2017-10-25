@@ -1,4 +1,4 @@
-package characters;
+package objs.characters;
 
 import java.awt.event.KeyEvent;
 

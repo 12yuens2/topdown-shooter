@@ -2,9 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
-import characters.Character;
-import characters.PlayerCharacter;
-import particles.Particle;
+import objs.characters.Character;
+import objs.characters.PlayerCharacter;
+import objs.particles.Particle;
 
 public class GameContext {
 

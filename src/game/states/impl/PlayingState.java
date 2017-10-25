@@ -1,14 +1,14 @@
 package game.states.impl;
 
 
-import characters.BasicChaseCharacter;
-import characters.Character;
 import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
 import game.ShooterGame;
 import game.states.GameState;
-import particles.Particle;
+import objs.characters.BasicChaseCharacter;
+import objs.characters.Character;
+import objs.particles.Particle;
 import processing.core.PConstants;
 
 public class PlayingState extends GameState {
@@ -26,7 +26,7 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY) {
 		updateStep(mouseX, mouseY);
 
-		if (random.nextInt(200) == 0) context.enemies.add(
+		if (random.nextInt(50) == 0) context.enemies.add(
 				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
 										parent.random(ShooterGame.SCREEN_Y), 
 										15, 

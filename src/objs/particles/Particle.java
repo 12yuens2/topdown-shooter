@@ -1,4 +1,4 @@
-package particles;
+package objs.particles;
 
 import game.DrawEngine;
 import game.IDrawable;
