@@ -3,6 +3,7 @@ package objs.characters;
 import java.util.ArrayList;
 
 import game.IDrawable;
+import game.ShooterGame;
 import processing.core.PVector;
 
 public abstract class Character implements IDrawable {
@@ -31,5 +32,14 @@ public abstract class Character implements IDrawable {
 				position.add(normal.mult(1));
 			}
 		}
+	}
+	
+	
+	protected static float moveX(float xPos) {
+		return Math.min(ShooterGame.SCREEN_X, Math.max(0, xPos));
+	}
+	
+	protected static float moveY(float yPos) {
+		return Math.min(ShooterGame.SCREEN_Y, Math.max(0, yPos));
 	}
 }

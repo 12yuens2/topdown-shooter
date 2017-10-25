@@ -16,7 +16,7 @@ public class PlayerCharacter extends Character {
 	public PVector destination;
 	
 	private float orientation;
-	private float up, down, left, right;
+	public float up, down, left, right;
 	
 	public PlayerCharacter(float xPos, float yPos, float radius) {
 		super(xPos, yPos, radius);
@@ -29,8 +29,8 @@ public class PlayerCharacter extends Character {
 	
 	@Override
 	public void move() {
-		position.x = Math.min(ShooterGame.SCREEN_X, Math.max(0, position.x + (right - left) * SPEED));
-		position.y = Math.min(ShooterGame.SCREEN_Y, Math.max(0, position.y + (down - up) * SPEED));
+		position.x = moveX(position.x + (right - left) * SPEED);
+		position.y = moveY(position.y + (down - up) * SPEED);
 
 		if (PVector.sub(destination, position).mag() > 2f) {
 			PVector velocity = new PVector((destination.x - position.x), (destination.y - position.y)).normalize().mult(3f);

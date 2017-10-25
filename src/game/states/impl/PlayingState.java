@@ -6,6 +6,7 @@ import game.GameContext;
 import game.GameInput;
 import game.ShooterGame;
 import game.states.GameState;
+import objs.characters.AmbushCharacter;
 import objs.characters.BasicChaseCharacter;
 import objs.characters.Character;
 import objs.particles.Particle;
@@ -26,8 +27,14 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY) {
 		updateStep(mouseX, mouseY);
 
-		if (random.nextInt(50) == 0) context.enemies.add(
+		if (random.nextInt(250) == 0) context.enemies.add(
 				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
+										parent.random(ShooterGame.SCREEN_Y), 
+										15, 
+										context.player));
+		
+		if (random.nextInt(50) == 0) context.enemies.add(
+				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
 										parent.random(ShooterGame.SCREEN_Y), 
 										15, 
 										context.player));
