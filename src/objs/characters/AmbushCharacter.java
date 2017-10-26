@@ -36,8 +36,8 @@ public class AmbushCharacter extends Character {
 		/* Move to new target position */
 		Random r = new Random();
 		if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
-			float targetX = moveX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);
-			float targetY = moveY(targetPlayer.position.y + (targetPlayer.down - targetPlayer.up) * DISTANCE);
+			float targetX = getX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);
+			float targetY = getY(targetPlayer.position.y + (targetPlayer.down - targetPlayer.up) * DISTANCE);
 			
 			targetPosition = new PVector(targetX, targetY);
 		}

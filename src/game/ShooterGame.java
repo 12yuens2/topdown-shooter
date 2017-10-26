@@ -4,8 +4,8 @@ import processing.core.PApplet;
 
 public class ShooterGame extends PApplet{
 	
-	public static int SCREEN_X = 600;
-	public static int SCREEN_Y = 600;
+	public static int SCREEN_X = 1600;
+	public static int SCREEN_Y = 900;
 	
 	float xPos = 100;
 	float yPos = 100;
@@ -16,7 +16,7 @@ public class ShooterGame extends PApplet{
 	public GameController gameController;
 	
 	public void settings() {
-		size(600, 600);
+		size(SCREEN_X, SCREEN_Y);
 	}
 	
 	public void setup() {

@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 
 import objs.characters.Character;
+import objs.characters.PatrolCharacter;
 import objs.characters.PlayerCharacter;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
@@ -21,5 +22,7 @@ public class GameContext {
 		enemies = new ArrayList<>();
 		particles = new ArrayList<>();
 		pickups = new ArrayList<>();
+		
+		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
 	}
 }

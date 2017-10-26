@@ -26,8 +26,8 @@ public class PlayerCharacter extends Character {
 	
 	@Override
 	public void move() {
-		position.x = moveX(position.x + (right - left) * SPEED);
-		position.y = moveY(position.y + (down - up) * SPEED);
+		position.x = getX(position.x + (right - left) * SPEED);
+		position.y = getY(position.y + (down - up) * SPEED);
 
 		
 		facing.x = position.x + 10 * PApplet.cos(orientation);

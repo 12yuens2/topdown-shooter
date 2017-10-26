@@ -30,11 +30,11 @@ public abstract class Character extends GameObject {
 	}
 	
 	
-	protected static float moveX(float xPos) {
+	protected static float getX(float xPos) {
 		return Math.min(ShooterGame.SCREEN_X, Math.max(0, xPos));
 	}
 	
-	protected static float moveY(float yPos) {
+	protected static float getY(float yPos) {
 		return Math.min(ShooterGame.SCREEN_Y, Math.max(0, yPos));
 	}
 }
