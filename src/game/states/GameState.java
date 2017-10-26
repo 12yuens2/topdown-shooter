@@ -53,22 +53,24 @@ public abstract class GameState {
 			enemy.checkCollisions(context.enemies);
 		}
 		
-		Iterator<Character> it = context.enemies.iterator();
+		Iterator<Character> enemyIt = context.enemies.iterator();
 		
-		while(it.hasNext()) {
-			Character enemy = it.next();
+		while(enemyIt.hasNext()) {
+			Character enemy = enemyIt.next();
 			enemy.move();
 			enemy.checkCollisions(context.enemies);
 			
-			Iterator<Particle> iter = context.particles.iterator();
-			while(iter.hasNext()) {
-				Particle p = iter.next();
+			Iterator<Particle> particleIt = context.particles.iterator();
+			while(particleIt.hasNext()) {
+				Particle p = particleIt.next();
 				float collide = p.radius + enemy.radius;
 				float distance = PVector.dist(p.position, enemy.position);
 				
 				if (distance < collide) {
-					it.remove();
-					iter.remove();
+					enemy.health -= p.damage;
+					
+					if (enemy.health <= 0) enemyIt.remove();
+					particleIt.remove();
 				}
 			}
 		}

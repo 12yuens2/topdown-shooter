@@ -7,8 +7,8 @@ public class BasicChaseCharacter extends Character {
 
 	public PlayerCharacter target;
 	
-	public BasicChaseCharacter(float xPos, float yPos, float radius, PlayerCharacter target) {
-		super(xPos, yPos, radius);
+	public BasicChaseCharacter(float xPos, float yPos, float radius, int health, PlayerCharacter target) {
+		super(xPos, yPos, radius, health);
 		this.target = target;
 	}
 

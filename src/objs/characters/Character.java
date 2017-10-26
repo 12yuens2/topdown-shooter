@@ -9,10 +9,12 @@ import processing.core.PVector;
 public abstract class Character extends GameObject {
 	
 	public boolean friendly;
+	public int health;
 	
-	public Character(float xPos, float yPos, float radius) {
+	public Character(float xPos, float yPos, float radius, int health) {
 		super(xPos, yPos, radius);
 		this.friendly = false;
+		this.health = health;
 	}
 	
 	public abstract void move();

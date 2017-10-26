@@ -7,14 +7,16 @@ import processing.core.PVector;
 public class Particle extends GameObject {
 
 	public PVector velocity;
+	public int damage;
 	
-	public Particle(float xPos, float yPos, float radius) {
+	public Particle(float xPos, float yPos, float radius, int damage) {
 		super(xPos, yPos, radius);
 		this.velocity = new PVector(0,0);
+		this.damage = damage;
 	}
 	
-	public Particle(PVector position, float mouseX, float mouseY, float radius) {
-		super(position.x, position.y, radius);
+	public Particle(PVector position, float mouseX, float mouseY, float radius, int damage) {
+		this(position.x, position.y, radius, damage);
 		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
 	}
 	

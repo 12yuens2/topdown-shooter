@@ -15,8 +15,8 @@ public class PatrolCharacter extends Character {
 	public boolean chase;
 	public int currentPatrol;
 	
-	public PatrolCharacter(float xPos, float yPos, float radius, float patrolDistance, float detectRadius, PlayerCharacter target) {
-		super(xPos, yPos, radius);
+	public PatrolCharacter(float xPos, float yPos, float radius, int health, float patrolDistance, float detectRadius, PlayerCharacter target) {
+		super(xPos, yPos, radius, health);
 		this.target = target;
 		this.detectRadius = detectRadius;
 		this.chase = false;
@@ -25,9 +25,9 @@ public class PatrolCharacter extends Character {
 		
 		patrolPositions = new ArrayList<>();
 		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y + patrolDistance)));
-		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y - patrolDistance)));
 		patrolPositions.add(new PVector(getX(position.x - patrolDistance), getY(position.y + patrolDistance)));
 		patrolPositions.add(new PVector(getX(position.x - patrolDistance), getY(position.y - patrolDistance)));
+		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y - patrolDistance)));
 		
 		this.currentPatrol = 0;
 	}
@@ -35,16 +35,16 @@ public class PatrolCharacter extends Character {
 	@Override
 	public void move() {
 		if (chase) {
-			PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(1f);
+			PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(1.75f);
 			position.x += velocity.x;
 			position.y += velocity.y;
 			
-			if (tooFarAway()) {
+			if (tooFarAway() && !detectPlayer()) {
 				chase = false;
 			}
 		}
 		else {
-			if (detectPlayer() && !tooFarAway()) {
+			if (detectPlayer()) {
 				chase = true;
 			} 
 			else {
@@ -63,7 +63,7 @@ public class PatrolCharacter extends Character {
 	}
 	
 	private boolean tooFarAway() {
-		return PVector.dist(position, startingPosition) > detectRadius * 2;
+		return PVector.dist(position, startingPosition) > detectRadius * 1.5;
 	}
 	
 	private boolean detectPlayer() {
@@ -76,7 +76,7 @@ public class PatrolCharacter extends Character {
 	@Override
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(255), position.x, position.y, detectRadius * 2, detectRadius * 2);
+//		drawEngine.drawEllipse(drawEngine.parent.color(255), position.x, position.y, detectRadius * 2, detectRadius * 2);
 		drawEngine.drawEllipse(drawEngine.parent.color(200, 180, 20), position.x, position.y, size, size);
 		
 	}

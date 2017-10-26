@@ -17,8 +17,8 @@ public class PlayerCharacter extends Character {
 	private float orientation;
 	public float up, down, left, right;
 	
-	public PlayerCharacter(float xPos, float yPos, float radius) {
-		super(xPos, yPos, radius);
+	public PlayerCharacter(float xPos, float yPos, float radius, int health) {
+		super(xPos, yPos, radius, health);
 		this.friendly = true;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));

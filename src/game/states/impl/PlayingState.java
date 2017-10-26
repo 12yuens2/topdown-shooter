@@ -29,28 +29,28 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY) {
 		updateStep(mouseX, mouseY);
 
-//		if (random.nextInt(250) == 0) context.enemies.add(
-//				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
-//										parent.random(ShooterGame.SCREEN_Y), 
-//										15, 
-//										context.player));
-//		
-//		if (random.nextInt(250) == 0) context.enemies.add(
-//				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
-//										parent.random(ShooterGame.SCREEN_Y), 
-//										15, 
-//										context.player));
-//		
-//		if (random.nextInt(50) == 0) context.enemies.add(
-//				new PatrolCharacter(parent.random(ShooterGame.SCREEN_X), 
-//									parent.random(ShooterGame.SCREEN_Y), 
-//									15, 100f, 150f, context.player));
-//		
-//		if (random.nextInt(250) == 0) context.pickups.add(
-//				new HpPickup(parent.random(ShooterGame.SCREEN_X), 
-//							 parent.random(ShooterGame.SCREEN_Y), 
-//							 5));
-//		
+		if (random.nextInt(150) == 0) context.enemies.add(
+				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
+										parent.random(ShooterGame.SCREEN_Y), 
+										15, 5, 
+										context.player));
+		
+		if (random.nextInt(50) == 0) context.enemies.add(
+				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
+										parent.random(ShooterGame.SCREEN_Y), 
+										15,10,
+										context.player));
+		
+		if (random.nextInt(250) == 0) context.enemies.add(
+				new PatrolCharacter(parent.random(ShooterGame.SCREEN_X), 
+									parent.random(ShooterGame.SCREEN_Y), 
+									15, 15, 100f, 200f, context.player));
+		
+		if (random.nextInt(250) == 0) context.pickups.add(
+				new HpPickup(parent.random(ShooterGame.SCREEN_X), 
+							 parent.random(ShooterGame.SCREEN_Y), 
+							 5));
+		
 		return this;
 	}
 
@@ -60,7 +60,7 @@ public class PlayingState extends GameState {
 		else context.player.directionRelease(input.keyCode);
 		
 		if (input.mouseButton == PConstants.LEFT) {
-			context.particles.add(new Particle(context.player.facing.copy(), input.mouseX, input.mouseY, 5));
+			context.particles.add(new Particle(context.player.facing.copy(), input.mouseX, input.mouseY, 5, 5));
 		}
 		
 		return this;

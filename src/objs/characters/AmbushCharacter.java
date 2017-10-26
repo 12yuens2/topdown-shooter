@@ -8,14 +8,14 @@ import processing.core.PVector;
 public class AmbushCharacter extends Character {
 
 	public static final float DISTANCE = 200f;
-	public static final int DELAY = 60;
+	public static final int DELAY = 75;
 	
 	
 	public PVector targetPosition;
 	public PlayerCharacter targetPlayer;
 	
-	public AmbushCharacter(float xPos, float yPos, float radius, PlayerCharacter target) {
-		super(xPos, yPos, radius);
+	public AmbushCharacter(float xPos, float yPos, float radius, int health, PlayerCharacter target) {
+		super(xPos, yPos, radius, health);
 		this.targetPlayer = target;
 		this.targetPosition = new PVector(target.position.x, target.position.y);
 	}

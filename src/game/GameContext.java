@@ -17,12 +17,12 @@ public class GameContext {
 	public ArrayList<Pickup> pickups;
 	
 	public GameContext() {
-		player = new PlayerCharacter((float) Math.random() * ShooterGame.SCREEN_X, (float) Math.random() * ShooterGame.SCREEN_Y, 15);
+		player = new PlayerCharacter((float) Math.random() * ShooterGame.SCREEN_X, (float) Math.random() * ShooterGame.SCREEN_Y, 15, 3);
 		
 		enemies = new ArrayList<>();
 		particles = new ArrayList<>();
 		pickups = new ArrayList<>();
 		
-		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
+//		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
 	}
 }
