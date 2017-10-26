@@ -1,24 +1,21 @@
 package objs.particles;
 
 import game.DrawEngine;
-import game.IDrawable;
+import game.GameObject;
 import processing.core.PVector;
 
-public class Particle implements IDrawable {
+public class Particle extends GameObject {
 
-	public PVector position, velocity;
-	public float radius;
+	public PVector velocity;
 	
-	public Particle(PVector position, PVector velocity, float radius) {
-		this.position = position;
-		this.velocity = velocity;
-		this.radius = radius;
+	public Particle(float xPos, float yPos, float radius) {
+		super(xPos, yPos, radius);
+		this.velocity = new PVector(0,0);
 	}
 	
 	public Particle(PVector position, float mouseX, float mouseY, float radius) {
-		this.position = position;
+		super(position.x, position.y, radius);
 		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
-		this.radius = radius;
 	}
 	
 	

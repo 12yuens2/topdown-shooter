@@ -2,21 +2,16 @@ package objs.characters;
 
 import java.util.ArrayList;
 
-import game.IDrawable;
+import game.GameObject;
 import game.ShooterGame;
 import processing.core.PVector;
 
-public abstract class Character implements IDrawable {
-
-	public PVector position;
-	
-	public float radius;
+public abstract class Character extends GameObject {
 	
 	public boolean friendly;
 	
 	public Character(float xPos, float yPos, float radius) {
-		this.position = new PVector(xPos, yPos);
-		this.radius = radius;
+		super(xPos, yPos, radius);
 		this.friendly = false;
 	}
 	

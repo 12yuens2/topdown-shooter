@@ -10,6 +10,7 @@ import objs.characters.AmbushCharacter;
 import objs.characters.BasicChaseCharacter;
 import objs.characters.Character;
 import objs.particles.Particle;
+import objs.pickups.HpPickup;
 import processing.core.PConstants;
 
 public class PlayingState extends GameState {
@@ -39,6 +40,11 @@ public class PlayingState extends GameState {
 										15, 
 										context.player));
 		
+		if (random.nextInt(50) == 0) context.pickups.add(
+				new HpPickup(parent.random(ShooterGame.SCREEN_X), 
+							 parent.random(ShooterGame.SCREEN_Y), 
+							 5));
+		
 		return this;
 	}
 
@@ -49,10 +55,6 @@ public class PlayingState extends GameState {
 		
 		if (input.mouseButton == PConstants.LEFT) {
 			context.particles.add(new Particle(context.player.facing.copy(), input.mouseX, input.mouseY, 5));
-			context.player.stopMoving();
-		}
-		if (input.mouseButton == PConstants.RIGHT) {
-			context.player.moveTo(input.mouseX, input.mouseY);
 		}
 		
 		return this;

@@ -13,7 +13,6 @@ public class PlayerCharacter extends Character {
 	public static final float SPEED = 5.0f;
 
 	public PVector facing;
-	public PVector destination;
 	
 	private float orientation;
 	public float up, down, left, right;
@@ -23,8 +22,6 @@ public class PlayerCharacter extends Character {
 		this.friendly = true;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
-		
-		this.destination = position;
 	}
 	
 	@Override
@@ -32,10 +29,6 @@ public class PlayerCharacter extends Character {
 		position.x = moveX(position.x + (right - left) * SPEED);
 		position.y = moveY(position.y + (down - up) * SPEED);
 
-		if (PVector.sub(destination, position).mag() > 2f) {
-			PVector velocity = new PVector((destination.x - position.x), (destination.y - position.y)).normalize().mult(3f);
-			position.add(velocity);
-		}
 		
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
@@ -79,16 +72,6 @@ public class PlayerCharacter extends Character {
 	public void facingDirection(int mouseX, int mouseY) {
 		orientation = PApplet.atan2(mouseY - position.y , mouseX - position.x);
 	}
-
-	public void moveTo(float mouseX, float mouseY) {
-		destination = new PVector(mouseX, mouseY);
-	}
-
-	public void stopMoving() {
-		destination = position;		
-	}
-
-
 	
 }
 	

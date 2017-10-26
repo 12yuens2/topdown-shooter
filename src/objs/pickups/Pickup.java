@@ -1,15 +1,15 @@
 package objs.pickups;
 
-import game.IDrawable;
-import processing.core.PVector;
-
-public abstract class Pickup implements IDrawable{
-
-	public PVector position;
-	public float radius;
+import game.GameObject;
+public abstract class Pickup extends GameObject{
+	
+	public Effect effect;
 	
 	public Pickup(float xPos, float yPos, float radius) {
-		this.position = new PVector(xPos, yPos);
-		this.radius = radius;
+		super(xPos, yPos, radius);
+	}
+	
+	public void pickup() {
+		//effect.apply();
 	}
 }

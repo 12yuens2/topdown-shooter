@@ -8,6 +8,7 @@ import game.GameContext;
 import game.GameInput;
 import objs.characters.Character;
 import objs.particles.Particle;
+import objs.pickups.Pickup;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -40,7 +41,7 @@ public abstract class GameState {
 		
 		context.player.display(drawEngine);
 		
-		drawEngine.displayDrawables(context.enemies, context.particles);
+		drawEngine.displayDrawables(context.enemies, context.particles, context.pickups);
 	}
 	
 	public void updateStep(int mouseX, int mouseY) {
@@ -69,6 +70,17 @@ public abstract class GameState {
 					it.remove();
 					iter.remove();
 				}
+			}
+		}
+		
+		Iterator<Pickup> pickupIt = context.pickups.iterator();
+		while(pickupIt.hasNext()) {
+			Pickup pickup = pickupIt.next();
+			float collide = context.player.radius + pickup.radius;
+			float distance = PVector.dist(context.player.position, pickup.position);
+			
+			if (distance < collide) {
+				pickupIt.remove();
 			}
 		}
 		

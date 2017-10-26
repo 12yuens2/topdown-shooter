@@ -7,7 +7,6 @@ import processing.core.PVector;
 
 public class AmbushCharacter extends Character {
 
-	
 	public static final float DISTANCE = 200f;
 	public static final int DELAY = 60;
 	
@@ -32,16 +31,18 @@ public class AmbushCharacter extends Character {
 
 	@Override
 	public void move() {
+		PVector velocity = new PVector((targetPosition.x - position.x), (targetPosition.y - position.y));
+		
+		/* Move to new target position */
 		Random r = new Random();
-		if (r.nextInt(DELAY) == 0) {
+		if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
 			float targetX = moveX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);
 			float targetY = moveY(targetPlayer.position.y + (targetPlayer.down - targetPlayer.up) * DISTANCE);
 			
 			targetPosition = new PVector(targetX, targetY);
 		}
-		
-		PVector velocity = new PVector((targetPosition.x - position.x), (targetPosition.y - position.y)).normalize().mult(1f);
-		position.add(velocity);
+
+		position.add(velocity.normalize().mult(1f));
 		
 	}
 

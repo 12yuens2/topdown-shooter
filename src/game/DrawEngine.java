@@ -13,9 +13,9 @@ public class DrawEngine {
     	this.parent = parent;
     }
     
-    public void displayDrawables(ArrayList<? extends IDrawable>... drawables) {
-        for (ArrayList<? extends IDrawable> drawList : drawables) {
-        	for (IDrawable drawable : drawList) {
+    public void displayDrawables(ArrayList<? extends GameObject>... drawables) {
+        for (ArrayList<? extends GameObject> drawList : drawables) {
+        	for (GameObject drawable : drawList) {
         		drawable.display(this);
         	}
         }
