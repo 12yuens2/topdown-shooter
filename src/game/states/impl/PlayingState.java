@@ -1,6 +1,8 @@
 package game.states.impl;
 
 
+import com.sun.glass.events.KeyEvent;
+
 import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
@@ -56,12 +58,23 @@ public class PlayingState extends GameState {
 
 	@Override
 	public GameState handleInput(GameInput input) {
-		if (input.keyDown) context.player.directionPress(input.keyCode);
+		if (input.keyDown) {
+			context.player.directionPress(input.keyCode);
+			
+			if (input.keyCode == KeyEvent.VK_R) {
+				context.player.currentWeapon.reload();
+			}
+		}
 		else context.player.directionRelease(input.keyCode);
 		
 		if (input.mouseButton == PConstants.LEFT) {
-			context.particles.add(new Particle(context.player.facing.copy(), input.mouseX, input.mouseY, 5, 5));
+			Particle bullet = context.player.attack(input.mouseX, input.mouseY);
+			if (bullet != null) {
+				context.particles.add(bullet);
+			}
 		}
+		
+		
 		
 		return this;
 	}

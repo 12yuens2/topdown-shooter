@@ -1,10 +1,13 @@
 package objs.characters;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import game.DrawEngine;
 import game.ShooterGame;
-
+import objs.particles.Particle;
+import objs.weapons.Gun;
+import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -17,11 +20,21 @@ public class PlayerCharacter extends Character {
 	private float orientation;
 	public float up, down, left, right;
 	
+	
+	public Weapon currentWeapon;
+	public ArrayList<Weapon> weapons;
+	
 	public PlayerCharacter(float xPos, float yPos, float radius, int health) {
 		super(xPos, yPos, radius, health);
 		this.friendly = true;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
+		
+		this.weapons = new ArrayList<>();
+		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 12, 120, 300));
+		
+		currentWeapon = weapons.get(0);
+		
 	}
 	
 	@Override
@@ -32,6 +45,7 @@ public class PlayerCharacter extends Character {
 		
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
+		currentWeapon.position = facing.copy();
 	}
 	
 
@@ -39,7 +53,9 @@ public class PlayerCharacter extends Character {
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
 		drawEngine.drawEllipse(drawEngine.parent.color(255, 0, 0), position.x, position.y, size, size);
-		drawEngine.drawEllipse(drawEngine.parent.color(0, 255, 0), facing.x, facing.y, size/3, size/3);		
+		
+		currentWeapon.display(drawEngine);
+//		drawEngine.drawEllipse(drawEngine.parent.color(0, 255, 0), facing.x, facing.y, size/3, size/3);		
 	}
 	
 	
@@ -71,6 +87,10 @@ public class PlayerCharacter extends Character {
 
 	public void facingDirection(int mouseX, int mouseY) {
 		orientation = PApplet.atan2(mouseY - position.y , mouseX - position.x);
+	}
+
+	public Particle attack(float targetX, float targetY) {
+		return currentWeapon.shoot(targetX, targetY);
 	}
 	
 }
