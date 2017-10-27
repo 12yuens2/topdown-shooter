@@ -37,19 +37,7 @@ public class PlayerCharacter extends Character {
 		
 		currentWeapon = weapons.get(0);
 		
-	}
-	
-	@Override
-	public void move() {
-		position.x = getX(position.x + (right - left) * SPEED);
-		position.y = getY(position.y + (down - up) * SPEED);
-
-		
-		facing.x = position.x + 10 * PApplet.cos(orientation);
-		facing.y = position.y + 10 * PApplet.sin(orientation);
-		currentWeapon.position = facing.copy();
-	}
-	
+	}	
 
 	@Override
 	public void display(DrawEngine drawEngine) {
@@ -60,6 +48,16 @@ public class PlayerCharacter extends Character {
 //		drawEngine.drawEllipse(drawEngine.parent.color(0, 255, 0), facing.x, facing.y, size/3, size/3);		
 	}
 	
+	
+	@Override
+	public void integrate() {
+		position.x = getX(position.x + (right - left) * SPEED);
+		position.y = getY(position.y + (down - up) * SPEED);
+		
+		facing.x = position.x + 10 * PApplet.cos(orientation);
+		facing.y = position.y + 10 * PApplet.sin(orientation);
+		currentWeapon.position = facing.copy();
+	}
 	
 	
 	public void directionPress(int keyCode) {

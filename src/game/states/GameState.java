@@ -2,6 +2,7 @@ package game.states;
 
 import java.util.Iterator;
 import java.util.Random;
+import java.util.function.Function;
 
 import game.DrawEngine;
 import game.GameContext;
@@ -47,62 +48,65 @@ public abstract class GameState {
 	}
 	
 	public void updateStep(int mouseX, int mouseY) {
-		context.player.move();
+		context.player.integrate();
 		context.player.facingDirection(mouseX, mouseY);
 		
-		for (Character enemy : context.enemies) {
-			enemy.move();
-			enemy.checkCollisions(context.enemies);
-		}
-		
 		Iterator<Character> enemyIt = context.enemies.iterator();
-		
 		while(enemyIt.hasNext()) {
 			Character enemy = enemyIt.next();
-			enemy.move();
-			enemy.checkCollisions(context.enemies);
+			enemy.integrate();
 			if (enemy.health <= 0) enemyIt.remove();
 			
-			Iterator<Particle> particleIt = context.particles.iterator();
-			while(particleIt.hasNext()) {
-				Particle p = particleIt.next();
-				float collide = p.radius + enemy.radius;
-				float distance = PVector.dist(p.position, enemy.position);
-				
-				if (distance < collide) {
-					enemy.health -= p.damage;
+			/* Collision with other enemies to resolve overlapping */
+			enemy.collideResult(context.enemies.iterator(), new Function<Character, Boolean>() {
+
+				@Override
+				public Boolean apply(Character c) {
+					PVector normal = PVector.sub(enemy.position, c.position).normalize();
+					enemy.position.add(normal.mult(1));
 					
-					if (p instanceof Missile) {
-						context.explosions.add(((Missile)p).explode());
-					}
-					particleIt.remove();
+					return false;
 				}
-			}
-			
-			Iterator<Explosion> explosionIt = context.explosions.iterator();
-			while(explosionIt.hasNext()) {
-				Explosion explosion = explosionIt.next();
-				float collide = explosion.radius + enemy.radius;
-				float distance = PVector.dist(explosion.position, enemy.position);
 				
-				if (distance <= collide) enemy.health -= explosion.damage;
-				if (explosion.lifespan <= 0) explosionIt.remove();
-			}
+			});
+			
+			/* Collision with particles */
+			enemy.collideResult(context.particles.iterator(), new Function<Particle, Boolean>() {
+
+				@Override
+				public Boolean apply(Particle p) {
+					enemy.health -= p.damage;
+					if (p instanceof Missile) context.explosions.add(((Missile)p).explode());
+					
+					return true;
+				}
+				
+			});
+			
+			/* Collision with explosions*/
+			enemy.collideResult(context.explosions.iterator(), new Function<Explosion, Boolean>() {
+
+				@Override
+				public Boolean apply(Explosion e) {
+					enemy.health -= e.damage;
+					
+					return e.lifespan <= 0;
+				}
+				
+			});
 			
 		}
 		
-		
-		Iterator<Pickup> pickupIt = context.pickups.iterator();
-		while(pickupIt.hasNext()) {
-			Pickup pickup = pickupIt.next();
-			float collide = context.player.radius + pickup.radius;
-			float distance = PVector.dist(context.player.position, pickup.position);
-			
-			if (distance < collide) {
-				pickupIt.remove();
+		/* Player pickups */
+		context.player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
+
+			@Override
+			public Boolean apply(Pickup p) {
+				return true;
 			}
-		}
-		
+			
+		});
+
 		for (Particle particle : context.particles) particle.integrate();
 		for (Explosion explosion : context.explosions) explosion.integrate();
 		

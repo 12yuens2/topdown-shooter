@@ -33,7 +33,15 @@ public class PatrolCharacter extends Character {
 	}
 
 	@Override
-	public void move() {
+	public void display(DrawEngine drawEngine) {
+		float size = radius * 2;
+//		drawEngine.drawEllipse(drawEngine.parent.color(255), position.x, position.y, detectRadius * 2, detectRadius * 2);
+		drawEngine.drawEllipse(drawEngine.parent.color(200, 180, 20), position.x, position.y, size, size);
+		
+	}
+	
+	@Override
+	public void integrate() {
 		if (chase) {
 			PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(1.75f);
 			position.x += velocity.x;
@@ -54,7 +62,7 @@ public class PatrolCharacter extends Character {
 				
 				if (velocity.mag() < 1f) {
 					currentPatrol = (currentPatrol + 1) % patrolPositions.size();
-					move();
+					integrate();
 				} else {
 					position.add(velocity.normalize().mult(1f));
 				}
@@ -73,12 +81,6 @@ public class PatrolCharacter extends Character {
 		return distance < collide;
 	}
 
-	@Override
-	public void display(DrawEngine drawEngine) {
-		float size = radius * 2;
-//		drawEngine.drawEllipse(drawEngine.parent.color(255), position.x, position.y, detectRadius * 2, detectRadius * 2);
-		drawEngine.drawEllipse(drawEngine.parent.color(200, 180, 20), position.x, position.y, size, size);
-		
-	}
+
 
 }

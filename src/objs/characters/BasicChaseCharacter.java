@@ -19,7 +19,7 @@ public class BasicChaseCharacter extends Character {
 	}
 
 	@Override
-	public void move() {
+	public void integrate() {
 		PVector direction = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(1f);
 		position.x += direction.x;
 		position.y += direction.y;

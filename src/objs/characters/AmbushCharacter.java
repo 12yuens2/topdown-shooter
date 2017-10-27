@@ -30,7 +30,7 @@ public class AmbushCharacter extends Character {
 	}
 
 	@Override
-	public void move() {
+	public void integrate() {
 		PVector velocity = new PVector((targetPosition.x - position.x), (targetPosition.y - position.y));
 		
 		/* Move to new target position */

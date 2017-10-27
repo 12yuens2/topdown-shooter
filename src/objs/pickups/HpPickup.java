@@ -16,4 +16,10 @@ public class HpPickup extends Pickup{
 		
 	}
 
+	@Override
+	public void integrate() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
