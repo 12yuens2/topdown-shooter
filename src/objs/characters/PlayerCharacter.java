@@ -7,6 +7,7 @@ import game.DrawEngine;
 import game.ShooterGame;
 import objs.particles.Particle;
 import objs.weapons.Gun;
+import objs.weapons.Rocket;
 import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -32,6 +33,7 @@ public class PlayerCharacter extends Character {
 		
 		this.weapons = new ArrayList<>();
 		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 12, 120, 300));
+		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 12, 12, 120, 300));
 		
 		currentWeapon = weapons.get(0);
 		

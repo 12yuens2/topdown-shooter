@@ -7,6 +7,8 @@ import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
 import objs.characters.Character;
+import objs.particles.Explosion;
+import objs.particles.Missile;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
 import processing.core.PApplet;
@@ -41,7 +43,7 @@ public abstract class GameState {
 		
 		context.player.display(drawEngine);
 		
-		drawEngine.displayDrawables(context.enemies, context.particles, context.pickups);
+		drawEngine.displayDrawables(context.enemies, context.particles, context.pickups, context.explosions);
 	}
 	
 	public void updateStep(int mouseX, int mouseY) {
@@ -59,6 +61,7 @@ public abstract class GameState {
 			Character enemy = enemyIt.next();
 			enemy.move();
 			enemy.checkCollisions(context.enemies);
+			if (enemy.health <= 0) enemyIt.remove();
 			
 			Iterator<Particle> particleIt = context.particles.iterator();
 			while(particleIt.hasNext()) {
@@ -69,11 +72,25 @@ public abstract class GameState {
 				if (distance < collide) {
 					enemy.health -= p.damage;
 					
-					if (enemy.health <= 0) enemyIt.remove();
+					if (p instanceof Missile) {
+						context.explosions.add(((Missile)p).explode());
+					}
 					particleIt.remove();
 				}
 			}
+			
+			Iterator<Explosion> explosionIt = context.explosions.iterator();
+			while(explosionIt.hasNext()) {
+				Explosion explosion = explosionIt.next();
+				float collide = explosion.radius + enemy.radius;
+				float distance = PVector.dist(explosion.position, enemy.position);
+				
+				if (distance <= collide) enemy.health -= explosion.damage;
+				if (explosion.lifespan <= 0) explosionIt.remove();
+			}
+			
 		}
+		
 		
 		Iterator<Pickup> pickupIt = context.pickups.iterator();
 		while(pickupIt.hasNext()) {
@@ -87,6 +104,8 @@ public abstract class GameState {
 		}
 		
 		for (Particle particle : context.particles) particle.integrate();
+		for (Explosion explosion : context.explosions) explosion.integrate();
+		
 	}
 	
 }

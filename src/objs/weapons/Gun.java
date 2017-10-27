@@ -19,7 +19,6 @@ public class Gun extends Weapon{
 			clipAmmo--;
 			return new Particle(position.copy(), targetX, targetY, 5, 5);
 		}
-		
 	}
 
 	@Override

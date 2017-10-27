@@ -64,6 +64,13 @@ public class PlayingState extends GameState {
 			if (input.keyCode == KeyEvent.VK_R) {
 				context.player.currentWeapon.reload();
 			}
+			
+			if (input.keyCode == KeyEvent.VK_1) {
+				context.player.currentWeapon = context.player.weapons.get(0);
+			}
+			if (input.keyCode == KeyEvent.VK_2) {
+				context.player.currentWeapon = context.player.weapons.get(1);
+			}
 		}
 		else context.player.directionRelease(input.keyCode);
 		
