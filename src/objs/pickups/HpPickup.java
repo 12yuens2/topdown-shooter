@@ -1,12 +1,13 @@
 package objs.pickups;
 
 import game.DrawEngine;
+import objs.pickups.effects.impl.SpeedEffect;
 
 public class HpPickup extends Pickup{
 
 	public HpPickup(float xPos, float yPos, float radius) {
 		super(xPos, yPos, radius);
-		// TODO Auto-generated constructor stub
+		this.effect = new SpeedEffect(120);
 	}
 
 	@Override

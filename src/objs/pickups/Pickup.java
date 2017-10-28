@@ -1,6 +1,7 @@
 package objs.pickups;
 
 import game.GameObject;
+import objs.pickups.effects.Effect;
 public abstract class Pickup extends GameObject{
 	
 	public Effect effect;

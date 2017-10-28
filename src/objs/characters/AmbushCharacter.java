@@ -42,7 +42,7 @@ public class AmbushCharacter extends Character {
 			targetPosition = new PVector(targetX, targetY);
 		}
 
-		position.add(velocity.normalize().mult(1f));
+		position.add(velocity.normalize().mult(speedMultiplier));
 		
 	}
 

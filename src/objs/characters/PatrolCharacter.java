@@ -43,9 +43,8 @@ public class PatrolCharacter extends Character {
 	@Override
 	public void integrate() {
 		if (chase) {
-			PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(1.75f);
-			position.x += velocity.x;
-			position.y += velocity.y;
+			PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(speedMultiplier*1.5f);
+			position.add(velocity);
 			
 			if (tooFarAway() && !detectPlayer()) {
 				chase = false;
@@ -64,7 +63,7 @@ public class PatrolCharacter extends Character {
 					currentPatrol = (currentPatrol + 1) % patrolPositions.size();
 					integrate();
 				} else {
-					position.add(velocity.normalize().mult(1f));
+					position.add(velocity.normalize().mult(speedMultiplier));
 				}
 			}
 		}

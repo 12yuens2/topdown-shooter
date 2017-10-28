@@ -21,7 +21,7 @@ public class BasicChaseCharacter extends Character {
 	@Override
 	public void integrate() {
 		PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y));
-		position.add(velocity.normalize().mult(1.5f));
+		position.add(velocity.normalize().mult(speedMultiplier));
 	}
 
 }

@@ -7,11 +7,13 @@ public abstract class Character extends GameObject {
 	
 	public boolean friendly;
 	public int health;
+	public float speedMultiplier;
 	
 	public Character(float xPos, float yPos, float radius, int health) {
 		super(xPos, yPos, radius);
 		this.friendly = false;
 		this.health = health;
+		this.speedMultiplier = 2f;
 	}	
 	
 	protected static float getX(float xPos) {

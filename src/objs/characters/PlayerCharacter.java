@@ -2,10 +2,12 @@ package objs.characters;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import game.DrawEngine;
 import game.ShooterGame;
 import objs.particles.Particle;
+import objs.pickups.effects.Effect;
 import objs.weapons.Gun;
 import objs.weapons.Rocket;
 import objs.weapons.Weapon;
@@ -25,9 +27,13 @@ public class PlayerCharacter extends Character {
 	public Weapon currentWeapon;
 	public ArrayList<Weapon> weapons;
 	
+	public ArrayList<Effect> powerups;
+	
 	public PlayerCharacter(float xPos, float yPos, float radius, int health) {
 		super(xPos, yPos, radius, health);
 		this.friendly = true;
+		
+		this.speedMultiplier = SPEED;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 		
@@ -36,6 +42,8 @@ public class PlayerCharacter extends Character {
 		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 12, 12, 120, 300));
 		
 		currentWeapon = weapons.get(0);
+		
+		this.powerups = new ArrayList<>();
 		
 	}	
 
@@ -51,12 +59,23 @@ public class PlayerCharacter extends Character {
 	
 	@Override
 	public void integrate() {
-		position.x = getX(position.x + (right - left) * SPEED);
-		position.y = getY(position.y + (down - up) * SPEED);
+		position.x = getX(position.x + (right - left) * speedMultiplier);
+		position.y = getY(position.y + (down - up) * speedMultiplier);
 		
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
 		currentWeapon.position = facing.copy();
+		
+		Iterator<Effect> effectIt = powerups.iterator();
+		while(effectIt.hasNext()) {
+			Effect effect = effectIt.next();
+			effect.lifespan--;
+			
+			if (effect.lifespan <= 0) {
+				effect.cease(this);
+				effectIt.remove();
+			}
+		}
 	}
 	
 	
@@ -90,8 +109,10 @@ public class PlayerCharacter extends Character {
 	}
 
 	public Particle attack(float targetX, float targetY) {
+		System.out.println("sped: " + speedMultiplier);
 		return currentWeapon.shoot(targetX, targetY);
 	}
+	
 	
 }
 	

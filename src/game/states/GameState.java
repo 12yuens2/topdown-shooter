@@ -102,6 +102,8 @@ public abstract class GameState {
 
 			@Override
 			public Boolean apply(Pickup p) {
+				p.effect.apply(context.player);
+				context.player.powerups.add(p.effect);
 				return true;
 			}
 			
