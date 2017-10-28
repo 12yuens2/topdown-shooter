@@ -11,6 +11,7 @@ import game.states.GameState;
 import objs.characters.AmbushCharacter;
 import objs.characters.BasicChaseCharacter;
 import objs.characters.Character;
+import objs.characters.CircleCharacter;
 import objs.characters.PatrolCharacter;
 import objs.particles.Particle;
 import objs.pickups.HpPickup;
@@ -31,14 +32,20 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY) {
 		updateStep(mouseX, mouseY);
 
+//		if (random.nextInt(50) == 0) context.enemies.add(
+//				new CircleCharacter(parent.random(ShooterGame.SCREEN_X), 
+//										parent.random(ShooterGame.SCREEN_Y), 
+//										15, 5, 
+//										context.player));
+		
 		if (random.nextInt(150) == 0) context.enemies.add(
-				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
+				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
 										parent.random(ShooterGame.SCREEN_Y), 
-										15, 5, 
+										15,10,
 										context.player));
 		
-		if (random.nextInt(50) == 0) context.enemies.add(
-				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
+		if (random.nextInt(150) == 0) context.enemies.add(
+				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
 										parent.random(ShooterGame.SCREEN_Y), 
 										15,10,
 										context.player));
