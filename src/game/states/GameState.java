@@ -12,6 +12,7 @@ import objs.particles.Explosion;
 import objs.particles.Missile;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
+import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -111,6 +112,7 @@ public abstract class GameState {
 
 		for (Particle particle : context.particles) particle.integrate();
 		for (Explosion explosion : context.explosions) explosion.integrate();
+		for (Weapon weapon : context.player.weapons) weapon.integrate();
 		
 	}
 	

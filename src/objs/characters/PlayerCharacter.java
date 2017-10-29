@@ -38,8 +38,8 @@ public class PlayerCharacter extends Character {
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 		
 		this.weapons = new ArrayList<>();
-		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 12, 120, 300));
-		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 12, 12, 120, 300));
+		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 12, 120, 300, 120));
+		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 12, 12, 120, 300, 240));
 		
 		currentWeapon = weapons.get(0);
 		
@@ -109,7 +109,6 @@ public class PlayerCharacter extends Character {
 	}
 
 	public Particle attack(float targetX, float targetY) {
-		System.out.println("sped: " + speedMultiplier);
 		return currentWeapon.shoot(targetX, targetY);
 	}
 	

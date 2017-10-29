@@ -1,6 +1,5 @@
 package objs.pickups.effects.impl;
 
-import game.GameObject;
 import objs.characters.Character;
 import objs.pickups.effects.Effect;
 
@@ -19,6 +18,5 @@ public class SpeedEffect extends Effect {
 	public <T extends Character> void cease(T character) {
 		character.speedMultiplier = character.speedMultiplier/2f;
 	}
-
 
 }
