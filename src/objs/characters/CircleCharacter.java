@@ -19,8 +19,6 @@ public class CircleCharacter extends Character {
 		
 		Random r = new Random();
 		this.linearMag = r.nextFloat() * 0.08f + 0.01f;
-		
-		System.out.println("linearmag : " + linearMag);
 	}
 
 	@Override
@@ -31,23 +29,25 @@ public class CircleCharacter extends Character {
 
 	@Override
 	public void integrate() {
-		PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y));
+//		PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y));
 		
 		
-		if (PVector.dist(position, target.position) < 300) {
-			velocity = new PVector(-velocity.y, velocity.x);
+//		if (PVector.dist(position, target.position) < 300) {
+//			velocity = new PVector(-velocity.y, velocity.x);
+//		}
+//		
+//		position.add(velocity.normalize().mult(3f));
+		
+//		
+		PVector linear = new PVector((target.position.x - position.x), (target.position.y - position.y));
+		linear.normalize().mult(linearMag);
+		velocity.add(linear);
+		
+		if (velocity.mag() > 2f) {
+			velocity.normalize().mult(2f);
 		}
 		
-		position.add(velocity.normalize().mult(3f));
-		
-//		
-//		PVector linear = new PVector((target.position.x - position.x), (target.position.y - position.y));
-//		linear.normalize().mult(linearMag);
-//		velocity.add(linear);
-//		
-//		if (velocity.mag() > 2f) {
-//			velocity.normalize().mult(2f);
-//		}
+		position.add(velocity);
 	}
 
 }

@@ -71,7 +71,7 @@ public class FlockCharacter extends Character {
 	}
 
 	private PVector seperate(ArrayList<FlockCharacter> flock) {
-		float sep = 25f;
+		float sep = radius * 5;
 		PVector direction = new PVector(0, 0);
 		
 		int count = 0;
@@ -97,7 +97,7 @@ public class FlockCharacter extends Character {
 	}
 	
 	private PVector align(ArrayList<FlockCharacter> flock) {
-		float neighbourDistance = 50f;
+		float neighbourDistance = radius * 10;
 		PVector sum = new PVector(0, 0);
 		
 		int count = 0;
@@ -124,7 +124,7 @@ public class FlockCharacter extends Character {
 
 	
 	private PVector cohese(ArrayList<FlockCharacter> flock) {
-		float neighourDistance = 50f;
+		float neighourDistance = radius * 10;
 		PVector sum = new PVector(0, 0);
 		
 		int count = 0;
