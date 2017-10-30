@@ -52,13 +52,14 @@ public class PlayerCharacter extends Character {
 		float size = radius * 2;
 		drawEngine.drawEllipse(drawEngine.parent.color(255, 0, 0), position.x, position.y, size, size);
 		
-		currentWeapon.display(drawEngine);
-//		drawEngine.drawEllipse(drawEngine.parent.color(0, 255, 0), facing.x, facing.y, size/3, size/3);		
+		currentWeapon.display(drawEngine);	
 	}
 	
 	
 	@Override
 	public void integrate() {
+		if (speedMultiplier > 10f) speedMultiplier = 10f;
+		if (speedMultiplier < SPEED) speedMultiplier = SPEED;
 		position.x = getX(position.x + (right - left) * speedMultiplier);
 		position.y = getY(position.y + (down - up) * speedMultiplier);
 		

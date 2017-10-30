@@ -8,6 +8,7 @@ import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
 import objs.characters.Character;
+import objs.characters.FlockCharacter;
 import objs.particles.Explosion;
 import objs.particles.Missile;
 import objs.particles.Particle;
@@ -55,8 +56,16 @@ public abstract class GameState {
 		Iterator<Character> enemyIt = context.enemies.iterator();
 		while(enemyIt.hasNext()) {
 			Character enemy = enemyIt.next();
+			
+			if (enemy instanceof FlockCharacter) {
+				((FlockCharacter) enemy).flock(context.flockEnemies);
+			}
+			
 			enemy.integrate();
-			if (enemy.health <= 0) enemyIt.remove();
+			if (enemy.health <= 0) {
+				enemyIt.remove();
+				context.flockEnemies.remove(enemy);
+			}
 			
 			/* Collision with other enemies to resolve overlapping */
 			enemy.collideResult(context.enemies.iterator(), new Function<Character, Boolean>() {
@@ -97,7 +106,7 @@ public abstract class GameState {
 			});
 			
 		}
-		
+
 		/* Player pickups */
 		context.player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
 
@@ -113,7 +122,6 @@ public abstract class GameState {
 		for (Particle particle : context.particles) particle.integrate();
 		for (Explosion explosion : context.explosions) explosion.integrate();
 		for (Weapon weapon : context.player.weapons) weapon.integrate();
-		
 	}
 	
 }

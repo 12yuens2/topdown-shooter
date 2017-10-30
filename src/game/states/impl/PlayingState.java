@@ -12,6 +12,7 @@ import objs.characters.AmbushCharacter;
 import objs.characters.BasicChaseCharacter;
 import objs.characters.Character;
 import objs.characters.CircleCharacter;
+import objs.characters.FlockCharacter;
 import objs.characters.PatrolCharacter;
 import objs.particles.Particle;
 import objs.pickups.HpPickup;
@@ -32,33 +33,45 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY) {
 		updateStep(mouseX, mouseY);
 
+		if (random.nextInt(5) == 0) {
+			FlockCharacter boid = new FlockCharacter(
+					parent.random(ShooterGame.SCREEN_X),
+					parent.random(ShooterGame.SCREEN_Y),
+					15, 5,
+					context.player);
+			
+			context.enemies.add(boid);
+			context.flockEnemies.add(boid);
+		}
+				
+		
 //		if (random.nextInt(50) == 0) context.enemies.add(
 //				new CircleCharacter(parent.random(ShooterGame.SCREEN_X), 
 //										parent.random(ShooterGame.SCREEN_Y), 
 //										15, 5, 
 //										context.player));
-		
-		if (random.nextInt(150) == 0) context.enemies.add(
-				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
-										parent.random(ShooterGame.SCREEN_Y), 
-										15,10,
-										context.player));
-		
-		if (random.nextInt(150) == 0) context.enemies.add(
-				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
-										parent.random(ShooterGame.SCREEN_Y), 
-										15,10,
-										context.player));
-		
-		if (random.nextInt(250) == 0) context.enemies.add(
-				new PatrolCharacter(parent.random(ShooterGame.SCREEN_X), 
-									parent.random(ShooterGame.SCREEN_Y), 
-									15, 15, 100f, 200f, context.player));
-		
-		if (random.nextInt(250) == 0) context.pickups.add(
-				new HpPickup(parent.random(ShooterGame.SCREEN_X), 
-							 parent.random(ShooterGame.SCREEN_Y), 
-							 5));
+//		
+//		if (random.nextInt(150) == 0) context.enemies.add(
+//				new AmbushCharacter(parent.random(ShooterGame.SCREEN_X), 
+//										parent.random(ShooterGame.SCREEN_Y), 
+//										15,10,
+//										context.player));
+//		
+//		if (random.nextInt(150) == 0) context.enemies.add(
+//				new BasicChaseCharacter(parent.random(ShooterGame.SCREEN_X), 
+//										parent.random(ShooterGame.SCREEN_Y), 
+//										15,10,
+//										context.player));
+//		
+//		if (random.nextInt(250) == 0) context.enemies.add(
+//				new PatrolCharacter(parent.random(ShooterGame.SCREEN_X), 
+//									parent.random(ShooterGame.SCREEN_Y), 
+//									15, 15, 100f, 200f, context.player));
+//		
+//		if (random.nextInt(250) == 0) context.pickups.add(
+//				new HpPickup(parent.random(ShooterGame.SCREEN_X), 
+//							 parent.random(ShooterGame.SCREEN_Y), 
+//							 5));
 		
 		return this;
 	}

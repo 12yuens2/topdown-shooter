@@ -8,7 +8,7 @@ import processing.core.PVector;
 public class AmbushCharacter extends Character {
 
 	public static final float DISTANCE = 200f;
-	public static final int DELAY = 90;
+	public static final int DELAY = 75;
 	
 	
 	public PVector targetPosition;
@@ -26,7 +26,7 @@ public class AmbushCharacter extends Character {
 		drawEngine.drawEllipse(drawEngine.parent.color(0,180,180), position.x, position.y, size, size);
 		
 		//draw target
-//		drawEngine.drawEllipse(drawEngine.parent.color(255), targetPosition.x, targetPosition.y, 5, 5);
+		drawEngine.drawEllipse(drawEngine.parent.color(255), targetPosition.x, targetPosition.y, 5, 5);
 	}
 
 	@Override
