@@ -38,7 +38,6 @@ public class CircleCharacter extends Character {
 //		
 //		position.add(velocity.normalize().mult(3f));
 		
-//		
 		PVector linear = new PVector((target.position.x - position.x), (target.position.y - position.y));
 		linear.normalize().mult(linearMag);
 		velocity.add(linear);

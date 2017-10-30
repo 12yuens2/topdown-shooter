@@ -44,12 +44,12 @@ public class FlockCharacter extends Character {
 	    parent.translate(position.x, position.y);
 	    parent.rotate(theta);
 	    parent.beginShape(parent.TRIANGLES);
-	    parent.vertex(0, -radius*2);
-	    parent.vertex(-radius, radius*2);
-	    parent.vertex(radius, radius*2);
+	    parent.vertex(0, -radius);
+	    parent.vertex(-radius, radius);
+	    parent.vertex(radius, radius);
 	    parent.endShape();
 	    parent.popMatrix();
-//		float size = radius * 2;
+		float size = radius * 2;
 //		drawEngine.drawEllipse(drawEngine.parent.color(250, 10, 250), position.x, position.y, size, size);
 	}
 
@@ -61,57 +61,42 @@ public class FlockCharacter extends Character {
 		
 		/* Reset acceleration to 0 */
 		acceleration.mult(0);
-		
 	}
 	
 	public void flock(ArrayList<FlockCharacter> flock) {
-		acceleration.add(seperate(flock));
+		acceleration.add(separate(flock));
 		acceleration.add(align(flock));
 		acceleration.add(cohese(flock));
 	}
 
-	private PVector seperate(ArrayList<FlockCharacter> flock) {
-		float sep = radius * 5;
-		PVector direction = new PVector(0, 0);
-		
-		int count = 0;
-		for (FlockCharacter boid : flock) {
-			float distance = PVector.dist(boid.position, position);
-			
-			if (distance > 0 && distance < sep) {
-				PVector normal = PVector.sub(position, boid.position).normalize().div(distance);
-				direction.add(normal);
-				count++;
-			}
-		}
-		
-		if (count > 0) direction.div(count);
+	/**
+	 * Separation to avoid crowding in flock.
+	 * @param flock - Flock of all boids.
+	 * @return Direction to steer towards.
+	 */
+	private PVector separate(ArrayList<FlockCharacter> flock) {
+		float separation = radius * 5;
+		PVector sum = getSum(flock, separation);
 
-		if (direction.mag() > 0) {
-			direction.setMag(MAX_SPEED);
-			direction.sub(velocity);
-			direction.limit(MAX_FORCE);
+		if (sum.mag() > 0) {
+			sum.setMag(MAX_SPEED);
+			sum.sub(velocity);
+			sum.limit(MAX_FORCE);
 		}
 		
-		return direction;
+		return sum;
 	}
 	
+	/**
+	 * Alignment to steer with the average direction of the flock.
+	 * @param flock - Flock of all boids.
+	 * @return Direction to steer towards.
+	 */
 	private PVector align(ArrayList<FlockCharacter> flock) {
 		float neighbourDistance = radius * 10;
-		PVector sum = new PVector(0, 0);
+		PVector sum = getSum(flock, neighbourDistance);
 		
-		int count = 0;
-		for (FlockCharacter boid : flock) {
-			float distance = PVector.dist(boid.position, position);
-			if ((distance > 0) && distance < neighbourDistance) {
-				sum.add(boid.velocity);
-				count++;
-			}
-		}
-		
-		if (count > 0) {
-			sum.div(count);
-			
+		if (sum.mag() > 0) {			
 			sum.normalize().mult(MAX_SPEED);
 			PVector direction = PVector.sub(sum, velocity);
 			direction.limit(MAX_FORCE);
@@ -123,21 +108,16 @@ public class FlockCharacter extends Character {
 	}
 
 	
+	/**
+	 * Cohesion to steer towards the local flock.
+	 * @param flock - Flock of all boids.
+	 * @return Direction to steer towards.
+	 */
 	private PVector cohese(ArrayList<FlockCharacter> flock) {
 		float neighourDistance = radius * 10;
-		PVector sum = new PVector(0, 0);
+		PVector sum = getSum(flock, neighourDistance);
 		
-		int count = 0;
-		for (FlockCharacter boid : flock) {
-			float distance = PVector.dist(boid.position, position);
-			if (distance > 0 && distance < neighourDistance) {
-				sum.add(boid.position);
-				count++;
-			}
-		}
-		
-		if (count > 0) {
-			sum.div(count);
+		if (sum.mag() > 0) {
 			PVector target = PVector.sub(position, sum);
 			target.normalize().mult(MAX_SPEED);
 			
@@ -150,6 +130,33 @@ public class FlockCharacter extends Character {
 		}
 	}
 	
+	/**
+	 * Helper function to return the vector average of the neighbouring flock.
+	 * @param flock - Flock of all boids.
+	 * @param neighbourDistance - Radius of neighbouring flock.
+	 * @return Average direction vector.
+	 */
+	private PVector getSum(ArrayList<FlockCharacter> flock, float neighbourDistance) {
+		PVector sum = new PVector(0, 0);
+		
+		int count = 0;
+		for (FlockCharacter boid : flock) {
+			float distance = PVector.dist(position, boid.position);
+			if (distance > 0 && distance < neighbourDistance) {
+				sum.add(boid.position);
+				count++;
+			}
+		}
+		
+		if (count > 0) sum.div(count);
+		
+		return sum;
+	}
+	
+	/**
+	 * Default direction for flocking behaviour when there are no nearby flockmates.
+	 * @return Direction to steer towards.
+	 */
 	private PVector seekPlayer() {
 //		PVector direction = PVector.sub(target.position, position);
 //		
