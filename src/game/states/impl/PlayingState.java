@@ -37,7 +37,7 @@ public class PlayingState extends GameState {
 			FlockCharacter boid = new FlockCharacter(
 					parent.random(ShooterGame.SCREEN_X),
 					parent.random(ShooterGame.SCREEN_Y),
-					15, 5,
+					5, 5,
 					context.player);
 			
 			context.enemies.add(boid);
