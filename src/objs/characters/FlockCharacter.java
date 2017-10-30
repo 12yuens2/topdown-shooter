@@ -18,7 +18,7 @@ import processing.core.PVector;
 public class FlockCharacter extends Character {
 
 	public static final float MAX_SPEED = 2f;
-	public static final float MAX_FORCE = 3f;
+	public static final float MAX_FORCE = 0.04f;
 	
 	PlayerCharacter target;
 	PVector velocity, acceleration;
@@ -49,8 +49,8 @@ public class FlockCharacter extends Character {
 	    parent.vertex(radius, radius*2);
 	    parent.endShape();
 	    parent.popMatrix();
-		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(250, 10, 250), position.x, position.y, size, size);
+//		float size = radius * 2;
+//		drawEngine.drawEllipse(drawEngine.parent.color(250, 10, 250), position.x, position.y, size, size);
 	}
 
 	@Override
@@ -65,13 +65,13 @@ public class FlockCharacter extends Character {
 	}
 	
 	public void flock(ArrayList<FlockCharacter> flock) {
-		acceleration.add(seperate(flock).mult(2f));
+		acceleration.add(seperate(flock));
 		acceleration.add(align(flock));
-		acceleration.add(cohese(flock));		
+		acceleration.add(cohese(flock));
 	}
 
 	private PVector seperate(ArrayList<FlockCharacter> flock) {
-		float sep = 60f;
+		float sep = 25f;
 		PVector direction = new PVector(0, 0);
 		
 		int count = 0;
@@ -114,7 +114,7 @@ public class FlockCharacter extends Character {
 			
 			sum.normalize().mult(MAX_SPEED);
 			PVector direction = PVector.sub(sum, velocity);
-//			direction.limit(MAX_FORCE);
+			direction.limit(MAX_FORCE);
 			return direction;
 		}
 		else {
@@ -124,7 +124,7 @@ public class FlockCharacter extends Character {
 
 	
 	private PVector cohese(ArrayList<FlockCharacter> flock) {
-		float neighourDistance = 100f;
+		float neighourDistance = 50f;
 		PVector sum = new PVector(0, 0);
 		
 		int count = 0;
@@ -141,8 +141,8 @@ public class FlockCharacter extends Character {
 			PVector target = PVector.sub(position, sum);
 			target.normalize().mult(MAX_SPEED);
 			
-			PVector direction = PVector.sub(velocity, target);
-//			direction.limit(MAX_FORCE);
+			PVector direction = PVector.sub(target, velocity);
+			direction.limit(MAX_FORCE);
 			return direction;
 		}
 		else {
@@ -151,11 +151,13 @@ public class FlockCharacter extends Character {
 	}
 	
 	private PVector seekPlayer() {
-		PVector direction = PVector.sub(target.position, position);
+//		PVector direction = PVector.sub(target.position, position);
+//		
+//		direction.normalize().mult(MAX_SPEED);
+//		
+//		return direction;
 		
-		direction.normalize().mult(MAX_SPEED);
-		
-		return direction;		
+		return new PVector(0,0);
 		
 	}
 

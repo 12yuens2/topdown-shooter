@@ -72,8 +72,8 @@ public abstract class GameState {
 
 				@Override
 				public Boolean apply(Character c) {
-					PVector normal = PVector.sub(enemy.position, c.position).normalize();
-					enemy.position.add(normal.mult(1));
+//					PVector normal = PVector.sub(enemy.position, c.position).normalize();
+//					enemy.position.add(normal.mult(1));
 					
 					return false;
 				}
