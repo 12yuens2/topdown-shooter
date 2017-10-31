@@ -1,5 +1,6 @@
 package game.states;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.function.Function;
@@ -7,6 +8,7 @@ import java.util.function.Function;
 import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
+import game.GameObject;
 import objs.characters.Character;
 import objs.characters.FlockCharacter;
 import objs.particles.Explosion;
@@ -40,28 +42,69 @@ public abstract class GameState {
 
 	public abstract GameState handleInput(GameInput input);
 
-	
+	/**
+	 * Display all drawable game objects in the game.
+	 */
 	public void displayGame() {
 		parent.background(0);
 		
 		context.player.display(drawEngine);
-		
 		drawEngine.displayDrawables(context.enemies, context.particles, context.pickups, context.explosions);
 	}
 	
+	/**
+	 * Main update step of the game loop. Goes through all GameObjects and updates their properties such as position and health.
+	 * The position of the mouse is used to draw the direction the player is facing.
+	 * @param mouseX - x position of the mouse
+	 * @param mouseY - y position of the mouse
+	 */
 	public void updateStep(int mouseX, int mouseY) {
+		updatePlayerStep(mouseX, mouseY);
+		updateEnemyStep();
+
+		/* Integrate step for all other game objects */
+		updateGameObjects(context.particles, context.explosions, context.player.weapons);
+	}
+	
+	/**
+	 * Update step for the player. Updates the player's position, direction and checks for pickup collisions.
+	 * @param mouseX - x position of the mouse
+	 * @param mouseY - y position of the mouse
+	 */
+	private void updatePlayerStep(int mouseX, int mouseY) {
 		context.player.integrate();
 		context.player.facingDirection(mouseX, mouseY);
 		
+		/* Player pickups */
+		context.player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
+
+			@Override
+			public Boolean apply(Pickup p) {
+				p.effect.apply(context.player);
+				context.player.powerups.add(p.effect);
+				return true;
+			}
+			
+		});
+	}
+	
+	/**
+	 * Update step for all enemies in the game. 
+	 * Updates their movements and interaction with other objects in the game.
+	 */
+	private void updateEnemyStep() {
 		Iterator<Character> enemyIt = context.enemies.iterator();
+		
 		while(enemyIt.hasNext()) {
 			Character enemy = enemyIt.next();
 			
-			if (enemy instanceof FlockCharacter) {
-				((FlockCharacter) enemy).flock(context.flockEnemies);
-			}
+			/* Flock if enemy implements flocking behaviour. */
+			if (enemy instanceof FlockCharacter) ((FlockCharacter) enemy).flock(context.flockEnemies);
 			
+			/* Individual enemy update step */
 			enemy.integrate();
+			
+			/* Remove enemies with no health */
 			if (enemy.health <= 0) {
 				enemyIt.remove();
 				context.flockEnemies.remove(enemy);
@@ -80,7 +123,7 @@ public abstract class GameState {
 				
 			});
 			
-			/* Collision with particles */
+			/* Collision with particles for damage */
 			enemy.collideResult(context.particles.iterator(), new Function<Particle, Boolean>() {
 
 				@Override
@@ -93,7 +136,7 @@ public abstract class GameState {
 				
 			});
 			
-			/* Collision with explosions*/
+			/* Collision with explosions for damage */
 			enemy.collideResult(context.explosions.iterator(), new Function<Explosion, Boolean>() {
 
 				@Override
@@ -104,24 +147,19 @@ public abstract class GameState {
 				}
 				
 			});
-			
 		}
-
-		/* Player pickups */
-		context.player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
-
-			@Override
-			public Boolean apply(Pickup p) {
-				p.effect.apply(context.player);
-				context.player.powerups.add(p.effect);
-				return true;
+	}
+	
+	/**
+	 * Updates all game objects that do not require additional interaction with other objects.
+	 * @param objectLists - List of game object lists. 
+	 */
+	private void updateGameObjects(ArrayList<? extends GameObject>... objectLists) {
+		for (ArrayList<? extends GameObject> gameObjects : objectLists) {
+			for (GameObject object : gameObjects) {
+				object.integrate();
 			}
-			
-		});
-
-		for (Particle particle : context.particles) particle.integrate();
-		for (Explosion explosion : context.explosions) explosion.integrate();
-		for (Weapon weapon : context.player.weapons) weapon.integrate();
+		}
 	}
 	
 }

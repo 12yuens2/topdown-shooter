@@ -17,53 +17,51 @@ public class PatrolCharacter extends Character {
 	
 	public PatrolCharacter(float xPos, float yPos, float radius, int health, float patrolDistance, float detectRadius, PlayerCharacter target) {
 		super(xPos, yPos, radius, health);
+		this.speedMultiplier *= 1.5f;
 		this.target = target;
 		this.detectRadius = detectRadius;
 		this.chase = false;
 		
 		this.startingPosition = position.copy();
 		
-		patrolPositions = new ArrayList<>();
-		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y + patrolDistance)));
-		patrolPositions.add(new PVector(getX(position.x - patrolDistance), getY(position.y + patrolDistance)));
-		patrolPositions.add(new PVector(getX(position.x - patrolDistance), getY(position.y - patrolDistance)));
-		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y - patrolDistance)));
+		this.patrolPositions = new ArrayList<>();
+		addPatrolPositions(patrolDistance);
 		
 		this.currentPatrol = 0;
 	}
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		float size = radius * 2;
-//		drawEngine.drawEllipse(drawEngine.parent.color(255), position.x, position.y, detectRadius * 2, detectRadius * 2);
-		drawEngine.drawEllipse(drawEngine.parent.color(200, 180, 20), position.x, position.y, size, size);
-		
+		drawCircularObject(drawEngine.parent.color(200, 180, 20), drawEngine);
 	}
 	
 	@Override
 	public void integrate() {
+		/* Run directly towards the player */
 		if (chase) {
-			PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y)).normalize().mult(speedMultiplier*1.5f);
-			position.add(velocity);
+			PVector velocity = getVelocityToTarget(target.position);
+			move(velocity);
 			
-			if (tooFarAway() && !detectPlayer()) {
-				chase = false;
-			}
+			/* Stop chasing if we've gone too far or lost the player */
+			if (tooFarAway() && !detectPlayer()) chase = false;
 		}
+		
+		/* Patrol */
 		else {
 			if (detectPlayer()) {
-				chase = true;
-			} 
+				chase = true; 
+			}
 			else {
 				PVector targetPosition = patrolPositions.get(currentPatrol);
-				PVector velocity = new PVector(targetPosition.x - position.x, targetPosition.y - position.y);
-
+				PVector velocity = getVelocityToTarget(targetPosition);
 				
+				/* Update to next patrol location */
 				if (velocity.mag() < 1f) {
 					currentPatrol = (currentPatrol + 1) % patrolPositions.size();
 					integrate();
-				} else {
-					position.add(velocity.normalize().mult(speedMultiplier));
+				} 
+				else {
+					move(velocity);
 				}
 			}
 		}
@@ -78,6 +76,13 @@ public class PatrolCharacter extends Character {
 		float distance = PVector.dist(target.position, position);
 		
 		return distance < collide;
+	}
+	
+	private void addPatrolPositions(float patrolDistance) {
+		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y + patrolDistance)));
+		patrolPositions.add(new PVector(getX(position.x - patrolDistance), getY(position.y + patrolDistance)));
+		patrolPositions.add(new PVector(getX(position.x - patrolDistance), getY(position.y - patrolDistance)));
+		patrolPositions.add(new PVector(getX(position.x + patrolDistance), getY(position.y - patrolDistance)));
 	}
 
 

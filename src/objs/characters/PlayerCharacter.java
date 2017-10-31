@@ -14,6 +14,11 @@ import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+/**
+ * Class representing a character the player controls. 
+ * @author sy35
+ *
+ */
 public class PlayerCharacter extends Character {
 
 	public static final float SPEED = 5.0f;
@@ -49,9 +54,10 @@ public class PlayerCharacter extends Character {
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(255, 0, 0), position.x, position.y, size, size);
+		/* Draw player */
+		drawCircularObject(drawEngine.parent.color(255, 0, 0), drawEngine);
 		
+		/* Draw weapon */
 		currentWeapon.display(drawEngine);	
 	}
 	

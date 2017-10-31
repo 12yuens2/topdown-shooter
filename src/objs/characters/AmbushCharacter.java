@@ -5,6 +5,12 @@ import java.util.Random;
 import game.DrawEngine;
 import processing.core.PVector;
 
+/**
+ * Enemy that moves towards where it guesses the player will be.
+ * On every update step, there is a chance it will update its target position.
+ * @author sy35
+ *
+ */
 public class AmbushCharacter extends Character {
 
 	public static final float DISTANCE = 200f;
@@ -21,9 +27,8 @@ public class AmbushCharacter extends Character {
 	}
 
 	@Override
-	public void display(DrawEngine drawEngine) {
-		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(0,180,180), position.x, position.y, size, size);
+	public void display(DrawEngine drawEngine) {		
+		drawCircularObject(drawEngine.parent.color(0, 180, 180), drawEngine);
 		
 		//draw target
 //		drawEngine.drawEllipse(drawEngine.parent.color(255), targetPosition.x, targetPosition.y, 5, 5);
@@ -31,19 +36,20 @@ public class AmbushCharacter extends Character {
 
 	@Override
 	public void integrate() {
-		PVector velocity = new PVector((targetPosition.x - position.x), (targetPosition.y - position.y));
+		PVector velocity = getVelocityToTarget(targetPosition);
 		
-		/* Move to new target position */
+		/* Random chance to update target position*/
 		Random r = new Random();
 		if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
+			
+			/* Target position is based on the direction the player is currently heading */
 			float targetX = getX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);
 			float targetY = getY(targetPlayer.position.y + (targetPlayer.down - targetPlayer.up) * DISTANCE);
 			
 			targetPosition = new PVector(targetX, targetY);
 		}
 
-		position.add(velocity.normalize().mult(speedMultiplier));
-		
+		move(velocity);
 	}
 
 }

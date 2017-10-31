@@ -3,6 +3,11 @@ package objs.characters;
 import game.DrawEngine;
 import processing.core.PVector;
 
+/**
+ * Basic enemy that just follows the player, always trying to reach the player's position.
+ * @author sy35
+ *
+ */
 public class BasicChaseCharacter extends Character {
 
 	public PlayerCharacter target;
@@ -14,14 +19,13 @@ public class BasicChaseCharacter extends Character {
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(0,255,0), position.x, position.y, size, size);
+		drawCircularObject(drawEngine.parent.color(0, 255, 0), drawEngine);
 	}
 
 	@Override
 	public void integrate() {
-		PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y));
-		position.add(velocity.normalize().mult(speedMultiplier));
+		PVector velocity = getVelocityToTarget(target.position);
+		move(velocity);
 	}
 
 }

@@ -23,8 +23,7 @@ public class CircleCharacter extends Character {
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(183,91,12), position.x, position.y, size, size);
+		drawCircularObject(drawEngine.parent.color(183, 91, 12), drawEngine);
 	}
 
 	@Override
