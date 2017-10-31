@@ -44,7 +44,6 @@ public class PlayingState extends GameState {
 //			context.enemies.add(boid);
 //			context.flockEnemies.add(boid);
 //		}
-//				
 		
 		if (random.nextInt(200) == 0) context.enemies.add(
 				new CircleEnemy(parent.random(ShooterGame.SCREEN_X), 

@@ -1,8 +1,10 @@
 package objs.pickups.effects;
 
+import java.io.Serializable;
+
 import objs.characters.Character;
 
-public abstract class Effect{
+public abstract class Effect implements Serializable {
 
 	public int lifespan;
 	

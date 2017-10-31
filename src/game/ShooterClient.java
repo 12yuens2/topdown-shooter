@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import hypermedia.net.UDP;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
+import processing.net.Client;
+import processing.net.Server;
 
-public class ShooterGame extends PApplet{
-	
+public class ShooterClient extends PApplet {
 	public static int SCREEN_X = 1600;
 	public static int SCREEN_Y = 900;
 	
@@ -22,10 +23,11 @@ public class ShooterGame extends PApplet{
 	
 	public GameController gameController;
 	
-	public ByteArrayOutputStream bos;
-	public ObjectOutput out;
+	public ByteArrayInputStream bis;
+	public ObjectInput in;
 	
-	public UDP server;
+	public UDP client;
+	
 	
 	public void settings() {
 		size(SCREEN_X, SCREEN_Y);
@@ -33,47 +35,29 @@ public class ShooterGame extends PApplet{
 	
 	public void setup() {
 	   gameController = new GameController(this);
-	   
-	   bos = new ByteArrayOutputStream();
-	   
-	   server = new UDP(this, PORT);
-	   server.listen(true);
+	   	  
+	   client = new UDP(this, ShooterGame.PORT+1);
+	   client.listen(true);
+	   client.setReceiveHandler("receive");
+//	   client.log(true);
 	}
 
 	
 	public void draw() {
 		gameController.step(mouseX, mouseY);
 		
-		try {
-			bos = new ByteArrayOutputStream();
-			out = new ObjectOutputStream(bos);
-			out.writeObject(gameController.context.players);
-			out.flush();
-			byte[] contextBytes = bos.toByteArray();
-						
-			server.send(contextBytes, "127.0.0.1", PORT + 1);
-			
-//			bos.flush();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
+//		if (context != null) {
+//			System.out.println(context.score);
+//		}
 	}
-	
-	void receive(byte[] data, String ip, int port) {
-		ByteArrayInputStream bis = new ByteArrayInputStream(data);
+
+	public void receive(byte[] data, String ip, int port) {
+		bis = new ByteArrayInputStream(data);
 		
 		try {
-			ObjectInput in = new ObjectInputStream(bis);
+			in = new ObjectInputStream(bis);
 			ArrayList<PlayerCharacter> players = (ArrayList<PlayerCharacter>) in.readObject();
-			System.out.println(players.get(0).position.x + " " + players.get(1).position.y);
+			gameController.context.players = players;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +66,6 @@ public class ShooterGame extends PApplet{
 			e.printStackTrace();
 		}
 	}
-
 
 	public void mousePressed() {
 		gameController.handleInput(mouseX, mouseY, mouseButton, 0, false);
@@ -97,7 +80,6 @@ public class ShooterGame extends PApplet{
 	}
 	
 	public static void main(String[] args) {
-		PApplet.main("game.ShooterGame");
+		PApplet.main("game.ShooterClient");
 	}
-	
 }

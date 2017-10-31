@@ -1,5 +1,6 @@
 package game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import objs.characters.Character;
@@ -14,7 +15,7 @@ import objs.pickups.Pickup;
  * @author sy35
  *
  */
-public class GameContext {
+public class GameContext implements Serializable {
 
 	public ArrayList<PlayerCharacter> players;
 	
@@ -40,12 +41,12 @@ public class GameContext {
 		players.add(new PlayerCharacter(
 				(float) Math.random() * ShooterGame.SCREEN_X, 
 				(float) Math.random() * ShooterGame.SCREEN_Y, 
-				15, 100));
+				15, 100, false));
 		
 		players.add(new PlayerCharacter(
 				(float) Math.random() * ShooterGame.SCREEN_X, 
 				(float) Math.random() * ShooterGame.SCREEN_Y, 
-				15, 100));
+				15, 100, true));
 		
 //		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
 	}

@@ -1,11 +1,12 @@
 package game;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.function.Function;
 
 import processing.core.PVector;
 
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
 
 	public PVector position;
 	public float radius;

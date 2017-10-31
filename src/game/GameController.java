@@ -10,7 +10,7 @@ public class GameController {
 	
 	public DrawEngine drawEngine; 
 	
-	private GameContext context;
+	public GameContext context;
 	private GameState state;
 
 	
