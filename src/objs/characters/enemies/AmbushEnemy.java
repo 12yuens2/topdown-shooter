@@ -1,8 +1,11 @@
-package objs.characters;
+package objs.characters.enemies;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import game.DrawEngine;
+import objs.characters.Character;
+import objs.characters.PlayerCharacter;
 import processing.core.PVector;
 
 /**
@@ -11,19 +14,20 @@ import processing.core.PVector;
  * @author sy35
  *
  */
-public class AmbushCharacter extends Character {
+public class AmbushEnemy extends Enemy {
 
 	public static final float DISTANCE = 200f;
 	public static final int DELAY = 75;
 	
 	
 	public PVector targetPosition;
-	public PlayerCharacter targetPlayer;
 	
-	public AmbushCharacter(float xPos, float yPos, float radius, int health, PlayerCharacter target) {
-		super(xPos, yPos, radius, health);
-		this.targetPlayer = target;
-		this.targetPosition = new PVector(target.position.x, target.position.y);
+	
+	public AmbushEnemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, targets);
+		
+
+		this.targetPosition = getClosestTargetPosition();
 	}
 
 	@Override
@@ -41,6 +45,7 @@ public class AmbushCharacter extends Character {
 		/* Random chance to update target position*/
 		Random r = new Random();
 		if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
+			PlayerCharacter targetPlayer = getClosestTarget();
 			
 			/* Target position is based on the direction the player is currently heading */
 			float targetX = getX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);

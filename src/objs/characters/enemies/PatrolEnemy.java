@@ -1,24 +1,24 @@
-package objs.characters;
+package objs.characters.enemies;
 
 import java.util.ArrayList;
 
 import game.DrawEngine;
+import objs.characters.Character;
+import objs.characters.PlayerCharacter;
 import processing.core.PVector;
 
-public class PatrolCharacter extends Character {
+public class PatrolEnemy extends Enemy {
 
 	public ArrayList<PVector> patrolPositions;
 	public PVector startingPosition;
-	public PlayerCharacter target;
 	
 	public float detectRadius;
 	public boolean chase;
 	public int currentPatrol;
 	
-	public PatrolCharacter(float xPos, float yPos, float radius, int health, float patrolDistance, float detectRadius, PlayerCharacter target) {
-		super(xPos, yPos, radius, health);
+	public PatrolEnemy(float xPos, float yPos, float radius, int health, float patrolDistance, float detectRadius, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, targets);
 		this.speedMultiplier *= 1.5f;
-		this.target = target;
 		this.detectRadius = detectRadius;
 		this.chase = false;
 		
@@ -37,18 +37,20 @@ public class PatrolCharacter extends Character {
 	
 	@Override
 	public void integrate() {
+		PlayerCharacter target = getClosestTarget();
+		
 		/* Run directly towards the player */
 		if (chase) {
 			PVector velocity = getVelocityToTarget(target.position);
 			move(velocity);
 			
 			/* Stop chasing if we've gone too far or lost the player */
-			if (tooFarAway() && !detectPlayer()) chase = false;
+			if (tooFarAway() && !detectPlayer(target)) chase = false;
 		}
 		
 		/* Patrol */
 		else {
-			if (detectPlayer()) {
+			if (detectPlayer(target)) {
 				chase = true; 
 			}
 			else {
@@ -56,7 +58,7 @@ public class PatrolCharacter extends Character {
 				PVector velocity = getVelocityToTarget(targetPosition);
 				
 				/* Update to next patrol location */
-				if (velocity.mag() < 1f) {
+				if (velocity.mag() < 2f) {
 					currentPatrol = (currentPatrol + 1) % patrolPositions.size();
 					integrate();
 				} 
@@ -71,7 +73,7 @@ public class PatrolCharacter extends Character {
 		return PVector.dist(position, startingPosition) > detectRadius * 1.5;
 	}
 	
-	private boolean detectPlayer() {
+	private boolean detectPlayer(PlayerCharacter target) {
 		float collide = target.radius + detectRadius;
 		float distance = PVector.dist(target.position, position);
 		

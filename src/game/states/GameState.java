@@ -11,6 +11,7 @@ import game.GameInput;
 import game.GameObject;
 import objs.characters.Character;
 import objs.characters.FlockCharacter;
+import objs.characters.PlayerCharacter;
 import objs.particles.Explosion;
 import objs.particles.Missile;
 import objs.particles.Particle;
@@ -48,8 +49,7 @@ public abstract class GameState {
 	public void displayGame() {
 		parent.background(0);
 		
-		context.player.display(drawEngine);
-		drawEngine.displayDrawables(context.enemies, context.particles, context.pickups, context.explosions);
+		drawEngine.displayDrawables(context.players, context.enemies, context.particles, context.pickups, context.explosions);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public abstract class GameState {
 		updateEnemyStep();
 
 		/* Integrate step for all other game objects */
-		updateGameObjects(context.particles, context.explosions, context.player.weapons);
+		updateGameObjects(context.particles, context.explosions);
 	}
 	
 	/**
@@ -72,20 +72,28 @@ public abstract class GameState {
 	 * @param mouseY - y position of the mouse
 	 */
 	private void updatePlayerStep(int mouseX, int mouseY) {
-		context.player.integrate();
-		context.player.facingDirection(mouseX, mouseY);
-		
-		/* Player pickups */
-		context.player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
-
-			@Override
-			public Boolean apply(Pickup p) {
-				p.effect.apply(context.player);
-				context.player.powerups.add(p.effect);
-				return true;
-			}
+		Iterator<PlayerCharacter> playerIt = context.players.iterator();
+		while (playerIt.hasNext()) {
+			PlayerCharacter player = playerIt.next();
 			
-		});
+			player.integrate();
+			player.facingDirection(mouseX, mouseY);
+			
+			/* Player pickups */
+			player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
+
+				@Override
+				public Boolean apply(Pickup p) {
+					p.effect.apply(player);
+					player.powerups.add(p.effect);
+					return true;
+				}
+				
+			});
+			
+			updateGameObjects(player.weapons);
+		}
+		
 	}
 	
 	/**
@@ -106,6 +114,9 @@ public abstract class GameState {
 			
 			/* Remove enemies with no health */
 			if (enemy.health <= 0) {
+				context.score += 1;
+
+				System.out.println(context.score);
 				enemyIt.remove();
 				context.flockEnemies.remove(enemy);
 			}

@@ -9,9 +9,14 @@ import objs.particles.Explosion;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
 
+/**
+ * 
+ * @author sy35
+ *
+ */
 public class GameContext {
 
-	public PlayerCharacter player;
+	public ArrayList<PlayerCharacter> players;
 	
 	public ArrayList<Character> enemies;
 	public ArrayList<FlockCharacter> flockEnemies;
@@ -19,14 +24,28 @@ public class GameContext {
 	public ArrayList<Pickup> pickups;
 	public ArrayList<Explosion> explosions;
 	
+	public int score;
+	
 	public GameContext() {
-		player = new PlayerCharacter((float) Math.random() * ShooterGame.SCREEN_X, (float) Math.random() * ShooterGame.SCREEN_Y, 15, 3);
 		
+		this.score = 0;
+		
+		players = new ArrayList<>();
 		enemies = new ArrayList<>();
 		flockEnemies = new ArrayList<>();
 		particles = new ArrayList<>();
 		pickups = new ArrayList<>();
 		explosions = new ArrayList<>();
+		
+		players.add(new PlayerCharacter(
+				(float) Math.random() * ShooterGame.SCREEN_X, 
+				(float) Math.random() * ShooterGame.SCREEN_Y, 
+				15, 100));
+		
+		players.add(new PlayerCharacter(
+				(float) Math.random() * ShooterGame.SCREEN_X, 
+				(float) Math.random() * ShooterGame.SCREEN_Y, 
+				15, 100));
 		
 //		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
 	}

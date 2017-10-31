@@ -1,6 +1,5 @@
 package objs.characters;
 
-import game.DrawEngine;
 import game.GameObject;
 import game.ShooterGame;
 import processing.core.PVector;
@@ -11,6 +10,8 @@ import processing.core.PVector;
  *
  */
 public abstract class Character extends GameObject {
+	
+	public static float BASE_SPEED = 2f;
 	
 	public boolean friendly;
 	public int health;
@@ -24,7 +25,7 @@ public abstract class Character extends GameObject {
 		this.friendly = false;
 		
 		/* Default speed of characters */
-		this.speedMultiplier = 2f;
+		this.speedMultiplier = BASE_SPEED;
 	}
 	
 	

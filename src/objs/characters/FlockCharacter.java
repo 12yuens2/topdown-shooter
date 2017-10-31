@@ -18,7 +18,7 @@ import processing.core.PVector;
 public class FlockCharacter extends Character {
 
 	public static final float MAX_SPEED = 2f;
-	public static final float MAX_FORCE = 0.04f;
+	public static final float MAX_FORCE = 0.03f;
 	
 	PlayerCharacter target;
 	PVector velocity, acceleration;

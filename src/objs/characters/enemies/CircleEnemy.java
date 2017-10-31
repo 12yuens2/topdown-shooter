@@ -1,20 +1,21 @@
-package objs.characters;
+package objs.characters.enemies;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import game.DrawEngine;
+import objs.characters.Character;
+import objs.characters.PlayerCharacter;
 import processing.core.PVector;
 
-public class CircleCharacter extends Character {
+public class CircleEnemy extends Enemy {
 
-	public PlayerCharacter target;
 	public PVector velocity;
 	
 	private float linearMag;
 	
-	public CircleCharacter(float xPos, float yPos, float radius, int health, PlayerCharacter target) {
-		super(xPos, yPos, radius, health);
-		this.target = target;
+	public CircleEnemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, targets);
 		this.velocity = new PVector(0, 0);
 		
 		Random r = new Random();
@@ -37,7 +38,8 @@ public class CircleCharacter extends Character {
 //		
 //		position.add(velocity.normalize().mult(3f));
 		
-		PVector linear = new PVector((target.position.x - position.x), (target.position.y - position.y));
+		PVector targetPosition = getClosestTargetPosition();
+		PVector linear = PVector.sub(targetPosition, position);
 		linear.normalize().mult(linearMag);
 		velocity.add(linear);
 		
