@@ -28,7 +28,6 @@ public abstract class GameState {
 	public GameContext context;
 	public DrawEngine drawEngine;
 	
-	
 	public GameState(GameContext context, DrawEngine drawEngine) {
 		this.random = new Random();
 		this.parent = drawEngine.parent;
@@ -37,12 +36,30 @@ public abstract class GameState {
 		this.drawEngine = drawEngine;
 	}
 	
+	/**
+	 * Display this GameState to the screen.
+	 */
 	public abstract void display();
 	
+	
+	/**
+	 * Update the game state for each frame of the game.
+	 * @param mouseX - x position of the mouse.
+	 * @param mouseY - y position of the mouse.
+	 * @return the next state of the game.
+	 */
 	public abstract GameState update(int mouseX, int mouseY);
 
-	public abstract GameState handleInput(GameInput input);
+	
+	/**
+	 * Handle player input.
+	 * @param input - The player input which involves mouse position, mousebutton and keybutton pressed.
+	 * @param player - The player character which this input affects.
+	 * @return the next state of the game.
+	 */
+	public abstract GameState handleInput(GameInput input, PlayerCharacter player);
 
+	
 	/**
 	 * Display all drawable game objects in the game.
 	 */

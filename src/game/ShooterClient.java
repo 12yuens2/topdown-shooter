@@ -1,7 +1,10 @@
 package game;
 
 import game.states.impl.PlayingState;
-
+import network.Message;
+import network.MessageType;
+import network.UDPSocket;
+import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 
 
@@ -21,20 +24,37 @@ public class ShooterClient extends PApplet {
 	}
 	
 	public void setup() {
-	   gameController = new GameController(this);
+	   gameController = new GameController(this, "Client");
 	   	  
-	   client = new UDPSocket(this, "127.0.0.1", ShooterGame.CLIENT_PORT);
+	   client = new UDPSocket(this, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
 	   client.listen(true);
+	   
+	   client.sendMessage(MessageType.PLAYER, gameController.player, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
 	}
 
 	
 	public void draw() {
 		gameController.step(mouseX, mouseY);
+		sendInput(0, 0, false);
 	}
 
 	public void receive(byte[] data, String ip, int port) {
-		GameContext context = (GameContext) client.getObjectFromBytes(data);
-		gameController.state = new PlayingState(context, gameController.drawEngine);
+		Message message = client.getMessageFromBytes(data);
+		
+		if (message != null) {
+			switch (message.type) {
+				case PLAYER:
+					gameController.state.context.players.add((PlayerCharacter) message.data);
+					break;
+
+				case CONTEXT:
+					gameController.state = new PlayingState((GameContext) message.data, gameController.drawEngine);
+					break;
+					
+				default:
+					break;
+			}
+		}
 	}
 
 	public void mousePressed() {
@@ -52,7 +72,7 @@ public class ShooterClient extends PApplet {
 	private void sendInput(int mouseButton, int keyCode, boolean keyDown) {
 		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
 		
-		client.sendObject(input, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
+		client.sendClientMessage(MessageType.INPUT, input, gameController.player, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
 	}
 	
 	public static void main(String[] args) {

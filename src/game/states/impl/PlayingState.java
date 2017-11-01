@@ -76,29 +76,29 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	public GameState handleInput(GameInput input) {
+	public GameState handleInput(GameInput input, PlayerCharacter player) {
 		if (input.keyDown) {
 //			context.players.get(0).directionPress(input.keyCode);
-			for (PlayerCharacter player : context.players) player.directionPress(input.keyCode);
+			player.directionPress(input.keyCode);
 			
 			if (input.keyCode == KeyEvent.VK_R) {
-				context.players.get(0).currentWeapon.reload();
+				player.currentWeapon.reload();
 			}
 			
 			if (input.keyCode == KeyEvent.VK_1) {
-				context.players.get(0).currentWeapon = context.players.get(0).weapons.get(0);
+				player.currentWeapon = player.weapons.get(0);
 			}
 			if (input.keyCode == KeyEvent.VK_2) {
-				context.players.get(0).currentWeapon = context.players.get(0).weapons.get(1);
+				player.currentWeapon = player.weapons.get(1);
 			}
 		}
 		else {
 //			context.players.get(0).directionRelease(input.keyCode);
-			for (PlayerCharacter player : context.players) player.directionRelease(input.keyCode);
+			player.directionRelease(input.keyCode);
 		}
 		
 		if (input.mouseButton == PConstants.LEFT) {
-			Particle bullet = context.players.get(0).attack(input.mouseX, input.mouseY);
+			Particle bullet = player.attack(input.mouseX, input.mouseY);
 			if (bullet != null) {
 				context.particles.add(bullet);
 			}

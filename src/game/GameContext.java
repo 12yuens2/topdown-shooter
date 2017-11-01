@@ -38,16 +38,22 @@ public class GameContext implements Serializable {
 		pickups = new ArrayList<>();
 		explosions = new ArrayList<>();
 		
-		players.add(new PlayerCharacter(
-				(float) Math.random() * ShooterGame.SCREEN_X, 
-				(float) Math.random() * ShooterGame.SCREEN_Y, 
-				15, 100, false));
-		
-		players.add(new PlayerCharacter(
-				(float) Math.random() * ShooterGame.SCREEN_X, 
-				(float) Math.random() * ShooterGame.SCREEN_Y, 
-				15, 100, true));
-		
+//		players.add(new PlayerCharacter(
+//				(float) Math.random() * ShooterGame.SCREEN_X, 
+//				(float) Math.random() * ShooterGame.SCREEN_Y, 
+//				15, 100, false));
+//		
+//		players.add(new PlayerCharacter(
+//				(float) Math.random() * ShooterGame.SCREEN_X, 
+//				(float) Math.random() * ShooterGame.SCREEN_Y, 
+//				15, 100, true));
+//		
 //		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
+	}
+
+	public GameContext(PlayerCharacter player) {
+		this();
+		
+		players.add(player);
 	}
 }

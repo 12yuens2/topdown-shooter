@@ -3,6 +3,7 @@ package objs.characters;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 import game.DrawEngine;
 import game.ShooterGame;
@@ -23,6 +24,8 @@ public class PlayerCharacter extends Character {
 
 	public static final float SPEED = 5.0f;
 
+	public final String name;
+	
 	public PVector facing;
 	
 	private float orientation;
@@ -36,8 +39,9 @@ public class PlayerCharacter extends Character {
 	
 	public boolean other;
 	
-	public PlayerCharacter(float xPos, float yPos, float radius, int health, boolean other) {
+	public PlayerCharacter(String name, float xPos, float yPos, float radius, int health, boolean other) {
 		super(xPos, yPos, radius, health);
+		this.name = name;
 		this.friendly = true;
 		
 		this.speedMultiplier = SPEED;
@@ -140,6 +144,21 @@ public class PlayerCharacter extends Character {
 		return currentWeapon.shoot(targetX, targetY);
 	}
 	
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) return true;
+		if (!(o instanceof PlayerCharacter)) return false;
+		
+		PlayerCharacter player = (PlayerCharacter) o;
+		
+		return this.name.equals(player.name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
 	
 }
 	
