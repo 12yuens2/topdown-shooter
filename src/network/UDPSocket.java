@@ -11,6 +11,12 @@ import java.io.ObjectOutputStream;
 import hypermedia.net.UDP;
 import objs.characters.PlayerCharacter;
 
+/**
+ * Represents a UDP socket to send and receive data directly related to this game.
+ * UDP is a class from the UDP Processing library at http://ubaa.net/shared/processing/udp/
+ * @author sy35
+ *
+ */
 public class UDPSocket extends UDP {
 
 	public UDPSocket(Object owner, int port) {
@@ -21,16 +27,37 @@ public class UDPSocket extends UDP {
 		super(owner, port, ip);
 	}
 	
-	public void sendClientMessage(MessageType messageType, Object o, PlayerCharacter player, String ip, int port) {
-		Message message = new Message(messageType, o, player);
+	/**
+	 * Send a message to the given IP address. This function requires an associated player who is sending this message.
+	 * @param messageType - Type of the message being sent.
+	 * @param data - Object to be sent.
+	 * @param player - Player who sent this message.
+	 * @param ip - Destination IP address.
+	 * @param port - Destination port.
+	 */
+	public void sendClientMessage(MessageType messageType, Object data, PlayerCharacter player, String ip, int port) {
+		Message message = new Message(messageType, data, player);
 		sendObject(message, ip, port);
 	}
 	
-	public void sendMessage(MessageType messageType, Object o, String ip, int port) {
-		Message message = new Message(messageType, o);
+	
+	/**
+	 * Send a message to the given IP address without specifying who sent it.
+	 * @param messageType - Type of the message being sent.
+	 * @param data - Object to be sent.
+	 * @param ip - Destination IP address.
+	 * @param port - Destination port.
+	 */
+	public void sendMessage(MessageType messageType, Object data, String ip, int port) {
+		Message message = new Message(messageType, data);
 		sendObject(message, ip, port);
 	}
 	
+	/**
+	 * Process received bytes into a Message.
+	 * @param data - Received data bytes.
+	 * @return Received Message.
+	 */
 	public Message getMessageFromBytes(byte[] data) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(data);
 		ObjectInput in = null;
@@ -55,6 +82,12 @@ public class UDPSocket extends UDP {
 		return null;
 	}
 	
+	/**
+	 * Write an object as an array of bytes and send it down this UDP socket.
+	 * @param o - Object to be sent.
+	 * @param ip - Destination IP address.
+	 * @param port - Destination port.
+	 */
 	private void sendObject(Object o, String ip, int port) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutput out = null;

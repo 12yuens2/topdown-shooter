@@ -79,7 +79,6 @@ public class PlayingState extends GameState {
 		player.facingDirection((int)input.mouseX, (int)input.mouseY);
 		
 		if (input.keyDown) {
-//			context.players.get(0).directionPress(input.keyCode);
 			player.directionPress(input.keyCode);
 			
 			if (input.keyCode == KeyEvent.VK_R) {
@@ -94,7 +93,6 @@ public class PlayingState extends GameState {
 			}
 		}
 		else {
-//			context.players.get(0).directionRelease(input.keyCode);
 			player.directionRelease(input.keyCode);
 		}
 		
