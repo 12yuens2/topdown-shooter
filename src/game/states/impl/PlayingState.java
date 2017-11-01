@@ -31,8 +31,8 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	public GameState update(int mouseX, int mouseY) {
-		updateStep(mouseX, mouseY);
+	public GameState update(int mouseX, int mouseY, PlayerCharacter player) {
+		updateStep(mouseX, mouseY, player);
 
 //		if (random.nextInt(15) == 0) {
 //			FlockCharacter boid = new FlockCharacter(
@@ -77,6 +77,8 @@ public class PlayingState extends GameState {
 
 	@Override
 	public GameState handleInput(GameInput input, PlayerCharacter player) {
+		player.facingDirection((int)input.mouseX, (int)input.mouseY);
+		
 		if (input.keyDown) {
 //			context.players.get(0).directionPress(input.keyCode);
 			player.directionPress(input.keyCode);

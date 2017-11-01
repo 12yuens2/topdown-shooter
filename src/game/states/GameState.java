@@ -46,9 +46,10 @@ public abstract class GameState {
 	 * Update the game state for each frame of the game.
 	 * @param mouseX - x position of the mouse.
 	 * @param mouseY - y position of the mouse.
+	 * @param player - The character that this client controls.
 	 * @return the next state of the game.
 	 */
-	public abstract GameState update(int mouseX, int mouseY);
+	public abstract GameState update(int mouseX, int mouseY, PlayerCharacter player);
 
 	
 	/**
@@ -72,11 +73,12 @@ public abstract class GameState {
 	/**
 	 * Main update step of the game loop. Goes through all GameObjects and updates their properties such as position and health.
 	 * The position of the mouse is used to draw the direction the player is facing.
-	 * @param mouseX - x position of the mouse
-	 * @param mouseY - y position of the mouse
+	 * @param mouseX - x position of the mouse.
+	 * @param mouseY - y position of the mouse.
+	 * @param player - The character that this client controls.
 	 */
-	public void updateStep(int mouseX, int mouseY) {
-		updatePlayerStep(mouseX, mouseY);
+	public void updateStep(int mouseX, int mouseY, PlayerCharacter player) {
+		updatePlayerStep(mouseX, mouseY, player);
 		updateEnemyStep();
 
 		/* Integrate step for all other game objects */
@@ -87,14 +89,15 @@ public abstract class GameState {
 	 * Update step for the player. Updates the player's position, direction and checks for pickup collisions.
 	 * @param mouseX - x position of the mouse
 	 * @param mouseY - y position of the mouse
+	 * @param playerChar - The character that this client controls.
 	 */
-	private void updatePlayerStep(int mouseX, int mouseY) {
+	private void updatePlayerStep(int mouseX, int mouseY, PlayerCharacter playerChar) {
 		Iterator<PlayerCharacter> playerIt = context.players.iterator();
 		while (playerIt.hasNext()) {
 			PlayerCharacter player = playerIt.next();
 			
 			player.integrate();
-			player.facingDirection(mouseX, mouseY);
+			if (player.equals(playerChar)) player.facingDirection(mouseX, mouseY);
 			
 			/* Player pickups */
 			player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {

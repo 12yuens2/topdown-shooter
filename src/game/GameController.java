@@ -31,7 +31,7 @@ public class GameController {
 
 	public void step(int mouseX, int mouseY) {
 		state.display();
-		state = state.update(mouseX, mouseY);
+		state = state.update(mouseX, mouseY, player);
 
 	}
 	
