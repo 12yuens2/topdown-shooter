@@ -23,7 +23,7 @@ public class GameController {
 		this.player = new PlayerCharacter(name, 
 										  (float) Math.random() * ShooterGame.SCREEN_X, 
 										  (float) Math.random() * ShooterGame.SCREEN_Y, 
-										  15, 100, false);
+										  15, 100);
 		
 		this.state = new PlayingState(new GameContext(player), drawEngine);
 		
@@ -31,8 +31,7 @@ public class GameController {
 
 	public void step(int mouseX, int mouseY) {
 		state.display();
-		state = state.update(mouseX, mouseY, player);
-
+		if (player.name.equals("Server")) state = state.update(mouseX, mouseY, player);
 	}
 	
 	public GameInput getInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {

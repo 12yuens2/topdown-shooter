@@ -3,6 +3,7 @@ package objs.characters;
 import java.util.ArrayList;
 
 import game.DrawEngine;
+import objs.characters.enemies.Enemy;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -15,18 +16,16 @@ import processing.core.PVector;
  * @author sy35
  *
  */
-public class FlockCharacter extends Character {
+public class FlockCharacter extends Enemy {
 
 	public static final float MAX_SPEED = 2f;
 	public static final float MAX_FORCE = 0.03f;
 	
-	PlayerCharacter target;
 	PVector velocity, acceleration;
 	
-	public FlockCharacter(float xPos, float yPos, float radius, int health, PlayerCharacter target) {
-		super(xPos, yPos, radius, health);
-		this.target = target;
-		this.velocity = PVector.sub(target.position, position).normalize().mult(MAX_SPEED);
+	public FlockCharacter(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> players) {
+		super(xPos, yPos, radius, health, players);
+		this.velocity = PVector.sub(getClosestTargetPosition(), position).normalize().mult(MAX_SPEED);
 		this.acceleration = new PVector(0, 0);
 	}
 
@@ -49,7 +48,7 @@ public class FlockCharacter extends Character {
 	    parent.vertex(radius, radius);
 	    parent.endShape();
 	    parent.popMatrix();
-		float size = radius * 2;
+//		float size = radius * 2;
 //		drawEngine.drawEllipse(drawEngine.parent.color(250, 10, 250), position.x, position.y, size, size);
 	}
 

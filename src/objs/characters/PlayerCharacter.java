@@ -37,9 +37,7 @@ public class PlayerCharacter extends Character {
 	
 	public ArrayList<Effect> powerups;
 	
-	public boolean other;
-	
-	public PlayerCharacter(String name, float xPos, float yPos, float radius, int health, boolean other) {
+	public PlayerCharacter(String name, float xPos, float yPos, float radius, int health) {
 		super(xPos, yPos, radius, health);
 		this.name = name;
 		this.friendly = true;
@@ -55,7 +53,6 @@ public class PlayerCharacter extends Character {
 		currentWeapon = weapons.get(0);
 		
 		this.powerups = new ArrayList<>();
-		this.other = other;
 	}	
 
 	@Override
@@ -101,39 +98,20 @@ public class PlayerCharacter extends Character {
 	}
 	
 	private void changeDirection(int direction, int keyCode) {
-		if (other) {
-			switch(keyCode) {
-			case KeyEvent.VK_UP:
+		switch(keyCode) {
+			case KeyEvent.VK_W:
 				up = direction;
 				break;
-			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_S:
 				down = direction;
 				break;
-			case KeyEvent.VK_LEFT:
+			case KeyEvent.VK_A:
 				left = direction;
 				break;
-			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_D:
 				right = direction;
 				break;
 		}
-		}
-		else {
-			switch(keyCode) {
-				case KeyEvent.VK_W:
-					up = direction;
-					break;
-				case KeyEvent.VK_S:
-					down = direction;
-					break;
-				case KeyEvent.VK_A:
-					left = direction;
-					break;
-				case KeyEvent.VK_D:
-					right = direction;
-					break;
-			}
-		}
-			
 	}
 
 	public void facingDirection(int mouseX, int mouseY) {

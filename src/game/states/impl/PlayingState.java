@@ -34,16 +34,15 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY, PlayerCharacter player) {
 		updateStep(mouseX, mouseY, player);
 
-//		if (random.nextInt(15) == 0) {
-//			FlockCharacter boid = new FlockCharacter(
-//					parent.random(ShooterGame.SCREEN_X),
-//					parent.random(ShooterGame.SCREEN_Y),
-//					5, 5,
-//					context.player);
-//			
-//			context.enemies.add(boid);
-//			context.flockEnemies.add(boid);
-//		}
+		if (random.nextInt(15) == 0) {
+			FlockCharacter boid = new FlockCharacter(
+					parent.random(ShooterGame.SCREEN_X),
+					parent.random(ShooterGame.SCREEN_Y),
+					5, 5, context.players);
+			
+			context.enemies.add(boid);
+			context.flockEnemies.add(boid);
+		}
 		
 		if (random.nextInt(200) == 0) context.enemies.add(
 				new CircleEnemy(parent.random(ShooterGame.SCREEN_X), 
