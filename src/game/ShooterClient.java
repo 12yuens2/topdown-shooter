@@ -24,7 +24,7 @@ public class ShooterClient extends PApplet {
 	}
 	
 	public void setup() {
-	   gameController = new GameController(this, "Client");
+	   gameController = new GameController(this, "Client1");
 	   	  
 	   client = new UDPSocket(this, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
 	   client.listen(true);
