@@ -1,19 +1,9 @@
 package game;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import game.states.impl.PlayingState;
 
-import hypermedia.net.UDP;
-import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
-import processing.net.Client;
-import processing.net.Server;
+
 
 public class ShooterClient extends PApplet {
 	public static int SCREEN_X = 1600;
@@ -23,10 +13,7 @@ public class ShooterClient extends PApplet {
 	
 	public GameController gameController;
 	
-	public ByteArrayInputStream bis;
-	public ObjectInput in;
-	
-	public UDP client;
+	public UDPSocket client;
 	
 	
 	public void settings() {
@@ -36,47 +23,36 @@ public class ShooterClient extends PApplet {
 	public void setup() {
 	   gameController = new GameController(this);
 	   	  
-	   client = new UDP(this, ShooterGame.PORT+1);
+	   client = new UDPSocket(this, "127.0.0.1", ShooterGame.CLIENT_PORT);
 	   client.listen(true);
-	   client.setReceiveHandler("receive");
-//	   client.log(true);
 	}
 
 	
 	public void draw() {
 		gameController.step(mouseX, mouseY);
-		
-//		if (context != null) {
-//			System.out.println(context.score);
-//		}
 	}
 
 	public void receive(byte[] data, String ip, int port) {
-		bis = new ByteArrayInputStream(data);
-		
-		try {
-			in = new ObjectInputStream(bis);
-			ArrayList<PlayerCharacter> players = (ArrayList<PlayerCharacter>) in.readObject();
-			gameController.context.players = players;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		GameContext context = (GameContext) client.getObjectFromBytes(data);
+		gameController.state = new PlayingState(context, gameController.drawEngine);
 	}
 
 	public void mousePressed() {
-		gameController.handleInput(mouseX, mouseY, mouseButton, 0, false);
+		sendInput(mouseButton, 0, false);
 	}
 	
 	public void keyPressed() {
-		gameController.handleInput(mouseX, mouseY, 0, keyCode, true);
+		sendInput(0, keyCode, true);
 	}
 	
 	public void keyReleased() {
-		gameController.handleInput(mouseX, mouseY, 0, keyCode, false);
+		sendInput(0, keyCode, false);
+	}
+	
+	private void sendInput(int mouseButton, int keyCode, boolean keyDown) {
+		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+		
+		client.sendObject(input, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
 	}
 	
 	public static void main(String[] args) {

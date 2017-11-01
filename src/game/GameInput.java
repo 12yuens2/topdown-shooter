@@ -1,6 +1,8 @@
 package game;
 
-public class GameInput {
+import java.io.Serializable;
+
+public class GameInput implements Serializable {
 
 	public boolean keyDown;
 	

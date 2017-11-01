@@ -11,7 +11,7 @@ public class GameController {
 	public DrawEngine drawEngine; 
 	
 	public GameContext context;
-	private GameState state;
+	public GameState state;
 
 	
 	public GameController(PApplet parent) {
@@ -29,8 +29,16 @@ public class GameController {
 
 	}
 	
+	public GameInput getInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {
+		return new GameInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+	}
+	
 	public void handleInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {
-		GameInput input = new GameInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+		GameInput input = getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+		handleInput(input);
+	}
+	
+	public void handleInput(GameInput input) {
 		state.handleInput(input);
 	}
 }
