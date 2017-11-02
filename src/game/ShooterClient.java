@@ -1,9 +1,7 @@
 package game;
 
 import game.states.impl.PlayingState;
-import network.Message;
 import network.MessageType;
-import network.UDPSocket;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 
@@ -41,8 +39,9 @@ public class ShooterClient extends ShooterGame {
 	@Override
 	protected void handleContextMessage(GameContext context) {
 		gameController.state = new PlayingState(context, gameController.drawEngine);
-		PlayerCharacter player = getPlayer(gameController.player);
 		
+		/* Update the game controller's player object */
+		PlayerCharacter player = getPlayer(gameController.player);
 		if (player != null) gameController.player = player;
 	}
 
@@ -61,6 +60,12 @@ public class ShooterClient extends ShooterGame {
 		sendInput(0, keyCode, false);
 	}
 	
+	/**
+	 * Helper function to send an input message to the server.
+	 * @param mouseButton - Mousebutton that was pressed.
+	 * @param keyCode - Code for active key.
+	 * @param keyDown - Differentiate between a key press and key release.
+	 */
 	private void sendInput(int mouseButton, int keyCode, boolean keyDown) {
 		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
 		

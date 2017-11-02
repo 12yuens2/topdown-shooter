@@ -1,8 +1,6 @@
 package game;
 
-import network.Message;
 import network.MessageType;
-import network.UDPSocket;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 

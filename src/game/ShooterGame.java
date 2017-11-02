@@ -6,7 +6,6 @@ import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 
 public abstract class ShooterGame extends PApplet {
-
 	
 	public static final int SCREEN_X = 1600;
 	public static final int SCREEN_Y = 900;
@@ -33,6 +32,14 @@ public abstract class ShooterGame extends PApplet {
 		gameController.step(mouseX, mouseY);
 	}
 	
+	/**
+	 * Program receive handler used by the UDP library that must be implemented to handle datagram reception.
+	 * The function will be called by the UDP object when a nonnull message is received.
+	 * The type of the message will be parsed and the corresponding handlers for each type of message will be called.
+	 * @param data - The received message as bytes.
+	 * @param ip - IP address.
+	 * @param port - Port number.
+	 */
 	public void receive(byte[] data, String ip, int port) {
 		Message message = socket.getMessageFromBytes(data);
 		
@@ -52,20 +59,46 @@ public abstract class ShooterGame extends PApplet {
 		}
 	}
 	
+	/**
+	 * Handler for receiving a player message.
+	 * @param player - PlayerCharacter object received in the message.
+	 */
 	protected abstract void handlePlayerMessage(PlayerCharacter player);
 	
+	/**
+	 * Handler for receiving a game input message.
+	 * @param input - GameInput object received in the message.
+	 * @param player - Player corresponding to the received input. 
+	 */
 	protected abstract void handleInputMessage(GameInput input, PlayerCharacter player);
 	
+	/**
+	 * Handler for receiving a game context message.
+	 * @param context - GameContext object received in the message.
+	 */
 	protected abstract void handleContextMessage(GameContext context);
 	
-	
+	/**
+	 * Processing handler for behaviour when a mouse button is pressed.
+	 */
 	public abstract void mousePressed();
 	
+	/**
+	 * Processing handler for behaviour when a key is pressed.
+	 */
 	public abstract void keyPressed();
 	
+	/**
+	 * Processing handler for behaviour when a key is released.
+	 */
 	public abstract void keyReleased();
 	
 	
+	/**
+	 * Helper function to translate between a given PlayerCharacter to a PlayerCharacter in the game's list of players.
+	 * @param player - Player to find in the game's list.
+	 * @return - Player found in the game's list if the two players are the same. Null if the player was not found.
+	 */
 	protected PlayerCharacter getPlayer(PlayerCharacter player) {
 		int index = gameController.state.context.players.indexOf(player);
 		
