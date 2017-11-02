@@ -8,63 +8,55 @@ import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 
 
-public class ShooterClient extends PApplet {
-	public static int SCREEN_X = 1600;
-	public static int SCREEN_Y = 900;
-	
-	public static final int PORT = 18238;
-	
-	public GameController gameController;
-	
-	public UDPSocket client;
-	
-	
-	public void settings() {
-		size(SCREEN_X, SCREEN_Y);
-	}
+public class ShooterClient extends ShooterGame {
 	
 	public void setup() {
-	   gameController = new GameController(this, "Client1");
-	   	  
-	   client = new UDPSocket(this, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
-	   client.listen(true);
-	   
-	   client.sendMessage(MessageType.PLAYER, gameController.player, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
+		super.setup();
+		
+		/* Send this new player to server */
+		socket.sendMessage(MessageType.PLAYER, gameController.player, SERVER_IP, PORT);
 	}
 
 	
 	public void draw() {
-		gameController.step(mouseX, mouseY);
+		super.draw();
+		
+		/* Send mouse coordinates to server */
 		sendInput(0, 0, false);
 	}
 
-	public void receive(byte[] data, String ip, int port) {
-		Message message = client.getMessageFromBytes(data);
-		
-		if (message != null) {
-			switch (message.type) {
-				case PLAYER:
-					gameController.state.context.players.add((PlayerCharacter) message.data);
-					break;
-
-				case CONTEXT:
-					gameController.state = new PlayingState((GameContext) message.data, gameController.drawEngine);
-					break;
-					
-				default:
-					break;
-			}
-		}
+	@Override
+	protected void handlePlayerMessage(PlayerCharacter player) {
+		gameController.state.context.players.add(player);		
 	}
 
+	@Override
+	protected void handleInputMessage(GameInput input, PlayerCharacter player) {
+		/* 
+		 * No implementation needed.
+		 * Client does not update its own game when input is received.
+		 */		
+	}
+
+	@Override
+	protected void handleContextMessage(GameContext context) {
+		gameController.state = new PlayingState(context, gameController.drawEngine);
+		PlayerCharacter player = getPlayer(gameController.player);
+		
+		if (player != null) gameController.player = player;
+	}
+
+	@Override
 	public void mousePressed() {
 		sendInput(mouseButton, 0, false);
 	}
 	
+	@Override
 	public void keyPressed() {
 		sendInput(0, keyCode, true);
 	}
 	
+	@Override
 	public void keyReleased() {
 		sendInput(0, keyCode, false);
 	}
@@ -72,10 +64,11 @@ public class ShooterClient extends PApplet {
 	private void sendInput(int mouseButton, int keyCode, boolean keyDown) {
 		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
 		
-		client.sendClientMessage(MessageType.INPUT, input, gameController.player, ShooterGame.SERVER_IP, ShooterGame.SERVER_PORT);
+		socket.sendClientMessage(MessageType.INPUT, input, gameController.player, SERVER_IP, PORT);
 	}
 	
 	public static void main(String[] args) {
-		PApplet.main("game.ShooterClient");
+		PApplet.main("game.ShooterClient", args);
 	}
+
 }

@@ -13,6 +13,10 @@ public class DrawEngine {
     	this.parent = parent;
     }
     
+    /**
+     * Display all drawable objects.
+     * @param drawables - List of drawable objects.
+     */
     public void displayDrawables(ArrayList<? extends GameObject>... drawables) {  	
         for (ArrayList<? extends GameObject> drawList : drawables) {
         	ArrayList<? extends GameObject> drawListCopy = new ArrayList<>(drawList);

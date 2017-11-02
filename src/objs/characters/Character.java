@@ -1,7 +1,7 @@
 package objs.characters;
 
 import game.GameObject;
-import game.ShooterGame;
+import game.ShooterServer;
 import processing.core.PVector;
 
 /**
@@ -52,7 +52,7 @@ public abstract class Character extends GameObject {
 	 * @return - An x position that is in bounds of the game. If the given xPos is out of bounds, the x position at the boundary is returned.
 	 */
 	protected static float getX(float xPos) {
-		return Math.min(ShooterGame.SCREEN_X, Math.max(0, xPos));
+		return Math.min(ShooterServer.SCREEN_X, Math.max(0, xPos));
 	}
 	
 	/**
@@ -61,6 +61,6 @@ public abstract class Character extends GameObject {
 	 * @return - A y position that is in bounds of the game. If the given yPos is out of bounds, the y position at the boundary is returned.
 	 */
 	protected static float getY(float yPos) {
-		return Math.min(ShooterGame.SCREEN_Y, Math.max(0, yPos));
+		return Math.min(ShooterServer.SCREEN_Y, Math.max(0, yPos));
 	}
 }

@@ -9,6 +9,7 @@ import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
 import game.GameObject;
+import game.GameUI;
 import objs.characters.Character;
 import objs.characters.FlockCharacter;
 import objs.characters.PlayerCharacter;
@@ -26,6 +27,7 @@ public abstract class GameState {
 	public PApplet parent;
 	
 	public GameContext context;
+	public GameUI ui;
 	public DrawEngine drawEngine;
 	
 	public GameState(GameContext context, DrawEngine drawEngine) {
@@ -34,12 +36,15 @@ public abstract class GameState {
 		
 		this.context = context;
 		this.drawEngine = drawEngine;
+
+		this.ui = new GameUI(context, drawEngine);
 	}
 	
 	/**
 	 * Display this GameState to the screen.
+	 * @param player - The character that this client controls.
 	 */
-	public abstract void display();
+	public abstract void display(PlayerCharacter player);
 	
 	
 	/**

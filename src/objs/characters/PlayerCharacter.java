@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import game.DrawEngine;
-import game.ShooterGame;
+import game.ShooterServer;
 import objs.particles.Particle;
 import objs.pickups.effects.Effect;
 import objs.weapons.Gun;

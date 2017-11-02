@@ -6,7 +6,7 @@ import com.sun.glass.events.KeyEvent;
 import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
-import game.ShooterGame;
+import game.ShooterServer;
 import game.states.GameState;
 import objs.characters.Character;
 import objs.characters.FlockCharacter;
@@ -26,8 +26,9 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	public void display() {
-		displayGame();		
+	public void display(PlayerCharacter player) {
+		displayGame();
+		ui.display(player);
 	}
 
 	@Override
@@ -36,8 +37,8 @@ public class PlayingState extends GameState {
 
 		if (random.nextInt(15) == 0) {
 			FlockCharacter boid = new FlockCharacter(
-					parent.random(ShooterGame.SCREEN_X),
-					parent.random(ShooterGame.SCREEN_Y),
+					parent.random(ShooterServer.SCREEN_X),
+					parent.random(ShooterServer.SCREEN_Y),
 					5, 5, context.players);
 			
 			context.enemies.add(boid);
@@ -45,25 +46,25 @@ public class PlayingState extends GameState {
 		}
 		
 		if (random.nextInt(200) == 0) context.enemies.add(
-				new CircleEnemy(parent.random(ShooterGame.SCREEN_X), 
-										parent.random(ShooterGame.SCREEN_Y), 
+				new CircleEnemy(parent.random(ShooterServer.SCREEN_X), 
+										parent.random(ShooterServer.SCREEN_Y), 
 										15, 5, 
 										context.players));
 		
 		if (random.nextInt(200) == 0) context.enemies.add(
-				new AmbushEnemy(parent.random(ShooterGame.SCREEN_X), 
-										parent.random(ShooterGame.SCREEN_Y), 
+				new AmbushEnemy(parent.random(ShooterServer.SCREEN_X), 
+										parent.random(ShooterServer.SCREEN_Y), 
 										15,10,
 										context.players));
 		
 		if (random.nextInt(200) == 0) context.enemies.add(
-				new BasicChaseEnemy(parent.random(ShooterGame.SCREEN_X), 
-										parent.random(ShooterGame.SCREEN_Y), 
+				new BasicChaseEnemy(parent.random(ShooterServer.SCREEN_X), 
+										parent.random(ShooterServer.SCREEN_Y), 
 										15,10,
 										context.players));
 		
 		if (random.nextInt(250) == 0) {
-			HpPickup pickup = new HpPickup(parent.random(ShooterGame.SCREEN_X), parent.random(ShooterGame.SCREEN_Y), 5);
+			HpPickup pickup = new HpPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5);
 			if (random.nextInt(10) == 0) {
 				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
 														15, 15, 100f, 200f, context.players));

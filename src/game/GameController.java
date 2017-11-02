@@ -21,16 +21,15 @@ public class GameController {
 		this.drawEngine = new DrawEngine(parent);
 		
 		this.player = new PlayerCharacter(name, 
-										  (float) Math.random() * ShooterGame.SCREEN_X, 
-										  (float) Math.random() * ShooterGame.SCREEN_Y, 
+										  (float) Math.random() * ShooterServer.SCREEN_X, 
+										  (float) Math.random() * ShooterServer.SCREEN_Y, 
 										  15, 100);
 		
 		this.state = new PlayingState(new GameContext(player), drawEngine);
-		
 	}
 
 	public void step(int mouseX, int mouseY) {
-		state.display();
+		state.display(player);
 		if (player.name.equals("Server")) state = state.update(mouseX, mouseY, player);
 	}
 	
