@@ -16,7 +16,8 @@ import objs.characters.enemies.BasicChaseEnemy;
 import objs.characters.enemies.CircleEnemy;
 import objs.characters.enemies.PatrolEnemy;
 import objs.particles.Particle;
-import objs.pickups.HpPickup;
+import objs.pickups.impl.AmmoPickup;
+import objs.pickups.impl.SpeedPickup;
 import processing.core.PConstants;
 
 public class PlayingState extends GameState {
@@ -64,7 +65,16 @@ public class PlayingState extends GameState {
 										context.players));
 		
 		if (random.nextInt(250) == 0) {
-			HpPickup pickup = new HpPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5);
+			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5);
+			if (random.nextInt(10) == 0) {
+				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
+														15, 15, 100f, 200f, context.players));
+			}
+			context.pickups.add(pickup);
+		}
+		
+		if (random.nextInt(250) == 0) {
+			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5);
 			if (random.nextInt(10) == 0) {
 				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
 														15, 15, 100f, 200f, context.players));

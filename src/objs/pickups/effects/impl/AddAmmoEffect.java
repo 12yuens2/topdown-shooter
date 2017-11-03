@@ -1,23 +1,23 @@
 package objs.pickups.effects.impl;
 
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.pickups.effects.Effect;
+import objs.weapons.Weapon;
 
-public class SpeedEffect extends Effect {
+public class AddAmmoEffect extends Effect {
 
-	public SpeedEffect(int lifespan) {
-		this.lifespan = lifespan;
-	}
-	
 	@Override
 	public <T extends PlayerCharacter> void apply(T character) {
-		character.speedMultiplier *= 2f;
+		for (Weapon weapon : character.weapons) {
+			weapon.ammo += 30;
+		}
 	}
 
 	@Override
 	public <T extends PlayerCharacter> void cease(T character) {
-		character.speedMultiplier = character.speedMultiplier/2f;
+		/*
+		 * No implementation needed.
+		 */
 	}
 
 }

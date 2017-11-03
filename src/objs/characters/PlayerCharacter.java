@@ -75,17 +75,7 @@ public class PlayerCharacter extends Character {
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
 		currentWeapon.position = facing.copy();
-		
-		Iterator<Effect> effectIt = powerups.iterator();
-		while(effectIt.hasNext()) {
-			Effect effect = effectIt.next();
-			effect.lifespan--;
-			
-			if (effect.lifespan <= 0) {
-				effect.cease(this);
-				effectIt.remove();
-			}
-		}
+
 	}
 	
 	

@@ -17,6 +17,7 @@ import objs.particles.Explosion;
 import objs.particles.Missile;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
+import objs.pickups.effects.Effect;
 import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -115,6 +116,18 @@ public abstract class GameState {
 				}
 				
 			});
+			
+			/* Count down and remove any powerup effects */
+			Iterator<Effect> effectIt = player.powerups.iterator();
+			while(effectIt.hasNext()) {
+				Effect effect = effectIt.next();
+				effect.lifespan--;
+				
+				if (effect.lifespan <= 0) {
+					effect.cease(player);
+					effectIt.remove();
+				}
+			}
 			
 			updateGameObjects(player.weapons);
 		}
