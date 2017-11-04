@@ -18,5 +18,7 @@ public class GameUI {
 		int ammo = player.currentWeapon.ammo;
 		
 		drawEngine.drawText(16, bullets+"/"+ammo, 50, 50, 255);
+		drawEngine.drawText(16, "Score: " + context.score, 50, 75, 255);
+		drawEngine.drawText(16, "HP: " + player.health, 50, 100, 255);
 	}
 }

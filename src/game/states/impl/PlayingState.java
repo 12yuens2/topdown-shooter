@@ -74,7 +74,7 @@ public class PlayingState extends GameState {
 		}
 		
 		if (random.nextInt(250) == 0) {
-			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5);
+			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10);
 			if (random.nextInt(10) == 0) {
 				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
 														15, 15, 100f, 200f, context.players));

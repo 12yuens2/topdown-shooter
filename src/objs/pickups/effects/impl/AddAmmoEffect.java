@@ -9,7 +9,7 @@ public class AddAmmoEffect extends Effect {
 	@Override
 	public <T extends PlayerCharacter> void apply(T character) {
 		for (Weapon weapon : character.weapons) {
-			weapon.ammo += 30;
+			weapon.ammo += weapon.clipSize;
 		}
 	}
 

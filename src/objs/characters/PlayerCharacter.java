@@ -109,7 +109,10 @@ public class PlayerCharacter extends Character {
 	}
 
 	public Particle attack(float targetX, float targetY) {
-		return currentWeapon.shoot(targetX, targetY);
+		Particle bullet = currentWeapon.shoot(targetX, targetY);
+		if (bullet == null && currentWeapon.reloading <= 0) currentWeapon.reload();
+		
+		return bullet;
 	}
 	
 	

@@ -152,12 +152,23 @@ public abstract class GameState {
 			
 			/* Remove enemies with no health */
 			if (enemy.health <= 0) {
-				context.score += 1;
-
-				System.out.println(context.score);
 				enemyIt.remove();
 				context.flockEnemies.remove(enemy);
+
+				context.score += 1;
 			}
+			
+			/* Collision with players to deal damage to them */
+			enemy.collideResult(context.players.iterator(), new Function<PlayerCharacter, Boolean>() {
+
+				@Override
+				public Boolean apply(PlayerCharacter player) {
+					player.health -= 1;
+					
+					return false;
+				}
+				
+			});
 			
 			/* Collision with other enemies to resolve overlapping */
 			enemy.collideResult(context.enemies.iterator(), new Function<Character, Boolean>() {
