@@ -46,7 +46,7 @@ public abstract class Weapon extends GameObject {
 	
 	
 	public void reload() {
-		if (clipAmmo < clipSize) {
+		if (reloading <= 0 && clipAmmo < clipSize) {
 			clipAmmo = 0;
 			reloading = reloadTime;
 		}

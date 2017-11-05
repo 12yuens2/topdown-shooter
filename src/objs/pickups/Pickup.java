@@ -6,8 +6,16 @@ public abstract class Pickup extends GameObject{
 	
 	public Effect effect;
 	
-	public Pickup(float xPos, float yPos, float radius) {
+	public int lifespan;
+	
+	public Pickup(float xPos, float yPos, float radius, int lifespan) {
 		super(xPos, yPos, radius);
+		this.lifespan = lifespan;
+	}
+	
+	@Override
+	public void integrate() {
+		lifespan--;
 	}
 	
 	public void pickup() {

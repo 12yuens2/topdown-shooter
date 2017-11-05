@@ -6,8 +6,8 @@ import objs.pickups.effects.impl.SpeedEffect;
 
 public class SpeedPickup extends Pickup{
 
-	public SpeedPickup(float xPos, float yPos, float radius) {
-		super(xPos, yPos, radius);
+	public SpeedPickup(float xPos, float yPos, float radius, int lifespan) {
+		super(xPos, yPos, radius, lifespan);
 		this.effect = new SpeedEffect(120);
 	}
 
@@ -18,11 +18,5 @@ public class SpeedPickup extends Pickup{
 		
 	}
 
-	@Override
-	public void integrate() {
-		/*
-		 * No implementation required.
-		 */
-	}
 
 }

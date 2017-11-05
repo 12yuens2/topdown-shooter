@@ -17,6 +17,7 @@ import objs.characters.enemies.CircleEnemy;
 import objs.characters.enemies.PatrolEnemy;
 import objs.particles.Particle;
 import objs.pickups.impl.AmmoPickup;
+import objs.pickups.impl.BombPickup;
 import objs.pickups.impl.SpeedPickup;
 import processing.core.PConstants;
 
@@ -65,7 +66,7 @@ public class PlayingState extends GameState {
 										context.players));
 		
 		if (random.nextInt(250) == 0) {
-			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5);
+			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
 			if (random.nextInt(10) == 0) {
 				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
 														15, 15, 100f, 200f, context.players));
@@ -74,7 +75,16 @@ public class PlayingState extends GameState {
 		}
 		
 		if (random.nextInt(250) == 0) {
-			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10);
+			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
+			if (random.nextInt(10) == 0) {
+				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
+														15, 15, 100f, 200f, context.players));
+			}
+			context.pickups.add(pickup);
+		}
+			
+		if (random.nextInt(250) == 0) {
+			BombPickup pickup = new BombPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300, context);
 			if (random.nextInt(10) == 0) {
 				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
 														15, 15, 100f, 200f, context.players));

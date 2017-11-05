@@ -6,8 +6,8 @@ import objs.pickups.effects.impl.AddAmmoEffect;
 
 public class AmmoPickup extends Pickup {
 
-	public AmmoPickup(float xPos, float yPos, float radius) {
-		super(xPos, yPos, radius);
+	public AmmoPickup(float xPos, float yPos, float radius, int lifespan) {
+		super(xPos, yPos, radius, lifespan);
 		this.effect = new AddAmmoEffect();
 	}
 
@@ -18,11 +18,5 @@ public class AmmoPickup extends Pickup {
 		drawEngine.drawText(15, "G", (int) position.x, (int) position.y, drawEngine.parent.color(255));
 	}
 
-	@Override
-	public void integrate() {
-		/*
-		 * No implementation required.
-		 */
-	}
 
 }

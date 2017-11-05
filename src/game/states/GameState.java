@@ -87,7 +87,8 @@ public abstract class GameState {
 	public void updateStep(int mouseX, int mouseY, PlayerCharacter player) {
 		updatePlayerStep(mouseX, mouseY, player);
 		updateEnemyStep();
-
+		updatePickups();
+		
 		/* Integrate step for all other game objects */
 		updateGameObjects(context.particles, context.explosions);
 	}
@@ -140,7 +141,6 @@ public abstract class GameState {
 	 * Updates their movements and interaction with other objects in the game.
 	 */
 	private void updateEnemyStep() {
-		System.out.println(context.flockEnemies.size());
 		Iterator<Character> enemyIt = context.enemies.iterator();
 		
 		while(enemyIt.hasNext()) {
@@ -221,6 +221,20 @@ public abstract class GameState {
 				}
 				
 			});
+		}
+	}
+	
+	/**
+	 * Updates all pickups to remove them after their lifespan times out.
+	 */
+	private void updatePickups() {
+		Iterator<Pickup> pickupIt = context.pickups.iterator();
+		while(pickupIt.hasNext()) {
+			Pickup pickup = pickupIt.next();
+			
+			pickup.integrate();
+			
+			if (pickup.lifespan <= 0) pickupIt.remove();
 		}
 	}
 	
