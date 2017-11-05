@@ -10,6 +10,7 @@ import game.GameContext;
 import game.GameInput;
 import game.GameObject;
 import game.GameUI;
+import game.ShooterGame;
 import objs.characters.Character;
 import objs.characters.FlockCharacter;
 import objs.characters.PlayerCharacter;
@@ -139,13 +140,26 @@ public abstract class GameState {
 	 * Updates their movements and interaction with other objects in the game.
 	 */
 	private void updateEnemyStep() {
+		System.out.println(context.flockEnemies.size());
 		Iterator<Character> enemyIt = context.enemies.iterator();
 		
 		while(enemyIt.hasNext()) {
 			Character enemy = enemyIt.next();
 			
 			/* Flock if enemy implements flocking behaviour. */
-			if (enemy instanceof FlockCharacter) ((FlockCharacter) enemy).flock(context.flockEnemies);
+			if (enemy instanceof FlockCharacter) {
+				((FlockCharacter) enemy).flock(context.flockEnemies);
+				
+				float x = ((FlockCharacter) enemy).position.x;
+				float y = ((FlockCharacter) enemy).position.y;
+				
+				/* Remove flocking enemies when they leave the screen */
+				if (x > ShooterGame.SCREEN_X || x < 0  || y > ShooterGame.SCREEN_Y || y < 0) {
+					enemyIt.remove();
+					context.flockEnemies.remove(enemy);
+				}
+				
+			}
 			
 			/* Individual enemy update step */
 			enemy.integrate();
