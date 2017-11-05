@@ -1,8 +1,5 @@
 package objs.pickups.impl;
 
-import java.util.ArrayList;
-
-import objs.characters.Character;
 import game.DrawEngine;
 import game.GameContext;
 import objs.pickups.Pickup;
@@ -18,8 +15,8 @@ public class BombPickup extends Pickup {
 	@Override
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(75), position.x, position.y, size, size);
-		drawEngine.drawText(15, "B", (int) position.x, (int) position.y, drawEngine.parent.color(255));
+		drawEngine.drawEllipse(drawEngine.parent.color(75), position.x, position.y, size, size, lifespan);
+		drawEngine.drawText(15, "B", (int) position.x, (int) position.y, drawEngine.parent.color(255), lifespan);
 	}
 
 }

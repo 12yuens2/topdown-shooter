@@ -44,6 +44,18 @@ public class DrawEngine {
 		parent.textAlign(PConstants.CENTER, PConstants.CENTER);
 	}
 	
+    /**
+     * Draw text with opacity
+     */
+	public void drawText(int textSize, String text, int posX, int posY, int col, int opacity) {
+		PFont font = parent.createFont("Arial", textSize, true);
+		
+		parent.textFont(font, textSize);
+		parent.fill(col, opacity);
+		parent.text(text, posX, posY);
+		parent.textAlign(PConstants.CENTER, PConstants.CENTER);
+	}
+	
 	/**
 	 * Draw an ellipse based on given parameters.
 	 * @param col - colour of the circle
@@ -56,6 +68,15 @@ public class DrawEngine {
 	public void drawEllipse(int col, float xPos, float yPos, float width, float height) {
 		parent.ellipseMode(PConstants.CENTER);
 		parent.fill(col);
+		parent.ellipse(xPos, yPos, width, height);
+	}
+	
+	/**
+	 * Draw an ellipse with opacity.
+	 */
+	public void drawEllipse(int col, float xPos, float yPos, float width, float height, int opacity) {
+		parent.ellipseMode(PConstants.CENTER);
+		parent.fill(col, opacity);
 		parent.ellipse(xPos, yPos, width, height);
 	}
 	

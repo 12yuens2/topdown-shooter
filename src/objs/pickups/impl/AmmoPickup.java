@@ -14,8 +14,8 @@ public class AmmoPickup extends Pickup {
 	@Override
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(75), position.x, position.y, size, size);
-		drawEngine.drawText(15, "G", (int) position.x, (int) position.y, drawEngine.parent.color(255));
+		drawEngine.drawEllipse(drawEngine.parent.color(75), position.x, position.y, size, size, lifespan);
+		drawEngine.drawText(15, "G", (int) position.x, (int) position.y, drawEngine.parent.color(255), lifespan);
 	}
 
 

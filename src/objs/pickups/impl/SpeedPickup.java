@@ -14,7 +14,7 @@ public class SpeedPickup extends Pickup{
 	@Override
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(150,150,0), position.x, position.y, size, size);
+		drawEngine.drawEllipse(drawEngine.parent.color(150,150,0), position.x, position.y, size, size, lifespan);
 		
 	}
 
