@@ -9,17 +9,26 @@ public class Particle extends GameObject {
 	public PVector velocity;
 	public int damage;
 	
+	public boolean friendly;
+
 	public Particle(float xPos, float yPos, float radius, int damage) {
 		super(xPos, yPos, radius);
 		this.velocity = new PVector(0,0);
 		this.damage = damage;
+		
+		this.friendly = true;
 	}
 	
 	public Particle(PVector position, float mouseX, float mouseY, float radius, int damage) {
 		this(position.x, position.y, radius, damage);
 		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
 	}
-	
+
+	public Particle(PVector position, float mouseX, float mouseY, float radius, int damage, boolean friendly) {
+		this(position.x, position.y, radius, damage);
+		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
+		this.friendly = friendly;
+	}
 	
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;

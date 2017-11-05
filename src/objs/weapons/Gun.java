@@ -7,9 +7,11 @@ public class Gun extends Weapon {
 
 	public Gun(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime) {
 		super(xPos, yPos, radius, clipSize, clipAmmo, ammo, maxAmmo, reloadTime);
-		// TODO Auto-generated constructor stub
 	}
-	
+
+	public Gun(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
+		super(xPos, yPos, radius, clipSize, clipAmmo, ammo, maxAmmo, reloadTime, friendly);
+	}
 
 	@Override
 	public void display(DrawEngine drawEngine) {
@@ -25,7 +27,7 @@ public class Gun extends Weapon {
 		}
 		else {
 			clipAmmo--;
-			return new Particle(position.copy(), targetX, targetY, 5, 5);
+			return new Particle(position.copy(), targetX, targetY, 5, 5, friendly);
 		}
 	}
 

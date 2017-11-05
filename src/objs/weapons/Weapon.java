@@ -8,6 +8,7 @@ public abstract class Weapon extends GameObject {
 	public int clipAmmo, ammo, reloading;
 	public final int clipSize, maxAmmo, reloadTime;
 	
+	public boolean friendly;
 	
 	public Weapon(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime) {
 		super(xPos, yPos, radius);
@@ -17,9 +18,22 @@ public abstract class Weapon extends GameObject {
 		this.maxAmmo = maxAmmo;
 		this.reloadTime = reloadTime;
 		
+		this.friendly = true;
 		this.reloading = 0;
 	}
 
+	public Weapon(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
+		super(xPos, yPos, radius);
+		this.clipAmmo = clipAmmo;
+		this.ammo = ammo;
+		this.clipSize = clipSize;
+		this.maxAmmo = maxAmmo;
+		this.reloadTime = reloadTime;
+		
+		this.friendly = friendly;
+		this.reloading = 0;
+	}
+	
 
 	@Override
 	public void integrate() {
@@ -40,7 +54,7 @@ public abstract class Weapon extends GameObject {
 		}
 		else {
 			clipAmmo += missingAmmo;
-			ammo -= missingAmmo;
+			if (friendly) ammo -= missingAmmo;
 		}
 	}
 	

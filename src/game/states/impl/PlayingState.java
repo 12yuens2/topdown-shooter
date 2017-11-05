@@ -15,6 +15,7 @@ import objs.characters.enemies.AmbushEnemy;
 import objs.characters.enemies.BasicChaseEnemy;
 import objs.characters.enemies.CircleEnemy;
 import objs.characters.enemies.PatrolEnemy;
+import objs.characters.enemies.ShootEnemy;
 import objs.particles.Particle;
 import objs.pickups.impl.AmmoPickup;
 import objs.pickups.impl.BombPickup;
@@ -65,32 +66,38 @@ public class PlayingState extends GameState {
 										15,10,
 										context.players));
 		
-		if (random.nextInt(250) == 0) {
-			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
-			if (random.nextInt(10) == 0) {
-				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
-														15, 15, 100f, 200f, context.players));
-			}
-			context.pickups.add(pickup);
-		}
-		
-		if (random.nextInt(250) == 0) {
-			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
-			if (random.nextInt(10) == 0) {
-				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
-														15, 15, 100f, 200f, context.players));
-			}
-			context.pickups.add(pickup);
-		}
-			
-		if (random.nextInt(250) == 0) {
-			BombPickup pickup = new BombPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300, context);
-			if (random.nextInt(10) == 0) {
-				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
-														15, 15, 100f, 200f, context.players));
-			}
-			context.pickups.add(pickup);
-		}
+		if (random.nextInt(200) == 0) context.enemies.add(
+				new ShootEnemy(parent.random(ShooterServer.SCREEN_X), 
+								parent.random(ShooterServer.SCREEN_Y), 
+								15,10,
+								context));
+//		
+//		if (random.nextInt(250) == 0) {
+//			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
+//			if (random.nextInt(10) == 0) {
+//				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
+//														15, 15, 100f, 200f, context.players));
+//			}
+//			context.pickups.add(pickup);
+//		}
+//		
+//		if (random.nextInt(250) == 0) {
+//			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
+//			if (random.nextInt(10) == 0) {
+//				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
+//														15, 15, 100f, 200f, context.players));
+//			}
+//			context.pickups.add(pickup);
+//		}
+//			
+//		if (random.nextInt(250) == 0) {
+//			BombPickup pickup = new BombPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300, context);
+//			if (random.nextInt(10) == 0) {
+//				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
+//														15, 15, 100f, 200f, context.players));
+//			}
+//			context.pickups.add(pickup);
+//		}
 		
 		return this;
 	}

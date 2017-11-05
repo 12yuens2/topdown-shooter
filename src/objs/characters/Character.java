@@ -43,7 +43,9 @@ public abstract class Character extends GameObject {
 	 * @param velocity - Velocity vector to indicate the direction the character should move to.
 	 */
 	protected void move(PVector velocity) {
-		position.add(velocity.setMag(speedMultiplier));
+		velocity = velocity.setMag(speedMultiplier);
+		position.x = getX(position.x + velocity.x);
+		position.y = getY(position.y + velocity.y);
 	}
 	
 	/**

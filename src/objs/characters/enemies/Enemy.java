@@ -1,6 +1,7 @@
 package objs.characters.enemies;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
@@ -9,11 +10,13 @@ import processing.core.PVector;
 public abstract class Enemy extends Character {
 
 	public ArrayList<PlayerCharacter> targets;
+	public Random random;
 	
 	public Enemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
 		super(xPos, yPos, radius, health);
 		
 		this.targets = targets;
+		this.random = new Random();
 	}
 	
 	/**

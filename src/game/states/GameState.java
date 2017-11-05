@@ -202,10 +202,16 @@ public abstract class GameState {
 
 				@Override
 				public Boolean apply(Particle p) {
-					enemy.health -= p.damage;
-					if (p instanceof Missile) context.explosions.add(((Missile)p).explode());
-					
-					return true;
+					if (!p.friendly) {
+						return false;
+					}
+					else {
+						enemy.health -= p.damage;
+						if (p instanceof Missile) context.explosions.add(((Missile)p).explode());
+						
+						return true;
+					}
+
 				}
 				
 			});
