@@ -8,6 +8,7 @@ import game.GameContext;
 import game.GameInput;
 import game.ShooterServer;
 import game.states.GameState;
+import javafx.util.converter.PercentageStringConverter;
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
@@ -19,9 +20,11 @@ import objs.characters.enemies.impl.PatrolEnemy;
 import objs.characters.enemies.impl.ShootEnemy;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
+import objs.pickups.effects.impl.PermanentDamageEffect;
 import objs.pickups.impl.AmmoPickup;
 import objs.pickups.impl.BombPickup;
 import objs.pickups.impl.HealthPickup;
+import objs.pickups.impl.PermanentDamagePickup;
 import objs.pickups.impl.SpeedPickup;
 import processing.core.PConstants;
 import processing.core.PVector;
@@ -47,7 +50,7 @@ public class PlayingState extends GameState {
 		updateStep(mouseX, mouseY, player);
 
 		int enemyHealth = Enemy.BASE_HP + (difficulty);
-		int enemyDamage = Enemy.BASE_DMG + (difficulty/5);
+		int enemyDamage = Enemy.BASE_DMG + (difficulty/3);
 		int enemyScore = Enemy.BASE_SCORE + (difficulty/2);
 		int enemySpawnRate = Enemy.SPAWN_RATE - (difficulty*3);
 		int pickupSpawnRate = Pickup.SPAWN_RATE + (difficulty*3);
@@ -88,31 +91,39 @@ public class PlayingState extends GameState {
 								size, enemyHealth, enemyDamage, enemyScore,
 								context));
 		
-		if (random.nextInt(pickupSpawnRate) == 0) {
-			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
-			if (random.nextInt(10) == 0) {
-				spawnPatrolEnemy(pickup.position);
-			}
-			context.pickups.add(pickup);
-		}
+//		if (random.nextInt(pickupSpawnRate) == 0) {
+//			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
+//			if (random.nextInt(10) == 0) {
+//				spawnPatrolEnemy(pickup.position);
+//			}
+//			context.pickups.add(pickup);
+//		}
+//		
+//		if (random.nextInt(pickupSpawnRate) == 0) {
+//			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
+//			if (random.nextInt(10) == 0) {
+//				spawnPatrolEnemy(pickup.position);
+//			}
+//			context.pickups.add(pickup);
+//		}
+//			
+//		if (random.nextInt(pickupSpawnRate) == 0) {
+//			BombPickup pickup = new BombPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300, context);
+//			if (random.nextInt(10) == 0) {
+//				spawnPatrolEnemy(pickup.position);
+//			}
+//			context.pickups.add(pickup);
+//		}
+//		if (random.nextInt(pickupSpawnRate) == 0) {
+//			HealthPickup pickup = new HealthPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
+//			if (random.nextInt(10) == 0) {
+//				spawnPatrolEnemy(pickup.position);
+//			}
+//			context.pickups.add(pickup);
+//		}
 		
 		if (random.nextInt(pickupSpawnRate) == 0) {
-			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
-			if (random.nextInt(10) == 0) {
-				spawnPatrolEnemy(pickup.position);
-			}
-			context.pickups.add(pickup);
-		}
-			
-		if (random.nextInt(pickupSpawnRate) == 0) {
-			BombPickup pickup = new BombPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300, context);
-			if (random.nextInt(10) == 0) {
-				spawnPatrolEnemy(pickup.position);
-			}
-			context.pickups.add(pickup);
-		}
-		if (random.nextInt(pickupSpawnRate) == 0) {
-			HealthPickup pickup = new HealthPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
+			PermanentDamagePickup pickup = new PermanentDamagePickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
 			if (random.nextInt(10) == 0) {
 				spawnPatrolEnemy(pickup.position);
 			}
