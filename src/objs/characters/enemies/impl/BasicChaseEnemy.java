@@ -16,8 +16,8 @@ import processing.core.PVector;
 public class BasicChaseEnemy extends Enemy {
 
 	
-	public BasicChaseEnemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
-		super(xPos, yPos, radius, health, targets);
+	public BasicChaseEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, damage, score, targets);
 	}
 
 	@Override

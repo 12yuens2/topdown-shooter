@@ -5,22 +5,31 @@ import java.util.Random;
 
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
+import objs.weapons.Weapon;
 import processing.core.PVector;
 
 public abstract class Enemy extends Character {
 
+	public static final int BASE_HP = Weapon.BASE_DMG;
+	public static final int BASE_DMG = 1;
+	public static final int BASE_SCORE = 2;
+	
 	public ArrayList<PlayerCharacter> targets;
 	public Random random;
 	
-	public Enemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
+	public int damage, score;
+	
+	public Enemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets) {
 		super(xPos, yPos, radius, health);
 		
+		this.damage = damage;
+		this.score = score;
 		this.targets = targets;
 		this.random = new Random();
 	}
 	
 	/**
-	 * Get the closest target player from the list of player targets.
+	 * Get the closest target player to this enemy from the list of player targets.
 	 * @return the closest player character.
 	 */
 	protected PlayerCharacter getClosestTarget() {
@@ -39,8 +48,8 @@ public abstract class Enemy extends Character {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Get the position of the closest target to this enemy.
+	 * @return Position of the closest target.
 	 */
 	protected PVector getClosestTargetPosition() {
 		return getClosestTarget().position.copy();

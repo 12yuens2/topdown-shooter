@@ -12,8 +12,9 @@ import game.GameObject;
 import game.GameUI;
 import game.ShooterGame;
 import objs.characters.Character;
-import objs.characters.FlockCharacter;
 import objs.characters.PlayerCharacter;
+import objs.characters.enemies.Enemy;
+import objs.characters.enemies.impl.FlockEnemy;
 import objs.particles.Explosion;
 import objs.particles.Missile;
 import objs.particles.Particle;
@@ -126,6 +127,7 @@ public abstract class GameState {
 				
 			});
 			
+			/* Enemy particles */
 			player.collideResult(context.particles.iterator(), new Function<Particle, Boolean>() {
 
 				@Override
@@ -163,17 +165,17 @@ public abstract class GameState {
 	 * Updates their movements and interaction with other objects in the game.
 	 */
 	private void updateEnemyStep() {
-		Iterator<Character> enemyIt = context.enemies.iterator();
+		Iterator<Enemy> enemyIt = context.enemies.iterator();
 		
 		while(enemyIt.hasNext()) {
-			Character enemy = enemyIt.next();
+			Enemy enemy = enemyIt.next();
 			
 			/* Flock if enemy implements flocking behaviour. */
-			if (enemy instanceof FlockCharacter) {
-				((FlockCharacter) enemy).flock(context.flockEnemies);
+			if (enemy instanceof FlockEnemy) {
+				((FlockEnemy) enemy).flock(context.flockEnemies);
 				
-				float x = ((FlockCharacter) enemy).position.x;
-				float y = ((FlockCharacter) enemy).position.y;
+				float x = ((FlockEnemy) enemy).position.x;
+				float y = ((FlockEnemy) enemy).position.y;
 				
 				/* Remove flocking enemies when they leave the screen */
 				if (x > ShooterGame.SCREEN_X || x < 0  || y > ShooterGame.SCREEN_Y || y < 0) {
@@ -191,7 +193,7 @@ public abstract class GameState {
 				enemyIt.remove();
 				context.flockEnemies.remove(enemy);
 
-				context.score += 1;
+				context.score += enemy.score;
 			}
 			
 			/* Collision with players to deal damage to them */
@@ -199,7 +201,7 @@ public abstract class GameState {
 
 				@Override
 				public Boolean apply(PlayerCharacter player) {
-					player.health -= 1;
+					player.health -= enemy.damage;
 					
 					return false;
 				}
@@ -207,11 +209,11 @@ public abstract class GameState {
 			});
 			
 			/* Collision with other enemies to resolve overlapping */
-			enemy.collideResult(context.enemies.iterator(), new Function<Character, Boolean>() {
+			enemy.collideResult(context.enemies.iterator(), new Function<Enemy, Boolean>() {
 
 				@Override
-				public Boolean apply(Character c) {
-					PVector normal = PVector.sub(enemy.position, c.position).normalize();
+				public Boolean apply(Enemy e) {
+					PVector normal = PVector.sub(enemy.position, e.position).normalize();
 					enemy.position.add(normal.mult(1));
 					
 					return false;

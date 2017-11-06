@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import objs.characters.Character;
-import objs.characters.FlockCharacter;
 import objs.characters.PlayerCharacter;
+import objs.characters.enemies.Enemy;
+import objs.characters.enemies.impl.FlockEnemy;
 import objs.particles.Explosion;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
@@ -19,8 +20,8 @@ public class GameContext implements Serializable {
 
 	public ArrayList<PlayerCharacter> players;
 	
-	public ArrayList<Character> enemies;
-	public ArrayList<FlockCharacter> flockEnemies;
+	public ArrayList<Enemy> enemies;
+	public ArrayList<FlockEnemy> flockEnemies;
 	public ArrayList<Particle> particles;
 	public ArrayList<Pickup> pickups;
 	public ArrayList<Explosion> explosions;

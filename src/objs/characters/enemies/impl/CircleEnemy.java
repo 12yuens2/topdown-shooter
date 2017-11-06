@@ -15,8 +15,8 @@ public class CircleEnemy extends Enemy {
 	
 	private float linearMag;
 	
-	public CircleEnemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
-		super(xPos, yPos, radius, health, targets);
+	public CircleEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, damage, score, targets);
 		this.velocity = new PVector(0, 0);
 		
 		Random r = new Random();

@@ -5,6 +5,8 @@ import objs.particles.Particle;
 
 public abstract class Weapon extends GameObject {
 
+	public static final int BASE_DMG = 5;
+	
 	public int clipAmmo, ammo, reloading, firing, fireRate;
 	public final int clipSize, maxAmmo, reloadTime;
 	

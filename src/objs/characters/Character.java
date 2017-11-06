@@ -11,7 +11,7 @@ import processing.core.PVector;
  */
 public abstract class Character extends GameObject {
 	
-	public static float BASE_SPEED = 2f;
+	public static final float BASE_SPEED = 2f;
 	
 	public boolean friendly;
 	public int health;

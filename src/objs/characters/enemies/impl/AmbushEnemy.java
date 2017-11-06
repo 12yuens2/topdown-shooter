@@ -24,9 +24,8 @@ public class AmbushEnemy extends Enemy {
 	public PVector targetPosition;
 	
 	
-	public AmbushEnemy(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> targets) {
-		super(xPos, yPos, radius, health, targets);
-		
+	public AmbushEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, damage, score, targets);
 
 		this.targetPosition = getClosestTargetPosition();
 	}

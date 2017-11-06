@@ -20,14 +20,14 @@ public class ShootEnemy extends Enemy {
 	public PVector targetPosition;
 	public Gun gun;
 	
-	public ShootEnemy(float xPos, float yPos, float radius, int health, GameContext context) {
-		super(xPos, yPos, radius, health, context.players);
+	public ShootEnemy(float xPos, float yPos, float radius, int health, int damage, int score, GameContext context) {
+		super(xPos, yPos, radius, health, damage, score, context.players);
 		
 		this.shootInterval = 20;
 		
 		this.context = context;
 		this.targetPosition = PVector.random2D();
-		this.gun = new Gun(position.x, position.y, 5, 10, 50, 50, 60, false);	
+		this.gun = new Gun(position.x, position.y, damage, 10, 50, 50, 60, false);	
 	}
 
 	@Override

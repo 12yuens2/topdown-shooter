@@ -1,8 +1,9 @@
-package objs.characters;
+package objs.characters.enemies.impl;
 
 import java.util.ArrayList;
 
 import game.DrawEngine;
+import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -16,15 +17,15 @@ import processing.core.PVector;
  * @author sy35
  *
  */
-public class FlockCharacter extends Enemy {
+public class FlockEnemy extends Enemy {
 
 	public static final float MAX_SPEED = 2f;
 	public static final float MAX_FORCE = 0.03f;
 	
 	PVector velocity, acceleration;
 	
-	public FlockCharacter(float xPos, float yPos, float radius, int health, ArrayList<PlayerCharacter> players) {
-		super(xPos, yPos, radius, health, players);
+	public FlockEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, radius, health, damage, score, targets);
 		this.velocity = PVector.sub(getClosestTargetPosition(), position).normalize().mult(MAX_SPEED);
 		this.acceleration = new PVector(0, 0);
 	}
@@ -62,7 +63,7 @@ public class FlockCharacter extends Enemy {
 		acceleration.mult(0);
 	}
 	
-	public void flock(ArrayList<FlockCharacter> flock) {
+	public void flock(ArrayList<FlockEnemy> flock) {
 		acceleration.add(separate(flock));
 		acceleration.add(align(flock));
 		acceleration.add(cohese(flock));
@@ -73,7 +74,7 @@ public class FlockCharacter extends Enemy {
 	 * @param flock - Flock of all boids.
 	 * @return Direction to steer towards.
 	 */
-	private PVector separate(ArrayList<FlockCharacter> flock) {
+	private PVector separate(ArrayList<FlockEnemy> flock) {
 		float separation = radius * 5;
 		PVector sum = getSum(flock, separation);
 
@@ -91,7 +92,7 @@ public class FlockCharacter extends Enemy {
 	 * @param flock - Flock of all boids.
 	 * @return Direction to steer towards.
 	 */
-	private PVector align(ArrayList<FlockCharacter> flock) {
+	private PVector align(ArrayList<FlockEnemy> flock) {
 		float neighbourDistance = radius * 10;
 		PVector sum = getSum(flock, neighbourDistance);
 		
@@ -112,7 +113,7 @@ public class FlockCharacter extends Enemy {
 	 * @param flock - Flock of all boids.
 	 * @return Direction to steer towards.
 	 */
-	private PVector cohese(ArrayList<FlockCharacter> flock) {
+	private PVector cohese(ArrayList<FlockEnemy> flock) {
 		float neighourDistance = radius * 10;
 		PVector sum = getSum(flock, neighourDistance);
 		
@@ -135,11 +136,11 @@ public class FlockCharacter extends Enemy {
 	 * @param neighbourDistance - Radius of neighbouring flock.
 	 * @return Average direction vector.
 	 */
-	private PVector getSum(ArrayList<FlockCharacter> flock, float neighbourDistance) {
+	private PVector getSum(ArrayList<FlockEnemy> flock, float neighbourDistance) {
 		PVector sum = new PVector(0, 0);
 		
 		int count = 0;
-		for (FlockCharacter boid : flock) {
+		for (FlockEnemy boid : flock) {
 			float distance = PVector.dist(position, boid.position);
 			if (distance > 0 && distance < neighbourDistance) {
 				sum.add(boid.position);
