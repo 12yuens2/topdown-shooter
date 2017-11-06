@@ -7,28 +7,33 @@ public abstract class Weapon extends GameObject {
 
 	public static final int BASE_DMG = 5;
 	
-	public int clipAmmo, ammo, reloading, firing, fireRate;
-	public final int clipSize, maxAmmo, reloadTime;
+	public int clipAmmo, ammo, reloading, firing, fireRate, damage, bulletRadius;
+	public final int clipSize, reloadTime;
 	
 	public boolean friendly;
 	
-	public Weapon(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, int fireRate) {
+	public Weapon(float xPos, float yPos, float radius, int ammo, int damage, 
+			int clipSize, int reloadTime, int fireRate, int bulletRadius) {
+		
 		super(xPos, yPos, radius);
 		this.ammo = ammo;
+		this.damage = damage;
+		
 		this.clipSize = clipSize;
 		this.clipAmmo = clipSize;
-		this.maxAmmo = maxAmmo;
 		this.reloadTime = reloadTime;
 		this.fireRate = fireRate;
+		this.bulletRadius = bulletRadius;
 		
 		this.friendly = true;
 		this.reloading = 0;
 		this.firing = 0;
 	}
 
-	public Weapon(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, int fireRate, boolean friendly) {
-		this(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime, fireRate);
+	public Weapon(float xPos, float yPos, float radius, int ammo, int damage, 
+			int clipSize, int reloadTime, int fireRate, int bulletRadius, boolean friendly) {
 		
+		this(xPos, yPos, radius, ammo, damage, clipSize, reloadTime, fireRate, bulletRadius);
 		this.friendly = friendly;
 	}
 	
@@ -41,6 +46,12 @@ public abstract class Weapon extends GameObject {
 		}
 	}
 
+	/**
+	 * 
+	 * @param targetX
+	 * @param targetY
+	 * @return
+	 */
 	public abstract Particle shoot(float targetX, float targetY);
 	
 	public void addAmmo() {

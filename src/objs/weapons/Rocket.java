@@ -6,8 +6,13 @@ import objs.particles.Particle;
 
 public class Rocket extends Gun {
 
-	public Rocket(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime) {
-		super(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime);
+	public static final int BASE_FIRERATE = 60;
+	public static final int CLIP_SIZE = 3;
+	public static final int RELOAD_TIME = 240;
+	public static final int BULLET_RADIUS = 10;
+	
+	public Rocket(float xPos, float yPos, float radius, int ammo, int damage) {
+		super(xPos, yPos, radius, ammo, damage, CLIP_SIZE, RELOAD_TIME, BASE_FIRERATE, BULLET_RADIUS);
 	}
 
 	@Override
@@ -17,7 +22,7 @@ public class Rocket extends Gun {
 		}
 		else {
 			clipAmmo--;
-			return new Missile(position.copy(), targetX, targetY, 5, 50);
+			return new Missile(position.copy(), targetX, targetY, bulletRadius, damage);
 		}
 	}
 

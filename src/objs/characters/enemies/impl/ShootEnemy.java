@@ -27,7 +27,7 @@ public class ShootEnemy extends Enemy {
 		
 		this.context = context;
 		this.targetPosition = PVector.random2D();
-		this.gun = new Gun(position.x, position.y, damage, 10, 50, 50, 60, false);	
+		this.gun = new Gun(position.x, position.y, radius/2f, 10, damage, false);	
 	}
 
 	@Override

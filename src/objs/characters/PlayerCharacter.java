@@ -24,6 +24,7 @@ import processing.core.PVector;
 public class PlayerCharacter extends Character {
 
 	public static final float SPEED = 5.0f;
+	public static final int DAMAGE = 5;
 
 	public final String name;
 	
@@ -33,7 +34,7 @@ public class PlayerCharacter extends Character {
 	public float up, down, left, right;
 	
 	public boolean attacking;
-	
+	public int damage;
 	
 	public Weapon currentWeapon;
 	public ArrayList<Weapon> weapons;
@@ -47,13 +48,14 @@ public class PlayerCharacter extends Character {
 		this.attacking = false;
 		
 		this.speedMultiplier = SPEED;
+		this.damage = DAMAGE;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 		
 		this.weapons = new ArrayList<>();
-		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 120, 300, 120));
-		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 6, 120, 300, 240));
-		weapons.add(new MachineGun(facing.x, facing.y, radius/2f, 30, 120, 300, 180));
+		weapons.add(new Gun(facing.x, facing.y, radius/2f, 96, damage));
+		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 16, damage*10));
+		weapons.add(new MachineGun(facing.x, facing.y, radius/2f, 180, damage));
 		
 		currentWeapon = weapons.get(0);
 		

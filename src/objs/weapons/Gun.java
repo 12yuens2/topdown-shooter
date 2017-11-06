@@ -6,13 +6,20 @@ import objs.particles.Particle;
 public class Gun extends Weapon {
 
 	public static final int BASE_FIRERATE = 20;
+	public static final int CLIP_SIZE = 12;
+	public static final int RELOAD_TIME = 120;
+	public static final int BULLET_RADIUS = 5;
 	
-	public Gun(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime) {
-		super(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime, BASE_FIRERATE);
+	public Gun(float xPos, float yPos, float radius, int ammo, int damage) {
+		super(xPos, yPos, radius, ammo, damage, CLIP_SIZE, RELOAD_TIME, BASE_FIRERATE, BULLET_RADIUS);
 	}
 
-	public Gun(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
-		super(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime, BASE_FIRERATE, friendly);
+	public Gun(float xPos, float yPos, float radius, int ammo, int damage, boolean friendly) {
+		super(xPos, yPos, radius, ammo, damage, CLIP_SIZE, RELOAD_TIME, BASE_FIRERATE, BULLET_RADIUS, friendly);
+	}
+	
+	public Gun(float xPos, float yPos, float radius, int ammo, int damage, int clipSize, int reloadTime, int fireRate, int bulletRadius) {
+		super(xPos, yPos, radius, ammo, damage, clipSize, reloadTime, fireRate, bulletRadius);
 	}
 
 	@Override
@@ -29,7 +36,7 @@ public class Gun extends Weapon {
 		}
 		else {
 			clipAmmo--;
-			return new Particle(position.copy(), targetX, targetY, 5, 5, friendly);
+			return new Particle(position.copy(), targetX, targetY, bulletRadius, damage, friendly);
 		}
 	}
 
