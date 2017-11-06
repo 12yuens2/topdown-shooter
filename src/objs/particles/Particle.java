@@ -32,7 +32,9 @@ public class Particle extends GameObject {
 	
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
-		drawEngine.drawEllipse(drawEngine.parent.color(0,0,255), position.x, position.y, size, size);
+		int color = friendly ? drawEngine.parent.color(0,0,255) : drawEngine.parent.color(255,0,255);
+		
+		drawEngine.drawEllipse(color, position.x, position.y, size, size);
 	}
 
 	public void integrate() {

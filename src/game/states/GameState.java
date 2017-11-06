@@ -126,6 +126,21 @@ public abstract class GameState {
 				
 			});
 			
+			player.collideResult(context.particles.iterator(), new Function<Particle, Boolean>() {
+
+				@Override
+				public Boolean apply(Particle p) {
+					if (p.friendly) {
+						return false;
+					}
+					else {
+						player.health -= p.damage;
+						return true;
+					}
+				}
+				
+			});
+			
 			/* Count down and remove any powerup effects */
 			Iterator<Effect> effectIt = player.powerups.iterator();
 			while(effectIt.hasNext()) {
