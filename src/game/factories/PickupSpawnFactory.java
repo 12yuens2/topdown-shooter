@@ -9,6 +9,8 @@ import objs.pickups.Pickup;
 import objs.pickups.impl.AmmoPickup;
 import objs.pickups.impl.BombPickup;
 import objs.pickups.impl.HealthPickup;
+import objs.pickups.impl.PermanentBulletRadiusPickup;
+import objs.pickups.impl.PermanentDamagePickup;
 import objs.pickups.impl.SpeedPickup;
 
 /**
@@ -39,10 +41,12 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 
 	@Override
 	public void setSpawnFunctions() {
-		spawnFunctions.add(() -> spawnAmmoPickup());
-		spawnFunctions.add(() -> spawnSpeedPickup());
-		spawnFunctions.add(() -> spawnHealthPickup());
-		spawnFunctions.add(() -> spawnBombPickup());
+//		spawnFunctions.add(() -> spawnAmmoPickup());
+//		spawnFunctions.add(() -> spawnSpeedPickup());
+//		spawnFunctions.add(() -> spawnHealthPickup());
+//		spawnFunctions.add(() -> spawnBombPickup());
+		spawnFunctions.add(() -> spawnPermanentDamagePickup());
+		spawnFunctions.add(() -> spawnPermanentBulletRadiusPickup());
 	}
 
 	@Override
@@ -76,6 +80,13 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 		return new BombPickup(randomX(), randomY(), SIZE, pickupLifespan, context);
 	}
 
+	private PermanentDamagePickup spawnPermanentDamagePickup() {
+		return new PermanentDamagePickup(randomX(), randomY(), SIZE, pickupLifespan);
+	}
+	
+	private PermanentBulletRadiusPickup spawnPermanentBulletRadiusPickup() {
+		return new PermanentBulletRadiusPickup(randomX(), randomY(), SIZE, pickupLifespan);
+	}
 	
 
 }
