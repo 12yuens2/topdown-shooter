@@ -10,7 +10,8 @@ import processing.core.PVector;
 
 public class PatrolEnemy extends Enemy {
 
-	
+	public static final float DETECT_RADIUS = 200f;
+	public static final float PATROL_DISTANCE = 100f;
 	
 	public ArrayList<PVector> patrolPositions;
 	public PVector startingPosition;
@@ -22,13 +23,13 @@ public class PatrolEnemy extends Enemy {
 	public PatrolEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets)  {
 		super(xPos, yPos, radius, health, damage, score, targets);
 		this.speedMultiplier *= 1.5f;
-		this.detectRadius = 200f;
+		this.detectRadius = DETECT_RADIUS;
 		this.chase = false;
 		
 		this.startingPosition = position.copy();
 		
 		this.patrolPositions = new ArrayList<>();
-		addPatrolPositions(100f);
+		addPatrolPositions(PATROL_DISTANCE);
 		
 		this.currentPatrol = 0;
 	}

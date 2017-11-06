@@ -4,6 +4,8 @@ import game.GameObject;
 import objs.pickups.effects.Effect;
 public abstract class Pickup extends GameObject{
 	
+	public static final int SPAWN_RATE = 200;
+	
 	public Effect effect;
 	
 	public int lifespan;
