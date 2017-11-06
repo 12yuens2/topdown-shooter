@@ -7,6 +7,8 @@ import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
 import game.ShooterServer;
+import game.factories.EnemySpawnFactory;
+import game.factories.PickupSpawnFactory;
 import game.states.GameState;
 import javafx.util.converter.PercentageStringConverter;
 import objs.characters.Character;
@@ -33,10 +35,15 @@ public class PlayingState extends GameState {
 	
 	public int difficulty;
 	
+	public EnemySpawnFactory enemySpawnFactory;
+	public PickupSpawnFactory pickupSpawnFactory;
+	
 	public PlayingState(GameContext context, DrawEngine drawEngine) {
 		super(context, drawEngine);
 		
 		this.difficulty = 6;
+		this.enemySpawnFactory = new EnemySpawnFactory(difficulty, context);
+		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
 	}
 
 	@Override
@@ -48,87 +55,9 @@ public class PlayingState extends GameState {
 	@Override
 	public GameState update(int mouseX, int mouseY, PlayerCharacter player) {
 		updateStep(mouseX, mouseY, player);
-
-		int enemyHealth = Enemy.BASE_HP + (difficulty);
-		int enemyDamage = Enemy.BASE_DMG + (difficulty/3);
-		int enemyScore = Enemy.BASE_SCORE + (difficulty/2);
-		int enemySpawnRate = Enemy.SPAWN_RATE - (difficulty*3);
-		int pickupSpawnRate = Pickup.SPAWN_RATE + (difficulty*3);
-		int size = 15;
 		
-		
-		if (random.nextInt(enemySpawnRate/12) == 0) {
-			FlockEnemy boid = new FlockEnemy(
-					parent.random(ShooterServer.SCREEN_X),
-					parent.random(ShooterServer.SCREEN_Y),
-					5, enemyHealth, enemyDamage, enemyScore, context.players);
-			
-			context.enemies.add(boid);
-			context.flockEnemies.add(boid);
-		}
-		
-		if (random.nextInt(enemySpawnRate) == 0) context.enemies.add(
-				new CircleEnemy(parent.random(ShooterServer.SCREEN_X), 
-										parent.random(ShooterServer.SCREEN_Y), 
-										size, enemyHealth, enemyDamage, enemyScore, 
-										context.players));
-		
-		if (random.nextInt(enemySpawnRate) == 0) context.enemies.add(
-				new AmbushEnemy(parent.random(ShooterServer.SCREEN_X), 
-										parent.random(ShooterServer.SCREEN_Y), 
-										size, enemyHealth, enemyDamage, enemyScore,
-										context.players));
-		
-		if (random.nextInt(enemySpawnRate) == 0) context.enemies.add(
-				new BasicChaseEnemy(parent.random(ShooterServer.SCREEN_X), 
-										parent.random(ShooterServer.SCREEN_Y), 
-										size, enemyHealth, enemyDamage, enemyScore,
-										context.players));
-		
-		if (random.nextInt(enemySpawnRate) == 0) context.enemies.add(
-				new ShootEnemy(parent.random(ShooterServer.SCREEN_X), 
-								parent.random(ShooterServer.SCREEN_Y), 
-								size, enemyHealth, enemyDamage, enemyScore,
-								context));
-		
-//		if (random.nextInt(pickupSpawnRate) == 0) {
-//			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
-//			if (random.nextInt(10) == 0) {
-//				spawnPatrolEnemy(pickup.position);
-//			}
-//			context.pickups.add(pickup);
-//		}
-//		
-//		if (random.nextInt(pickupSpawnRate) == 0) {
-//			AmmoPickup pickup = new AmmoPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
-//			if (random.nextInt(10) == 0) {
-//				spawnPatrolEnemy(pickup.position);
-//			}
-//			context.pickups.add(pickup);
-//		}
-//			
-//		if (random.nextInt(pickupSpawnRate) == 0) {
-//			BombPickup pickup = new BombPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300, context);
-//			if (random.nextInt(10) == 0) {
-//				spawnPatrolEnemy(pickup.position);
-//			}
-//			context.pickups.add(pickup);
-//		}
-//		if (random.nextInt(pickupSpawnRate) == 0) {
-//			HealthPickup pickup = new HealthPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
-//			if (random.nextInt(10) == 0) {
-//				spawnPatrolEnemy(pickup.position);
-//			}
-//			context.pickups.add(pickup);
-//		}
-		
-		if (random.nextInt(pickupSpawnRate) == 0) {
-			PermanentDamagePickup pickup = new PermanentDamagePickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
-			if (random.nextInt(10) == 0) {
-				spawnPatrolEnemy(pickup.position);
-			}
-			context.pickups.add(pickup);
-		}
+		enemySpawnFactory.spawnEntities();
+		pickupSpawnFactory.spawnEntities();
 		
 		return this;
 	}
