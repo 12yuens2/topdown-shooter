@@ -36,17 +36,22 @@ public class ShooterServer extends ShooterGame {
 	
 	@Override
 	public void mousePressed() {
-		gameController.handleInput(mouseX, mouseY, mouseButton, 0, false);
+		gameController.handleInput(mouseX, mouseY, mouseButton, true, 0, false);
+	}
+	
+	@Override
+	public void mouseReleased() {
+		gameController.handleInput(mouseX, mouseY, mouseButton, false, 0, false);
 	}
 	
 	@Override
 	public void keyPressed() {
-		gameController.handleInput(mouseX, mouseY, 0, keyCode, true);
+		gameController.handleInput(mouseX, mouseY, 0, false, keyCode, true);
 	}
 	
 	@Override
 	public void keyReleased() {
-		gameController.handleInput(mouseX, mouseY, 0, keyCode, false);
+		gameController.handleInput(mouseX, mouseY, 0, false, keyCode, false);
 	}
 	
 	public static void main(String[] args) {

@@ -16,7 +16,6 @@ public abstract class ShooterGame extends PApplet {
 	public GameController gameController;
 	public UDPSocket socket;
 	
-	
 	public void settings() {
 		size(SCREEN_X, SCREEN_Y);
 	}
@@ -82,6 +81,11 @@ public abstract class ShooterGame extends PApplet {
 	 * Processing handler for behaviour when a mouse button is pressed.
 	 */
 	public abstract void mousePressed();
+	
+	/**
+	 * Processing handler for behaviour when a mouse button is released.
+	 */
+	public abstract void mouseReleased();
 	
 	/**
 	 * Processing handler for behaviour when a key is pressed.

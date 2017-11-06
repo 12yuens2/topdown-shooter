@@ -6,9 +6,8 @@ import objs.particles.Particle;
 
 public class Rocket extends Gun {
 
-	public Rocket(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime) {
-		super(xPos, yPos, radius, clipSize, clipAmmo, ammo, maxAmmo, reloadTime);
-		// TODO Auto-generated constructor stub
+	public Rocket(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime) {
+		super(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime);
 	}
 
 	@Override

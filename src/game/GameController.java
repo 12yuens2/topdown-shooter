@@ -33,12 +33,12 @@ public class GameController {
 		if (player.name.equals("Server")) state = state.update(mouseX, mouseY, player);
 	}
 	
-	public GameInput getInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {
-		return new GameInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+	public GameInput getInput(int mouseX, int mouseY, int mouseButton, boolean mouseDown, int keyCode, boolean keyDown) {
+		return new GameInput(mouseX, mouseY, mouseButton, mouseDown, keyCode, keyDown);
 	}
 	
-	public void handleInput(int mouseX, int mouseY, int mouseButton, int keyCode, boolean keyDown) {
-		GameInput input = getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+	public void handleInput(int mouseX, int mouseY, int mouseButton, boolean mouseDown, int keyCode, boolean keyDown) {
+		GameInput input = getInput(mouseX, mouseY, mouseButton, mouseDown, keyCode, keyDown);
 		handleInput(input, this.player);
 	}
 	

@@ -119,16 +119,17 @@ public class PlayingState extends GameState {
 			if (input.keyCode == KeyEvent.VK_2) {
 				player.currentWeapon = player.weapons.get(1);
 			}
+			if (input.keyCode == KeyEvent.VK_3) {
+				player.currentWeapon = player.weapons.get(2);
+			}
 		}
 		else {
 			player.directionRelease(input.keyCode);
 		}
 		
 		if (input.mouseButton == PConstants.LEFT) {
-			Particle bullet = player.attack(input.mouseX, input.mouseY);
-			if (bullet != null) {
-				context.particles.add(bullet);
-			}
+			player.currentWeapon.firing = 0;
+			player.attacking = input.mouseDown;
 		}
 		
 		return this;

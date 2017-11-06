@@ -10,6 +10,7 @@ import game.ShooterServer;
 import objs.particles.Particle;
 import objs.pickups.effects.Effect;
 import objs.weapons.Gun;
+import objs.weapons.MachineGun;
 import objs.weapons.Rocket;
 import objs.weapons.Weapon;
 import processing.core.PApplet;
@@ -31,6 +32,8 @@ public class PlayerCharacter extends Character {
 	private float orientation;
 	public float up, down, left, right;
 	
+	public boolean attacking;
+	
 	
 	public Weapon currentWeapon;
 	public ArrayList<Weapon> weapons;
@@ -41,14 +44,16 @@ public class PlayerCharacter extends Character {
 		super(xPos, yPos, radius, health);
 		this.name = name;
 		this.friendly = true;
+		this.attacking = false;
 		
 		this.speedMultiplier = SPEED;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 		
 		this.weapons = new ArrayList<>();
-		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 12, 120, 300, 120));
-		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 12, 12, 120, 300, 240));
+		weapons.add(new Gun(facing.x, facing.y, radius/2f, 12, 120, 300, 120));
+		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 6, 120, 300, 240));
+		weapons.add(new MachineGun(facing.x, facing.y, radius/2f, 30, 120, 300, 180));
 		
 		currentWeapon = weapons.get(0);
 		
@@ -109,10 +114,17 @@ public class PlayerCharacter extends Character {
 	}
 
 	public Particle attack(float targetX, float targetY) {
-		Particle bullet = currentWeapon.shoot(targetX, targetY);
-		if (bullet == null) currentWeapon.reload();
-		
-		return bullet;
+		if (currentWeapon.firing <= 0) {
+			currentWeapon.firing = currentWeapon.fireRate;
+			Particle bullet = currentWeapon.shoot(targetX, targetY);
+			if (bullet == null) currentWeapon.reload();
+			
+			return bullet;
+		}
+		else {
+			currentWeapon.firing--;
+			return null;
+		}
 	}
 	
 	

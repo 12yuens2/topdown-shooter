@@ -20,7 +20,7 @@ public class ShooterClient extends ShooterGame {
 		super.draw();
 		
 		/* Send mouse coordinates to server */
-		sendInput(0, 0, false);
+		sendInput(0, false, 0, false);
 	}
 
 	@Override
@@ -47,17 +47,22 @@ public class ShooterClient extends ShooterGame {
 
 	@Override
 	public void mousePressed() {
-		sendInput(mouseButton, 0, false);
+		sendInput(mouseButton, true, 0, false);
+	}
+	
+	@Override
+	public void mouseReleased() {
+		sendInput(mouseButton, false, 0, false);
 	}
 	
 	@Override
 	public void keyPressed() {
-		sendInput(0, keyCode, true);
+		sendInput(0, false, keyCode, true);
 	}
 	
 	@Override
 	public void keyReleased() {
-		sendInput(0, keyCode, false);
+		sendInput(0, false, keyCode, false);
 	}
 	
 	/**
@@ -66,8 +71,8 @@ public class ShooterClient extends ShooterGame {
 	 * @param keyCode - Code for active key.
 	 * @param keyDown - Differentiate between a key press and key release.
 	 */
-	private void sendInput(int mouseButton, int keyCode, boolean keyDown) {
-		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, keyCode, keyDown);
+	private void sendInput(int mouseButton, boolean mouseDown, int keyCode, boolean keyDown) {
+		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, mouseDown, keyCode, keyDown);
 		
 		socket.sendClientMessage(MessageType.INPUT, input, gameController.player, SERVER_IP, PORT);
 	}

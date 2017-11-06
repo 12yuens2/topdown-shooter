@@ -5,12 +5,14 @@ import objs.particles.Particle;
 
 public class Gun extends Weapon {
 
-	public Gun(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime) {
-		super(xPos, yPos, radius, clipSize, clipAmmo, ammo, maxAmmo, reloadTime);
+	public static final int BASE_FIRERATE = 20;
+	
+	public Gun(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime) {
+		super(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime, BASE_FIRERATE);
 	}
 
-	public Gun(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
-		super(xPos, yPos, radius, clipSize, clipAmmo, ammo, maxAmmo, reloadTime, friendly);
+	public Gun(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
+		super(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime, BASE_FIRERATE, friendly);
 	}
 
 	@Override

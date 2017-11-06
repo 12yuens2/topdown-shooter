@@ -4,16 +4,17 @@ import java.io.Serializable;
 
 public class GameInput implements Serializable {
 
-	public boolean keyDown;
+	public boolean keyDown, mouseDown;
 	
 	public int mouseButton, keyCode;
 	public float mouseX, mouseY;
 	
 	
-	public GameInput(float mouseX, float mouseY, int mouseButton, int keyCode, boolean keyDown) {
+	public GameInput(float mouseX, float mouseY, int mouseButton, boolean mouseDown, int keyCode, boolean keyDown) {
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
 		this.mouseButton = mouseButton;
+		this.mouseDown = mouseDown;
 		this.keyCode = keyCode;
 		this.keyDown = keyDown;
 	}

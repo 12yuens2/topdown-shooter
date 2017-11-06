@@ -5,33 +5,29 @@ import objs.particles.Particle;
 
 public abstract class Weapon extends GameObject {
 
-	public int clipAmmo, ammo, reloading;
+	public int clipAmmo, ammo, reloading, firing, fireRate;
 	public final int clipSize, maxAmmo, reloadTime;
 	
 	public boolean friendly;
 	
-	public Weapon(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime) {
+	public Weapon(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, int fireRate) {
 		super(xPos, yPos, radius);
-		this.clipAmmo = clipAmmo;
 		this.ammo = ammo;
 		this.clipSize = clipSize;
+		this.clipAmmo = clipSize;
 		this.maxAmmo = maxAmmo;
 		this.reloadTime = reloadTime;
+		this.fireRate = fireRate;
 		
 		this.friendly = true;
 		this.reloading = 0;
+		this.firing = 0;
 	}
 
-	public Weapon(float xPos, float yPos, float radius, int clipSize, int clipAmmo, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
-		super(xPos, yPos, radius);
-		this.clipAmmo = clipAmmo;
-		this.ammo = ammo;
-		this.clipSize = clipSize;
-		this.maxAmmo = maxAmmo;
-		this.reloadTime = reloadTime;
+	public Weapon(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, int fireRate, boolean friendly) {
+		this(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime, fireRate);
 		
 		this.friendly = friendly;
-		this.reloading = 0;
 	}
 	
 
