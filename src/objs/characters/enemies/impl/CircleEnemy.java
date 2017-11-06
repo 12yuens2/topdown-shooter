@@ -1,4 +1,4 @@
-package objs.characters.enemies;
+package objs.characters.enemies.impl;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -6,6 +6,7 @@ import java.util.Random;
 import game.DrawEngine;
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
+import objs.characters.enemies.Enemy;
 import processing.core.PVector;
 
 public class CircleEnemy extends Enemy {

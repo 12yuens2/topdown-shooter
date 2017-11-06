@@ -11,14 +11,15 @@ import game.states.GameState;
 import objs.characters.Character;
 import objs.characters.FlockCharacter;
 import objs.characters.PlayerCharacter;
-import objs.characters.enemies.AmbushEnemy;
-import objs.characters.enemies.BasicChaseEnemy;
-import objs.characters.enemies.CircleEnemy;
-import objs.characters.enemies.PatrolEnemy;
-import objs.characters.enemies.ShootEnemy;
+import objs.characters.enemies.impl.AmbushEnemy;
+import objs.characters.enemies.impl.BasicChaseEnemy;
+import objs.characters.enemies.impl.CircleEnemy;
+import objs.characters.enemies.impl.PatrolEnemy;
+import objs.characters.enemies.impl.ShootEnemy;
 import objs.particles.Particle;
 import objs.pickups.impl.AmmoPickup;
 import objs.pickups.impl.BombPickup;
+import objs.pickups.impl.HealthPickup;
 import objs.pickups.impl.SpeedPickup;
 import processing.core.PConstants;
 
@@ -48,29 +49,29 @@ public class PlayingState extends GameState {
 			context.flockEnemies.add(boid);
 		}
 		
-		if (random.nextInt(200) == 0) context.enemies.add(
-				new CircleEnemy(parent.random(ShooterServer.SCREEN_X), 
-										parent.random(ShooterServer.SCREEN_Y), 
-										15, 5, 
-										context.players));
-		
-		if (random.nextInt(200) == 0) context.enemies.add(
-				new AmbushEnemy(parent.random(ShooterServer.SCREEN_X), 
-										parent.random(ShooterServer.SCREEN_Y), 
-										15,10,
-										context.players));
-		
-		if (random.nextInt(200) == 0) context.enemies.add(
-				new BasicChaseEnemy(parent.random(ShooterServer.SCREEN_X), 
-										parent.random(ShooterServer.SCREEN_Y), 
-										15,10,
-										context.players));
-		
-		if (random.nextInt(200) == 0) context.enemies.add(
-				new ShootEnemy(parent.random(ShooterServer.SCREEN_X), 
-								parent.random(ShooterServer.SCREEN_Y), 
-								15,10,
-								context));
+//		if (random.nextInt(200) == 0) context.enemies.add(
+//				new CircleEnemy(parent.random(ShooterServer.SCREEN_X), 
+//										parent.random(ShooterServer.SCREEN_Y), 
+//										15, 5, 
+//										context.players));
+//		
+//		if (random.nextInt(200) == 0) context.enemies.add(
+//				new AmbushEnemy(parent.random(ShooterServer.SCREEN_X), 
+//										parent.random(ShooterServer.SCREEN_Y), 
+//										15,10,
+//										context.players));
+//		
+//		if (random.nextInt(200) == 0) context.enemies.add(
+//				new BasicChaseEnemy(parent.random(ShooterServer.SCREEN_X), 
+//										parent.random(ShooterServer.SCREEN_Y), 
+//										15,10,
+//										context.players));
+//		
+//		if (random.nextInt(200) == 0) context.enemies.add(
+//				new ShootEnemy(parent.random(ShooterServer.SCREEN_X), 
+//								parent.random(ShooterServer.SCREEN_Y), 
+//								15,10,
+//								context));
 //		
 //		if (random.nextInt(250) == 0) {
 //			SpeedPickup pickup = new SpeedPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 5, 300);
@@ -98,6 +99,14 @@ public class PlayingState extends GameState {
 //			}
 //			context.pickups.add(pickup);
 //		}
+		if (random.nextInt(250) == 0) {
+			HealthPickup pickup = new HealthPickup(parent.random(ShooterServer.SCREEN_X), parent.random(ShooterServer.SCREEN_Y), 10, 300);
+			if (random.nextInt(10) == 0) {
+				context.enemies.add(new PatrolEnemy(pickup.position.x, pickup.position.y,
+														15, 15, 100f, 200f, context.players));
+			}
+			context.pickups.add(pickup);
+		}
 		
 		return this;
 	}

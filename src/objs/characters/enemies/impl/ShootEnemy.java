@@ -1,10 +1,11 @@
-package objs.characters.enemies;
+package objs.characters.enemies.impl;
 
 import java.util.ArrayList;
 
 import game.DrawEngine;
 import game.GameContext;
 import objs.characters.PlayerCharacter;
+import objs.characters.enemies.Enemy;
 import objs.particles.Particle;
 import objs.weapons.Gun;
 import processing.core.PVector;
