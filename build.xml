@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="ShooterGame" basedir="." default="all">
+
+
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
+
+    <path id="ShooterGame.classpath">
+      <pathelement location="${src}"/>
+      <pathelement location="${build}$"/>
+      <pathelement location="lib/core.jar"/>
+      <pathelement location="lib/udp.jar"/>
+    </path>
+    
+    <target name="all" depends="init, compile, dist, clean">
+    </target>
+
+    <target name="init">
+      <mkdir dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init">
+      <javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+	<src path="src"/>
+	<classpath refid="ShooterGame.classpath"/>
+      </javac>
+    </target>
+
+    <target name="dist" depends="compile">
+      <jar jarfile="./ShooterServer" basedir="${build}">
+	<manifest>
+	  <attribute name="Main-Class" value="game.ShooterServer" />
+	</manifest>
+      </jar>
+
+      <jar jarfile="./ShooterClient" basedir="${build}">
+	<manifest>
+	  <attribute name="Main-Class" value="game.ShooterClient" />
+	</manifest>
+      </jar>
+
+    </target>
+
+    <target name="server" depends="dist">
+      <java classname="game.ShooterServer" failonerror="true" fork="true">
+	<classpath>
+	  <path refid="ShooterGame.classpath" />
+	  <path location="ShooterGame" />
+	</classpath>
+      </java>
+    </target>
+
+    <target name="client" depends="dist">
+      <java classname="game.ShooterClient" failonerror="true" fork="true">
+	<classpath>
+	  <path refid="ShooterGame.classpath" />
+	  <path location="ShooterGame" />
+	</classpath>
+      </java>
+    </target>
+
+    <target name="clean">
+      <delete dir="${build}"/>
+    </target>
+</project>
+
