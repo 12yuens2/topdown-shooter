@@ -81,7 +81,10 @@ public class PlayerCharacter extends Character {
 		
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
-		currentWeapon.position = facing.copy();
+		
+		for (Weapon w : weapons) {
+			w.position = facing.copy();
+		}
 
 	}
 	

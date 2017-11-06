@@ -7,8 +7,9 @@ public abstract class Weapon extends GameObject {
 
 	public static final int BASE_DMG = 5;
 	
-	public int clipAmmo, ammo, reloading, firing, fireRate, damage, bulletRadius;
+	public int clipAmmo, ammo, reloading, firing, fireRate, damage;
 	public final int clipSize, reloadTime;
+	public float bulletRadius;
 	
 	public boolean friendly;
 	

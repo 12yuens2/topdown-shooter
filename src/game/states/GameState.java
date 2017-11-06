@@ -127,7 +127,22 @@ public abstract class GameState {
 				
 			});
 			
-			/* Enemy particles */
+			/* Collision with enemies to take damage */
+			player.collideResult(context.enemies.iterator(), new Function<Enemy, Boolean>() {
+
+				@Override
+				public Boolean apply(Enemy enemy) {
+					player.health -= enemy.damage;
+					if (enemy instanceof FlockEnemy) {
+						context.flockEnemies.remove(enemy);
+					}
+					
+					return enemy instanceof FlockEnemy;
+				}
+				
+			});
+			
+			/* Collision with enemy particles to take damage */
 			player.collideResult(context.particles.iterator(), new Function<Particle, Boolean>() {
 
 				@Override
@@ -195,18 +210,6 @@ public abstract class GameState {
 
 				context.score += enemy.score;
 			}
-			
-			/* Collision with players to deal damage to them */
-			enemy.collideResult(context.players.iterator(), new Function<PlayerCharacter, Boolean>() {
-
-				@Override
-				public Boolean apply(PlayerCharacter player) {
-					player.health -= enemy.damage;
-					
-					return false;
-				}
-				
-			});
 			
 			/* Collision with other enemies to resolve overlapping */
 			enemy.collideResult(context.enemies.iterator(), new Function<Enemy, Boolean>() {
