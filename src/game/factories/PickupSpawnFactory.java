@@ -48,7 +48,6 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 //		spawnFunctions.add(() -> spawnBombPickup());
 //		spawnFunctions.add(() -> spawnPermanentDamagePickup());
 //		spawnFunctions.add(() -> spawnPermanentBulletRadiusPickup());
-		spawnFunctions.add(() -> spawnTempFireRatePickup());
 	}
 
 	@Override
@@ -88,10 +87,6 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 	
 	private PermanentBulletRadiusPickup spawnPermanentBulletRadiusPickup() {
 		return new PermanentBulletRadiusPickup(randomX(), randomY(), SIZE, pickupLifespan);
-	}
-	
-	private TemporaryFireRatePickup spawnTempFireRatePickup() {
-		return new TemporaryFireRatePickup(randomX(), randomY(), SIZE, pickupLifespan);
 	}
 	
 
