@@ -45,6 +45,8 @@ public abstract class Weapon extends GameObject {
 			reloading--;
 			if (reloading <= 0) addAmmo();
 		}
+		
+		if (firing > 0) firing--;
 	}
 
 	/**

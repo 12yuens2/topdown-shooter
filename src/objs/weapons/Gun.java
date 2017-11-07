@@ -40,22 +40,5 @@ public class Gun extends Weapon {
 		}
 	}
 
-//	@Override
-//	public void reload() {
-//		if (reloading > 0) {
-//			int missingAmmo = clipSize - clipAmmo;
-//			
-//			if (ammo < missingAmmo) {
-//				ammo = 0;
-//				clipAmmo += ammo;
-//			}
-//			else {
-//				clipAmmo += missingAmmo;
-//				ammo -= missingAmmo;
-//			}
-//		}
-//	}
-
-
 
 }
