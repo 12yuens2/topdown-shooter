@@ -4,9 +4,10 @@ import game.GameObject;
 import objs.pickups.effects.Effect;
 public abstract class Pickup extends GameObject{
 	
-	public static final int SPAWN_RATE = 100;
+	public static final int SPAWN_RATE = 300;
 	public static final int LIFESPAN = 300;
 	public static final int PATROL_SPAWN_RATE = 10;
+	public static final int MIN_LIFESPAN = 100;
 	
 	public Effect effect;
 	

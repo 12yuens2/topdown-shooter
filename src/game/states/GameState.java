@@ -75,7 +75,7 @@ public abstract class GameState {
 	public void displayGame() {
 		parent.background(0);
 		
-		drawEngine.displayDrawables(context.explosions, context.particles, context.pickups, context.enemies, context.players);
+		drawEngine.displayDrawables(context.explosions, context.particles, context.pickups, context.players, context.enemies);
 	}
 	
 	/**

@@ -41,7 +41,7 @@ public class PlayingState extends GameState {
 	public PlayingState(GameContext context, DrawEngine drawEngine) {
 		super(context, drawEngine);
 		
-		this.difficulty = 6;
+		this.difficulty = 20;
 		this.enemySpawnFactory = new EnemySpawnFactory(difficulty, context);
 		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
 	}

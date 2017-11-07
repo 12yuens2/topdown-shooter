@@ -15,7 +15,7 @@ public abstract class Enemy extends Character {
 	public static final int BASE_DMG = 1;
 	public static final int BASE_SCORE = 2;
 	
-	public static final int SPAWN_RATE = 200;
+	public static final int SPAWN_RATE = 300;
 	
 	public ArrayList<PlayerCharacter> targets;
 	public Random random;
