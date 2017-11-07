@@ -34,6 +34,7 @@ import processing.core.PVector;
 public class PlayingState extends GameState {
 	
 	public int difficulty;
+	public int timer;
 	
 	public EnemySpawnFactory enemySpawnFactory;
 	public PickupSpawnFactory pickupSpawnFactory;
@@ -41,7 +42,8 @@ public class PlayingState extends GameState {
 	public PlayingState(GameContext context, DrawEngine drawEngine) {
 		super(context, drawEngine);
 		
-		this.difficulty = 20;
+		this.difficulty = 0;
+		this.timer = 0;
 		this.enemySpawnFactory = new EnemySpawnFactory(difficulty, context);
 		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
 	}
@@ -58,6 +60,12 @@ public class PlayingState extends GameState {
 		
 		enemySpawnFactory.spawnEntities();
 		pickupSpawnFactory.spawnEntities();
+		
+		if (++timer > 1000) {
+			difficulty++;
+			System.out.println(difficulty);
+			timer = 0;
+		}
 		
 		return this;
 	}

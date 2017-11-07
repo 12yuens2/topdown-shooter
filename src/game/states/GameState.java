@@ -199,7 +199,11 @@ public abstract class GameState {
 			
 			/* Remove enemies with no health */
 			if (enemy.health <= 0) {
-				enemyIt.remove();
+				try {
+					enemyIt.remove();
+				} catch (IllegalStateException e) {
+					/* Ignore */
+				}
 				context.flockEnemies.remove(enemy);
 
 				context.score += enemy.score;
