@@ -3,6 +3,7 @@ package objs.characters.enemies.impl;
 import java.util.ArrayList;
 
 import game.DrawEngine;
+import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
@@ -20,8 +21,8 @@ public class PatrolEnemy extends Enemy {
 	public boolean chase;
 	public int currentPatrol;
 	
-	public PatrolEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets)  {
-		super(xPos, yPos, radius, health, damage, score, targets);
+	public PatrolEnemy(float xPos, float yPos, EnemySpawnParameter spawnParam, ArrayList<PlayerCharacter> targets)  {
+		super(xPos, yPos, spawnParam, targets);
 		this.speedMultiplier *= 1.5f;
 		this.detectRadius = DETECT_RADIUS;
 		this.chase = false;

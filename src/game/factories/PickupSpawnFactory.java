@@ -41,12 +41,12 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 
 	@Override
 	public void setSpawnFunctions() {
-		spawnFunctions.add(() -> spawnAmmoPickup());
-		spawnFunctions.add(() -> spawnSpeedPickup());
-		spawnFunctions.add(() -> spawnHealthPickup());
-		spawnFunctions.add(() -> spawnBombPickup());
-		spawnFunctions.add(() -> spawnPermanentDamagePickup());
-		spawnFunctions.add(() -> spawnPermanentBulletRadiusPickup());
+		spawnMap.put(spawnRate, () -> spawnAmmoPickup());
+		spawnMap.put(spawnRate, () -> spawnSpeedPickup());
+		spawnMap.put(spawnRate, () -> spawnHealthPickup());
+		spawnMap.put(spawnRate*5, () -> spawnBombPickup());
+		spawnMap.put(spawnRate*2, () -> spawnPermanentDamagePickup());
+		spawnMap.put(spawnRate*3, () -> spawnPermanentBulletRadiusPickup());
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 			
 			/* Spawn an enemy to patrol around this pickup */
 			if (random.nextInt(patrolSpawnRate) == 0) {
-				Enemy e = enemySpawnFactory.spawnPatrolEnemy(p.position);
+				Enemy e = enemySpawnFactory.spawnPatrolEnemy(enemySpawnFactory.basicEnemySpawnParameter, p.position);
 				if (e != null) context.enemies.add(e);
 			}
 		}

@@ -101,9 +101,9 @@ public class PlayingState extends GameState {
 		return this;
 	}
 	
-	private void spawnPatrolEnemy(PVector position) {
-		context.enemies.add(new PatrolEnemy(position.x, position.y,
-											15, Enemy.BASE_HP, Enemy.BASE_DMG, Enemy.BASE_SCORE,
-											context.players));
-		}
+//	private void spawnPatrolEnemy(PVector position) {
+//		context.enemies.add(new PatrolEnemy(position.x, position.y,
+//											15, Enemy.BASE_HP, Enemy.BASE_DMG, Enemy.BASE_SCORE,
+//											context.players));
+//		}
 }

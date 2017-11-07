@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import game.DrawEngine;
+import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
@@ -24,8 +25,8 @@ public class AmbushEnemy extends Enemy {
 	public PVector targetPosition;
 	
 	
-	public AmbushEnemy(float xPos, float yPos, float radius, int health, int damage, int score, ArrayList<PlayerCharacter> targets) {
-		super(xPos, yPos, radius, health, damage, score, targets);
+	public AmbushEnemy(float xPos, float yPos, EnemySpawnParameter spawnParam, ArrayList<PlayerCharacter> targets) {
+		super(xPos, yPos, spawnParam, targets);
 
 		this.targetPosition = getClosestTargetPosition();
 	}

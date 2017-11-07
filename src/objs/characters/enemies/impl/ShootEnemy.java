@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import game.DrawEngine;
 import game.GameContext;
+import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import objs.particles.Particle;
@@ -20,8 +21,8 @@ public class ShootEnemy extends Enemy {
 	public PVector targetPosition;
 	public Gun gun;
 	
-	public ShootEnemy(float xPos, float yPos, float radius, int health, int damage, int score, GameContext context) {
-		super(xPos, yPos, radius, health, damage, score, context.players);
+	public ShootEnemy(float xPos, float yPos, EnemySpawnParameter spawnParam, GameContext context) {
+		super(xPos, yPos, spawnParam, context.players);
 		
 		this.shootInterval = 20;
 		

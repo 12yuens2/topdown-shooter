@@ -1,6 +1,8 @@
 package game.factories;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
@@ -21,12 +23,12 @@ public abstract class SpawnFactory<T extends GameObject> {
 	protected GameContext context;
 	protected Random random;
 	
-	protected ArrayList<Callable<T>> spawnFunctions;
+	protected HashMap<Integer, Callable<T>> spawnMap;
 	
 	public SpawnFactory(int difficulty, GameContext context) {
 		this.context = context;
 		this.random = new Random();
-		this.spawnFunctions = new ArrayList<>();
+		this.spawnMap = new HashMap<>();
 		
 		setDifficulty(difficulty);
 		setSpawnFunctions();
@@ -56,16 +58,29 @@ public abstract class SpawnFactory<T extends GameObject> {
 	 * @return
 	 */
 	protected T spawnRandomEntity() {
-		if (random.nextInt(spawnRate) == 0) {
-			try {
-				T t = spawnFunctions.get(random.nextInt(spawnFunctions.size())).call();
-				return t;
-			} catch (Exception e) {
-				e.printStackTrace();
+		for (Entry<Integer, Callable<T>> entry : spawnMap.entrySet()) {
+			if (random.nextInt(entry.getKey()) == 0) {
+				try {
+					T t = spawnMap.get(entry.getKey()).call();
+					return t;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
 		return null;
+		
+//		if (random.nextInt(spawnRate) == 0) {
+//			try {
+//				T t = spawnMap.get(random.nextInt(spawnMap.size())).call();
+//				return t;
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return null;
 	}
 
 	

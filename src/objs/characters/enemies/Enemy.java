@@ -3,6 +3,7 @@ package objs.characters.enemies;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.weapons.Weapon;
@@ -30,6 +31,10 @@ public abstract class Enemy extends Character {
 		this.random = new Random();
 	}
 	
+	public Enemy(float xPos, float yPos, EnemySpawnParameter spawnParam, ArrayList<PlayerCharacter> targets) {
+		this(xPos, yPos, spawnParam.radius, spawnParam.health, spawnParam.damage, spawnParam.score, targets);
+	}
+
 	/**
 	 * Get the closest target player to this enemy from the list of player targets.
 	 * @return the closest player character.

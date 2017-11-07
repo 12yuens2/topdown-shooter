@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import game.GameContext;
 import game.GameObject;
 import game.ShooterServer;
+import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.enemies.Enemy;
 import objs.characters.enemies.impl.AmbushEnemy;
 import objs.characters.enemies.impl.BasicChaseEnemy;
@@ -26,6 +27,7 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	public static final int ENEMY_RADIUS = 15;
 	
 	public int enemyHealth, enemyDamage, enemyScore;
+	public EnemySpawnParameter basicEnemySpawnParameter, flockEnemySpawnParameter;
 	
 	public EnemySpawnFactory(int difficulty, GameContext context) {
 		super(difficulty, context);
@@ -39,14 +41,17 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		this.enemyHealth = Enemy.BASE_HP + (difficulty);
 		this.enemyDamage = Enemy.BASE_DMG + (difficulty/3);
 		this.enemyScore = Enemy.BASE_SCORE + (difficulty/2);
+		
+		this.basicEnemySpawnParameter = new EnemySpawnParameter(ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore);
+		this.flockEnemySpawnParameter = new EnemySpawnParameter(5, enemyHealth/2, enemyDamage/2, enemyScore/2);
 	}
 	
 	@Override
 	public void setSpawnFunctions() {
-		spawnFunctions.add(() -> spawnChaseEnemy());
-		spawnFunctions.add(() -> spawnCircleEnemy());
-		spawnFunctions.add(() -> spawnAmbushEnemy());
-		spawnFunctions.add(() -> spawnShootEnemy());
+		spawnMap.put(spawnRate, () -> spawnChaseEnemy(basicEnemySpawnParameter));
+		spawnMap.put(spawnRate, () -> spawnCircleEnemy(basicEnemySpawnParameter));
+		spawnMap.put(spawnRate, () -> spawnAmbushEnemy(basicEnemySpawnParameter));
+		spawnMap.put(spawnRate, () -> spawnShootEnemy(basicEnemySpawnParameter));
 	}
 
 	@Override
@@ -54,39 +59,38 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		Enemy e = spawnRandomEntity();
 		if (e != null) context.enemies.add(e);
 		
-		spawnFlockEnemy();
+		spawnFlockEnemy(flockEnemySpawnParameter);
 	}
 
 	
 	
-	private BasicChaseEnemy spawnChaseEnemy() {
+	private BasicChaseEnemy spawnChaseEnemy(EnemySpawnParameter spawnParam) {
 		return new BasicChaseEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
-				ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore, context.players);
+				spawnParam, context.players);
 	}
 	
-	private CircleEnemy spawnCircleEnemy() {
+	private CircleEnemy spawnCircleEnemy(EnemySpawnParameter spawnParam) {
 		return new CircleEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
-				ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore, context.players);
+				spawnParam, context.players);
 	}
 	
-	private AmbushEnemy spawnAmbushEnemy() {
+	private AmbushEnemy spawnAmbushEnemy(EnemySpawnParameter spawnParam) {
 		return new AmbushEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
-				ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore, context.players);
+				spawnParam, context.players);
 	}
 	
-	private ShootEnemy spawnShootEnemy() {
+	private ShootEnemy spawnShootEnemy(EnemySpawnParameter spawnParam) {
 		return new ShootEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
-				ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore, context);
+				spawnParam, context);
 	}
 	
-	public PatrolEnemy spawnPatrolEnemy(PVector position) {
-		return new PatrolEnemy(position.x, position.y, 
-				ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore, context.players);
+	public PatrolEnemy spawnPatrolEnemy(EnemySpawnParameter spawnParam, PVector position) {
+		return new PatrolEnemy(position.x, position.y, spawnParam, context.players);
 	}
 
-	private void spawnFlockEnemy() {
+	private void spawnFlockEnemy(EnemySpawnParameter spawnParam) {
 		if (random.nextInt(spawnRate/12) == 0) {
-			FlockEnemy boid = new FlockEnemy(randomX(), randomY(), 5, enemyHealth, enemyDamage, enemyScore, context.players);
+			FlockEnemy boid = new FlockEnemy(randomX(), randomY(), spawnParam, context.players);
 			context.enemies.add(boid);
 			context.flockEnemies.add(boid);
 		}
