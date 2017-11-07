@@ -88,7 +88,6 @@ public class PlayingState extends GameState {
 		}
 		
 		if (input.mouseButton == PConstants.LEFT) {
-			player.currentWeapon.firing = 0;
 			player.attacking = input.mouseDown;
 		}
 		

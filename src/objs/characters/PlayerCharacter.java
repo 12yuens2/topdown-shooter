@@ -127,7 +127,6 @@ public class PlayerCharacter extends Character {
 			return bullet;
 		}
 		else {
-			currentWeapon.firing--;
 			return null;
 		}
 	}

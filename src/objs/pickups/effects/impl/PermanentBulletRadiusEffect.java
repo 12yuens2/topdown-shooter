@@ -10,7 +10,6 @@ public class PermanentBulletRadiusEffect extends Effect {
 	public <T extends PlayerCharacter> void apply(T character) {
 		for (Weapon w : character.weapons) {
 			w.bulletRadius += 0.5f;
-			System.out.println(w.bulletRadius);
 		}
 	}
 

@@ -12,6 +12,7 @@ import objs.pickups.impl.HealthPickup;
 import objs.pickups.impl.PermanentBulletRadiusPickup;
 import objs.pickups.impl.PermanentDamagePickup;
 import objs.pickups.impl.SpeedPickup;
+import objs.pickups.impl.TemporaryFireRatePickup;
 
 /**
  * Factory class to spawn pickups.
@@ -45,8 +46,9 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 //		spawnFunctions.add(() -> spawnSpeedPickup());
 //		spawnFunctions.add(() -> spawnHealthPickup());
 //		spawnFunctions.add(() -> spawnBombPickup());
-		spawnFunctions.add(() -> spawnPermanentDamagePickup());
-		spawnFunctions.add(() -> spawnPermanentBulletRadiusPickup());
+//		spawnFunctions.add(() -> spawnPermanentDamagePickup());
+//		spawnFunctions.add(() -> spawnPermanentBulletRadiusPickup());
+		spawnFunctions.add(() -> spawnTempFireRatePickup());
 	}
 
 	@Override
@@ -86,6 +88,10 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 	
 	private PermanentBulletRadiusPickup spawnPermanentBulletRadiusPickup() {
 		return new PermanentBulletRadiusPickup(randomX(), randomY(), SIZE, pickupLifespan);
+	}
+	
+	private TemporaryFireRatePickup spawnTempFireRatePickup() {
+		return new TemporaryFireRatePickup(randomX(), randomY(), SIZE, pickupLifespan);
 	}
 	
 
