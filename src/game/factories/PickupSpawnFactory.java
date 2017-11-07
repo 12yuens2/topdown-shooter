@@ -11,6 +11,7 @@ import objs.pickups.impl.BombPickup;
 import objs.pickups.impl.HealthPickup;
 import objs.pickups.impl.PermanentBulletRadiusPickup;
 import objs.pickups.impl.PermanentDamagePickup;
+import objs.pickups.impl.PiercePickup;
 import objs.pickups.impl.SpeedPickup;
 
 /**
@@ -46,6 +47,7 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 		spawnMap.put(spawnRate/3, this :: spawnAmmoPickup);
 		spawnMap.put(spawnRate/2, this :: spawnHealthPickup);
 		spawnMap.put(spawnRate, this :: spawnSpeedPickup);
+		spawnMap.put(spawnRate*2, this :: spawnPiercePickup);
 		spawnMap.put(spawnRate*2, this :: spawnPermanentDamagePickup);
 		spawnMap.put(spawnRate*3, this :: spawnPermanentBulletRadiusPickup);
 		spawnMap.put(spawnRate*5, this :: spawnBombPickup);
@@ -88,6 +90,10 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 	
 	private PermanentBulletRadiusPickup spawnPermanentBulletRadiusPickup() {
 		return new PermanentBulletRadiusPickup(randomX(), randomY(), SIZE, pickupLifespan);
+	}
+	
+	private PiercePickup spawnPiercePickup() {
+		return new PiercePickup(randomX(), randomY(), SIZE, pickupLifespan);
 	}
 	
 

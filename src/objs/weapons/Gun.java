@@ -36,7 +36,7 @@ public class Gun extends Weapon {
 		}
 		else {
 			if (friendly) clipAmmo--;
-			return new Particle(position.copy(), targetX, targetY, bulletRadius, damage, friendly);
+			return new Particle(position.copy(), targetX, targetY, bulletRadius, damage, friendly, pierce);
 		}
 	}
 

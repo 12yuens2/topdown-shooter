@@ -234,7 +234,7 @@ public abstract class GameState {
 						enemy.health -= p.damage;
 						if (p instanceof Missile) context.explosions.add(((Missile)p).explode());
 						
-						return true;
+						return !p.pierce;
 					}
 
 				}

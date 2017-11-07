@@ -9,7 +9,7 @@ public class Particle extends GameObject {
 	public PVector velocity;
 	public int damage;
 	
-	public boolean friendly;
+	public boolean friendly, pierce;
 
 	public Particle(float xPos, float yPos, float radius, int damage) {
 		super(xPos, yPos, radius);
@@ -17,6 +17,7 @@ public class Particle extends GameObject {
 		this.damage = damage;
 		
 		this.friendly = true;
+		this.pierce = false;
 	}
 	
 	public Particle(PVector position, float mouseX, float mouseY, float radius, int damage) {
@@ -24,10 +25,11 @@ public class Particle extends GameObject {
 		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
 	}
 
-	public Particle(PVector position, float mouseX, float mouseY, float radius, int damage, boolean friendly) {
+	public Particle(PVector position, float mouseX, float mouseY, float radius, int damage, boolean friendly, boolean pierce) {
 		this(position.x, position.y, radius, damage);
 		this.velocity = new PVector((mouseX - position.x), (mouseY - position.y)).normalize().mult(10f);
 		this.friendly = friendly;
+		this.pierce = pierce;
 	}
 	
 	public void display(DrawEngine drawEngine) {

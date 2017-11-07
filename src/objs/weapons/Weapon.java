@@ -11,7 +11,7 @@ public abstract class Weapon extends GameObject {
 	public final int clipSize, maxAmmo, reloadTime;
 	public float bulletRadius;
 	
-	public boolean friendly;
+	public boolean friendly, pierce;
 	
 	public Weapon(float xPos, float yPos, float radius, int ammo, int damage, 
 			int clipSize, int reloadTime, int fireRate, int bulletRadius) {
@@ -28,6 +28,7 @@ public abstract class Weapon extends GameObject {
 		this.bulletRadius = bulletRadius;
 		
 		this.friendly = true;
+		this.pierce = false;
 		this.reloading = 0;
 		this.firing = 0;
 	}

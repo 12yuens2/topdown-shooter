@@ -15,8 +15,7 @@ public class PermanentBulletRadiusPickup extends Pickup {
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
 		drawEngine.drawEllipse(drawEngine.parent.color(0,0,255), position.x, position.y, size, size, lifespan);
-		drawEngine.drawText(16, "R", (int) position.x, (int) position.y, 255);
-		
+		drawEngine.drawText(16, "R", (int) position.x, (int) position.y, 255);		
 	}
 
 }
