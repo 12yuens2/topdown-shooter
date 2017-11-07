@@ -11,12 +11,12 @@ public class Explosion extends Particle{
 	public Explosion(PVector position, float mouseX, float mouseY, float radius, int damage) {
 		super(position, mouseX, mouseY, radius, damage);
 		this.initialRadius = radius;
-		this.lifespan = 50;
+		this.lifespan = 30;
 	}
 	
 	@Override
 	public void display(DrawEngine drawEngine) {
-		radius += initialRadius/2f;
+		radius += initialRadius/2.5f;
 		float size = radius * 2;
 		drawEngine.drawEllipse(drawEngine.parent.color(255,127,80), position.x, position.y, size, size);
 	}

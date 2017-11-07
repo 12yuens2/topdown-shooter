@@ -164,7 +164,7 @@ public abstract class GameState {
 				}
 			}
 			
-			updateGameObjects(player.weapons);
+			player.currentWeapon.integrate();
 		}
 		
 	}

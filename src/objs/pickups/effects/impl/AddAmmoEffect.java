@@ -10,6 +10,7 @@ public class AddAmmoEffect extends Effect {
 	public <T extends PlayerCharacter> void apply(T character) {
 		for (Weapon weapon : character.weapons) {
 			weapon.ammo += weapon.clipSize;
+			if (weapon.ammo > weapon.maxAmmo) weapon.ammo = weapon.maxAmmo;
 		}
 	}
 

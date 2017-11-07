@@ -8,6 +8,7 @@ public class MachineGun extends Gun {
 	public static final int CLIP_SIZE = 30;
 	public static final int RELOAD_TIME = 180;
 	
+	
 	public MachineGun(float xPos, float yPos, float radius, int ammo, int damage) {
 		super(xPos, yPos, radius, ammo, damage, CLIP_SIZE, RELOAD_TIME, BASE_FIRERATE, Gun.BULLET_RADIUS);
 	}

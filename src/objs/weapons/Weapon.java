@@ -8,7 +8,7 @@ public abstract class Weapon extends GameObject {
 	public static final int BASE_DMG = 5;
 	
 	public int clipAmmo, ammo, reloading, firing, fireRate, damage;
-	public final int clipSize, reloadTime;
+	public final int clipSize, maxAmmo, reloadTime;
 	public float bulletRadius;
 	
 	public boolean friendly;
@@ -22,6 +22,7 @@ public abstract class Weapon extends GameObject {
 		
 		this.clipSize = clipSize;
 		this.clipAmmo = clipSize;
+		this.maxAmmo = clipSize * 10;
 		this.reloadTime = reloadTime;
 		this.fireRate = fireRate;
 		this.bulletRadius = bulletRadius;
@@ -72,7 +73,7 @@ public abstract class Weapon extends GameObject {
 	
 	
 	public void reload() {
-		if (reloading <= 0 && clipAmmo < clipSize) {
+		if (reloading <= 0 && clipAmmo < clipSize && ammo > 0) {
 			clipAmmo = 0;
 			reloading = reloadTime;
 		}

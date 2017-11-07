@@ -75,6 +75,7 @@ public class DrawEngine {
 	 * Draw an ellipse with opacity.
 	 */
 	public void drawEllipse(int col, float xPos, float yPos, float width, float height, int opacity) {
+		parent.stroke(255);
 		parent.ellipseMode(PConstants.CENTER);
 		parent.fill(col, opacity);
 		parent.ellipse(xPos, yPos, width, height);
@@ -90,9 +91,43 @@ public class DrawEngine {
 	 * @param height - height of the rectangle
 	 */
 	public void drawRectangle(int col, float xPos, float yPos, float width, float height) {
-		parent.rectMode(PConstants.CENTER);
+		parent.rectMode(PConstants.CORNER);
 		parent.fill(col);
 		parent.rect(xPos, yPos, width, height);
+	}
+	
+	
+	/**
+	 * Draw an arc based on given parameters.
+	 * @param col - colour of the arc.
+	 * @param xPos - x coordinate
+	 * @param yPos - y coordinate
+	 * @param width - width of the arc
+	 * @param height - height of the arc
+	 * @param startValue - angle to start the arc in radians
+	 * @param value - angle to end the arc in radians
+	 */
+	public void drawArc(int col, float xPos, float yPos, float width, float height, float startValue, float value) {
+		parent.stroke(col);
+		parent.strokeWeight(20);
+		parent.noFill();
+		parent.arc(xPos, yPos, width, height, startValue, value);
+		
+		/* Reset stroke weight to default. */
+		parent.strokeWeight(1);
+	}
+	
+	/**
+	 * Draw an arc with opacity.
+	 */
+	public void drawArc(int col, float xPos, float yPos, float width, float height, float startValue, float value, float opacity) {
+		parent.stroke(col, opacity);
+		parent.strokeWeight(20);
+		parent.noFill();
+		parent.arc(xPos, yPos, width, height, startValue, value);
+		
+		/* Reset stroke weight to default. */
+		parent.strokeWeight(1);
 	}
 
 

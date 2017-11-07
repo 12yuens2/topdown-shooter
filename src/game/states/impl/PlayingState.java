@@ -67,6 +67,14 @@ public class PlayingState extends GameState {
 			timer = 0;
 		}
 		
+		if (timer == 500) {
+			int entities = context.enemies.size();
+			if (entities < 10) difficulty += 3;
+			if (entities >= 10 && entities < 30) difficulty += 1;
+			if (entities > 50) difficulty -= 1;
+		}
+		
+		
 		return this;
 	}
 
