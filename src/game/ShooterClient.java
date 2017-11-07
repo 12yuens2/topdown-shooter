@@ -20,7 +20,7 @@ public class ShooterClient extends ShooterGame {
 		super.draw();
 		
 		/* Send mouse coordinates to server */
-		sendInput(0, false, 0, false);
+		sendInput(mouseButton, mousePressed, 0, false);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class ShooterClient extends ShooterGame {
 		/* 
 		 * No implementation needed.
 		 * Client does not update its own game when input is received.
-		 */		
+		 */
 	}
 
 	@Override

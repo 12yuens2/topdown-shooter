@@ -89,6 +89,13 @@ public class PlayingState extends GameState {
 		
 		if (input.mouseButton == PConstants.LEFT) {
 			player.attacking = input.mouseDown;
+			if (player.attacking) {
+				Particle bullet = player.attack(input.mouseX, input.mouseY);
+				if (bullet != null) {
+					context.particles.add(bullet);
+				}
+			}
+			
 		}
 		
 		return this;

@@ -10,8 +10,9 @@ public class ShooterServer extends ShooterGame {
 	public void draw() {
 		super.draw();
 		
+		gameController.handleInput(mouseX, mouseY, mouseButton, mousePressed, 0, false);
 		/* Multicast the new game context to all clients */
-		socket.sendMessage(MessageType.CONTEXT, gameController.state.context, SERVER_IP, PORT);		
+		socket.sendMessage(MessageType.CONTEXT, gameController.state.context, SERVER_IP, PORT);
 	}
 
 	@Override

@@ -108,13 +108,6 @@ public abstract class GameState {
 			player.integrate();
 			if (player.equals(playerChar)) player.facingDirection(mouseX, mouseY);
 			
-			if (player.attacking) {
-				Particle bullet = player.attack(mouseX, mouseY);
-				if (bullet != null) {
-					context.particles.add(bullet);
-				}
-			}
-			
 			/* Player pickups */
 			player.collideResult(context.pickups.iterator(), new Function<Pickup, Boolean>() {
 
