@@ -6,6 +6,9 @@
     <property name="build" location="build"/>
     <property name="dist" location="dist"/>
 
+    <property name="server" location="./ShooterServer" />
+    <property name="client" location="./ShooterClient" />
+
     <path id="ShooterGame.classpath">
       <pathelement location="${src}"/>
       <pathelement location="${build}$"/>
@@ -13,7 +16,7 @@
       <pathelement location="lib/udp.jar"/>
     </path>
     
-    <target name="all" depends="init, compile, dist, clean">
+    <target name="all" depends="init, compile, dist">
     </target>
 
     <target name="init">
@@ -28,26 +31,26 @@
     </target>
 
     <target name="dist" depends="compile">
-      <jar jarfile="./ShooterServer" basedir="${build}">
+      <jar jarfile="${server}" basedir="${build}">
 	<manifest>
 	  <attribute name="Main-Class" value="game.ShooterServer" />
 	</manifest>
       </jar>
 
-      <jar jarfile="./ShooterClient" basedir="${build}">
+      <jar jarfile="${client}" basedir="${build}">
 	<manifest>
 	  <attribute name="Main-Class" value="game.ShooterClient" />
 	</manifest>
       </jar>
-
     </target>
 
     <target name="server" depends="dist">
       <java classname="game.ShooterServer" failonerror="true" fork="true">
 	<classpath>
 	  <path refid="ShooterGame.classpath" />
-	  <path location="ShooterGame" />
+	  <path location="${server}" />
 	</classpath>
+	<arg value="${arg0}"/>
       </java>
     </target>
 
@@ -55,13 +58,15 @@
       <java classname="game.ShooterClient" failonerror="true" fork="true">
 	<classpath>
 	  <path refid="ShooterGame.classpath" />
-	  <path location="ShooterGame" />
+	  <path location="${client}" />
 	</classpath>
       </java>
     </target>
 
     <target name="clean">
       <delete dir="${build}"/>
+      <delete file="${server}"/>
+      <delete file="${client}"/>
     </target>
 </project>
 
