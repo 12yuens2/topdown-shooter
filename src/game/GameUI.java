@@ -18,7 +18,7 @@ public class GameUI {
 	
 	
 	public void display(PlayerCharacter player) {
-		player.health = 100;
+//		player.health = 100;
 //		int bullets = player.currentWeapon.clipAmmo;
 //		int ammo = player.currentWeapon.ammo;
 //		

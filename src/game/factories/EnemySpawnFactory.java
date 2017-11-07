@@ -1,11 +1,6 @@
 package game.factories;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.Callable;
-
 import game.GameContext;
-import game.GameObject;
 import game.ShooterServer;
 import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.enemies.Enemy;
