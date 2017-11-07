@@ -35,7 +35,7 @@ public class DrawEngine {
      * @param posY - y position of the text
      * @param col - colour of the text
      */
-	public void drawText(int textSize, String text, int posX, int posY, int col) {
+	public void drawText(int textSize, String text, float posX, float posY, int col) {
 		PFont font = parent.createFont("Arial", textSize, true);
 		
 		parent.textFont(font, textSize);
@@ -47,7 +47,7 @@ public class DrawEngine {
     /**
      * Draw text with opacity
      */
-	public void drawText(int textSize, String text, int posX, int posY, int col, int opacity) {
+	public void drawText(int textSize, String text, float posX, float posY, int col, int opacity) {
 		PFont font = parent.createFont("Arial", textSize, true);
 		
 		parent.textFont(font, textSize);
