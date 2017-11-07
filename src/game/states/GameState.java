@@ -75,7 +75,7 @@ public abstract class GameState {
 	public void displayGame() {
 		parent.background(0);
 		
-		drawEngine.displayDrawables(context.players, context.enemies, context.particles, context.pickups, context.explosions);
+		drawEngine.displayDrawables(context.explosions, context.particles, context.pickups, context.enemies, context.players);
 	}
 	
 	/**
@@ -89,9 +89,10 @@ public abstract class GameState {
 		updatePlayerStep(mouseX, mouseY, player);
 		updateEnemyStep();
 		updatePickups();
+		updateExplosions();
 		
 		/* Integrate step for all other game objects */
-		updateGameObjects(context.particles, context.explosions);
+		updateGameObjects(context.particles);
 	}
 	
 	/**
@@ -261,6 +262,20 @@ public abstract class GameState {
 			pickup.integrate();
 			
 			if (pickup.lifespan <= 0) pickupIt.remove();
+		}
+	}
+	
+	/**
+	 * Update for explosions to remove them after lifespan time out.
+	 */
+	private void updateExplosions() {
+		Iterator<Explosion> explosionIt = context.explosions.iterator();
+		while(explosionIt.hasNext()) {
+			Explosion e = explosionIt.next();
+			
+			e.integrate();
+			
+			if (e.lifespan <= 0) explosionIt.remove();
 		}
 	}
 	
