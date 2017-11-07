@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{syntax}
+\usepackage{csquotes}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{frame=tb,
+  numbers=left,
+  stepnumber=1,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numberstyle=\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  moredelim=**[is][\color{red}]{@}{@},
+}
+
+\setlength{\grammarindent}{12em}
+
+%\renewcommand{\lstlistingname}{Algorithm}
+%\newcommand{\tablerow}[4]{ #1 & #2 & #3 & #4\\}
+\newcommand{\n}[0]{\\[\baselineskip]}
+%\newcommand{\qa}[2]{\textbf{Q:} #1 \\ \textbf{A:} #2}
+%\newcommand{\argument}[4]{\textbf{#1:} #2 \\ \textbf{#3:} #4}
+
+\title{CS4303 Geometry Wars Report}
+\author{140011146}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In this practical we were tasked to implement a top-down shooter game, similar to games like \textit{Robotron 2084} and \textit{Geometry Wars} with the goal of implementing a variety of AI algorithms. In my game, I have implemented six different types of AI, including a flocking AI. I have also implemented multiple different pickups and the ability to play over a network.
+\n
+To build and run the game, run \texttt{ant} in the submission directory.
+\section{Game features}
+
+\section{Design and Implementation}
+
+\section{Conclusion}
+
+\end{document}
