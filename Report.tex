@@ -57,10 +57,62 @@
 \section{Introduction}
 In this practical we were tasked to implement a top-down shooter game, similar to games like \textit{Robotron 2084} and \textit{Geometry Wars} with the goal of implementing a variety of AI algorithms. In my game, I have implemented six different types of AI, including a flocking AI. I have also implemented multiple different pickups and the ability to play over a network.
 \n
-To build and run the game, run \texttt{ant} in the submission directory.
+To build the game, run \texttt{ant} in the submission directory.
+\\
+\noindent
+To run the server, run \texttt{ant -Darg0="Server" server}
+\\
+\noindent
+To run the client, run \texttt{ant -Darg0="Name" client} where ``Name" can be any name.
 \section{Game features}
+asd
+\subsection{AIs}
+
+\subsection{Weapons}
+
+\subsection{Pickups}
+
+\subsection{Networking}
 
 \section{Design and Implementation}
+
+\subsection{AIs}
+
+\subsubsection{Basic chase}
+This is the most basic AI that always goes towards the current position of the player. If the player is always moving, this AI will always just be chasing behind the player, making it quite easy to run away from.
+
+\subsubsection{Circle}
+This AI is similar to the basic chase AI except they use acceleration in their movement rather than moving at a constant speed towards the player's position. This means that if the player moves past the quickly, they will take more time to turn around and follow the player again. 
+
+\subsubsection{Ambush}
+This AI attempts to move towards where it predicts the player will be based on the direction the player is moving in. It will move to a position in front of the player. 
+\n
+I found when first creating this AI that if it implements this behaviour and there are a lot of them, they will all move synchronously when the player changes direction, making them easy to predict for a player. To deal with this, I added a random delay before they change their target position making each of them act more independent.
+
+\subsubsection{Patrol}
+These AI are spawn in with the generated pickups and will patrol in a square around the pickups. If the player comes near they will chase the player for a certain distance before moving back to their patrol locations. 
+
+\subsubsection{Shoot}
+This AI will shoot back at the player, making it more difficult. I chose to make them shoot directly at the player position rather than randomly near the player so it is easier to dodge if the player is always moving. These AI will move randomly around the screen while shooting.
+
+\subsubsection{Flocking}
+I have also implemented the flocking algorithm following the example on https://processing.org/examples/flocking.html. 
+\n
+Initially I had these enemies move towards the player position if there were no nearby flockmates but this made the game very hard as they would all flock towards the player. Instead, their initial target position is the player's current position and there is no other target direction or velocity when there are no nearby flockmates. 
+\n
+These AI are also smaller and more are spawned in the game to show off their flocking behaviour without filling the whole screen.
+
+\subsection{Planning AI}
+
+\subsection{Factories}
+
+\subsection{Network}
+To implement the networking in the game, I use a processing UDP library (https://ubaa.net/shared/processing/udp/).
+\n
+UDP packets are sent on every frame of the game. The server will send the entire game state and let the client render the state. Clients only send the player input to the server to process. This means the server is always correct and would prevent client players from cheating their attributes such as position and health. The trade off is the server has to do a lot more processing and so the game cannot scale to having many players at once.
+
+
+\subsection{Pickup}
 
 \section{Conclusion}
 

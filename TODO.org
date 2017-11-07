@@ -1,26 +1,18 @@
-*** TODO Remove damage/health magic numbers from weapons/enemies. 
 *** DONE Implement difficulty and multipliers for speed/damage/health
 *** TODO Implement changing difficulty based on player performance
-*** TODO Add upgrades for bullet damage, fire rate, speed and size
-*** TODO Add bullet pierce pickup
-*** TODO Add reload animation/indicator
+*** DONE Add upgrades for bullet damage, fire rate, speed and size
+*** DONE Add bullet pierce pickup
+*** DONE Add reload animation/indicator
 *** TODO Add damage taken animation/indicator
-*** TODO Refactor spawning enemy/pickup code
-*** TODO Rocket explodes at cursor like in previous game
+*** DONE Refactor spawning enemy/pickup code
 *** TODO Add difficulty changes enemy types that spawn
-*** TODO Add speed changes with difficulty
-*** TODO Fix weapon attack to limit by maximum fire rate even when spam clicking
+*** DONE Fix weapon attack to limit by maximum fire rate even when spam clicking
 *** TODO Indicator/UI for pickup effects
+*** TODO Fix "Server" hack to differentiate server and client
+*** DONE Fix Explosion too large bug
+*** TODO Fix multiple clients of the same name.
+*** TODO Implement death
 
-**** TODO Diffierentiate different types of ammo pickup
-**** TODO Fix ShootEnemy movement
-**** TODO Add shotgun weapon
-**** TODO Add melee weapon
-**** TODO Patrol enemies continue to chase if pickup is taken
-**** TODO Flock enemies die on contact with player
+**** DONE Flock enemies die on contact with player
 **** TODO Add start and end game states
-**** TODO Not moving shooting enemies and only move at higher difficulties
 
-***** TODO Add graphics
-***** TODO Add sound
-***** TODO Enemies go for pickups
