@@ -31,10 +31,10 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	@Override
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
-		this.spawnRate = Enemy.SPAWN_RATE - (difficulty*3);
+		this.spawnRate = Math.max(1, Enemy.SPAWN_RATE - (difficulty*3));
 		
 		this.enemyHealth = Math.max(Enemy.BASE_HP, Enemy.BASE_HP + (difficulty*2));
-		this.enemyDamage = Enemy.BASE_DMG + (difficulty/5);
+		this.enemyDamage = Math.max(1, Enemy.BASE_DMG + (difficulty/5));
 		this.enemyScore = Math.max(Enemy.BASE_SCORE, Enemy.BASE_SCORE + (difficulty/2));
 		
 		this.basicEnemySpawnParameter = new EnemySpawnParameter(ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore);
@@ -45,13 +45,10 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	
 	@Override
 	public void setSpawnFunctions() {
-		spawnMap.put(spawnRate/2, () -> spawnChaseEnemy(basicEnemySpawnParameter));
-		spawnMap.put(spawnRate, () -> spawnCircleEnemy(basicEnemySpawnParameter));
-		spawnMap.put(spawnRate*2, () -> spawnAmbushEnemy(basicEnemySpawnParameter));
+		setEasySpawns();
 		
 		int spawn = spawnRate*(5 / Math.max(1, difficulty % 3));
-		spawnMap.put(spawn, () -> spawnShootEnemy(basicEnemySpawnParameter));
-		
+		spawnMap.put(() -> spawnShootEnemy(basicEnemySpawnParameter), spawn);
 	}
 
 	@Override
@@ -62,7 +59,13 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		spawnFlockEnemy(flockEnemySpawnParameter);
 	}
 
-	
+	public void setEasySpawns() {
+		spawnMap.clear();
+		
+		spawnMap.put(() -> spawnChaseEnemy(basicEnemySpawnParameter), spawnRate/2);
+		spawnMap.put(() -> spawnCircleEnemy(basicEnemySpawnParameter), spawnRate);
+		spawnMap.put(() -> spawnAmbushEnemy(basicEnemySpawnParameter), spawnRate*2);
+	}
 	
 	private BasicChaseEnemy spawnChaseEnemy(EnemySpawnParameter spawnParam) {
 		return new BasicChaseEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 

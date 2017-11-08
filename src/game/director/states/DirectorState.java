@@ -9,6 +9,7 @@ import objs.pickups.Pickup;
 public abstract class DirectorState {
 
 	public static final float THRESHOLD = 40f;
+	public static final float MAX_INTENSITY = THRESHOLD * 2;
 	
 	public int difficulty;
 	public float intensity, threshold;
@@ -37,17 +38,23 @@ public abstract class DirectorState {
 	
 	protected void minThreatSpawn() {
 		enemySpawnFactory.spawnRate =  (4 * Enemy.SPAWN_RATE) - (difficulty*3);
-		enemySpawnFactory.spawnEntities();
-		
 		pickupSpawnFactory.spawnRate = (Pickup.SPAWN_RATE / 4) + (difficulty * 3);
-		pickupSpawnFactory.spawnEntities();
+		
+		enemySpawnFactory.setEasySpawns();
+		spawnEntities();
 	}
 	
 	protected void maxThreatSpawn() {
-		enemySpawnFactory.spawnRate = (Enemy.SPAWN_RATE/3) - (difficulty*3);
-		enemySpawnFactory.spawnEntities();
-		
+		enemySpawnFactory.spawnRate = (Enemy.SPAWN_RATE/3) - (difficulty*3);		
 		pickupSpawnFactory.spawnRate = (3 * Pickup.SPAWN_RATE) + (difficulty * 3);
+		
+		if (intensity > MAX_INTENSITY) enemySpawnFactory.setEasySpawns();
+		
+		spawnEntities();
+	}
+	
+	private void spawnEntities() {
+		enemySpawnFactory.spawnEntities();
 		pickupSpawnFactory.spawnEntities();
 	}
 

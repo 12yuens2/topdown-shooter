@@ -34,9 +34,9 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 	@Override
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
-		this.spawnRate = Pickup.SPAWN_RATE + (difficulty*3);
+		this.spawnRate = Math.max(1, Pickup.SPAWN_RATE + (difficulty*3));
 		this.patrolSpawnRate = Math.max(1, Pickup.PATROL_SPAWN_RATE - (difficulty/2));
-		this.pickupLifespan = Math.max(Pickup.MIN_LIFESPAN, Pickup.LIFESPAN - (difficulty*3));
+		this.pickupLifespan = Math.max(Pickup.MIN_LIFESPAN, Pickup.LIFESPAN - (difficulty*3)) + 1000;
 		
 		setSpawnFunctions();
 	}
@@ -44,13 +44,13 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 
 	@Override
 	public void setSpawnFunctions() {
-		spawnMap.put(spawnRate/3, this :: spawnAmmoPickup);
-		spawnMap.put(spawnRate/2, this :: spawnHealthPickup);
-		spawnMap.put(spawnRate, this :: spawnSpeedPickup);
-		spawnMap.put(spawnRate*2, this :: spawnPiercePickup);
-		spawnMap.put(spawnRate*2, this :: spawnPermanentDamagePickup);
-		spawnMap.put(spawnRate*3, this :: spawnPermanentBulletRadiusPickup);
-		spawnMap.put(spawnRate*5, this :: spawnBombPickup);
+		spawnMap.put(this :: spawnHealthPickup, spawnRate/3);
+		spawnMap.put(this :: spawnAmmoPickup, spawnRate/2);
+		spawnMap.put(this :: spawnSpeedPickup, spawnRate);
+		spawnMap.put(this :: spawnPiercePickup, spawnRate*2);
+		spawnMap.put(this :: spawnPermanentDamagePickup, spawnRate*2);
+		spawnMap.put(this :: spawnPermanentBulletRadiusPickup, spawnRate*3);
+		spawnMap.put(this :: spawnBombPickup, spawnRate*5);
 	}
 
 	@Override

@@ -41,7 +41,6 @@ public class Director {
 	
 	public void increaseIntensityOnDamage(float damageTaken) {
 		intensity += 3 * damageTaken;
-		
 	}
 	
 	public void increaseIntensityOnKill(float score) {

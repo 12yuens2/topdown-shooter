@@ -24,7 +24,7 @@ public abstract class SpawnFactory<T extends GameObject> {
 	protected GameContext context;
 	protected Random random;
 	
-	protected HashMap<Integer, Callable<T>> spawnMap;
+	public HashMap<Callable<T>, Integer> spawnMap;
 	
 	public SpawnFactory(int difficulty, GameContext context) {
 		this.context = context;
@@ -59,10 +59,10 @@ public abstract class SpawnFactory<T extends GameObject> {
 	 * @return
 	 */
 	protected T spawnRandomEntity() {
-		for (Entry<Integer, Callable<T>> entry : spawnMap.entrySet()) {
-			if (random.nextInt(entry.getKey()) == 0) {
+		for (Entry<Callable<T>, Integer> entry : spawnMap.entrySet()) {
+			if (random.nextInt(entry.getValue()) == 0) {
 				try {
-					T t = spawnMap.get(entry.getKey()).call();
+					T t = entry.getKey().call();
 					return t;
 				} catch (Exception e) {
 					e.printStackTrace();
