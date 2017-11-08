@@ -27,7 +27,16 @@ public class FlockEnemy extends Enemy {
 	
 	public FlockEnemy(float xPos, float yPos, EnemySpawnParameter spawnParam, ArrayList<PlayerCharacter> targets) {
 		super(xPos, yPos, spawnParam, targets);
-		this.velocity = PVector.sub(getClosestTargetPosition(), position).normalize().mult(MAX_SPEED);
+		
+		PVector targetPosition = getClosestTargetPosition();
+		
+		if (targetPosition != null) {		
+			this.velocity = PVector.sub(getClosestTargetPosition(), position).normalize().mult(MAX_SPEED);
+		}
+		else {
+			this.velocity = PVector.random2D();
+		}
+		
 		this.acceleration = new PVector(0, 0);
 	}
 

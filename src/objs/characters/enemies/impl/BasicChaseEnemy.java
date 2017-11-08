@@ -29,8 +29,11 @@ public class BasicChaseEnemy extends Enemy {
 	@Override
 	public void integrate() {
 		PVector targetPosition = getClosestTargetPosition();
-		PVector velocity = getVelocityToTarget(targetPosition);
-		move(velocity);
+		
+		if (targetPosition != null) {
+			PVector velocity = getVelocityToTarget(targetPosition);
+			move(velocity);
+		}
 	}
 
 }

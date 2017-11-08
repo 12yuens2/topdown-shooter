@@ -1,5 +1,6 @@
 package game;
 
+import game.states.GameState;
 import network.Message;
 import network.UDPSocket;
 import objs.characters.PlayerCharacter;
@@ -52,8 +53,8 @@ public abstract class ShooterGame extends PApplet {
 					handleInputMessage((GameInput) message.data, message.player);
 					break;
 					
-				case CONTEXT:
-					handleContextMessage((GameContext) message.data);
+				case STATE:
+					handleStateMessage((GameState) message.data);
 			}
 		}
 	}
@@ -73,9 +74,9 @@ public abstract class ShooterGame extends PApplet {
 	
 	/**
 	 * Handler for receiving a game context message.
-	 * @param context - GameContext object received in the message.
+	 * @param data - GameContext object received in the message.
 	 */
-	protected abstract void handleContextMessage(GameContext context);
+	protected abstract void handleStateMessage(GameState state);
 	
 	/**
 	 * Processing handler for behaviour when a mouse button is pressed.
@@ -106,6 +107,6 @@ public abstract class ShooterGame extends PApplet {
 	protected PlayerCharacter getPlayer(PlayerCharacter player) {
 		int index = gameController.state.context.players.indexOf(player);
 		
-		return index > 0 ? gameController.state.context.players.get(index) : null;
+		return index >= 0 ? gameController.state.context.players.get(index) : null;
 	}
 }

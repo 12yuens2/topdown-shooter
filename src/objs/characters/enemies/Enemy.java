@@ -15,7 +15,7 @@ public abstract class Enemy extends Character {
 	public static final int BASE_DMG = 1;
 	public static final int BASE_SCORE = 2;
 	
-	public static final int SPAWN_RATE = 300;
+	public static final int SPAWN_RATE = 100;
 	
 	public ArrayList<PlayerCharacter> targets;
 	public Random random;
@@ -37,7 +37,7 @@ public abstract class Enemy extends Character {
 
 	/**
 	 * Get the closest target player to this enemy from the list of player targets.
-	 * @return the closest player character.
+	 * @return the closest player character. Null if no valid targets.
 	 */
 	protected PlayerCharacter getClosestTarget() {
 		PlayerCharacter targetPlayer = null;
@@ -56,10 +56,12 @@ public abstract class Enemy extends Character {
 	
 	/**
 	 * Get the position of the closest target to this enemy.
-	 * @return Position of the closest target.
+	 * @return Position of the closest target. Null if no valid targets.
 	 */
 	protected PVector getClosestTargetPosition() {
-		return getClosestTarget().position.copy();
+		PlayerCharacter target = getClosestTarget();
+
+		return target != null ? getClosestTarget().position.copy() : null;
 	}
 
 }

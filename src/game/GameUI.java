@@ -1,23 +1,21 @@
 package game;
 
+import java.io.Serializable;
+
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
-public class GameUI {
+public class GameUI implements Serializable {
 
 	public GameContext context;
-	public DrawEngine drawEngine;
-	public PApplet parent;
 	
-	public GameUI(GameContext context, DrawEngine drawEngine) {
+	public GameUI(GameContext context) {
 		this.context = context;
-		this.drawEngine = drawEngine;
-		this.parent = drawEngine.parent;
 	}
 	
 	
-	public void display(PlayerCharacter player) {
+	public void display(DrawEngine drawEngine, PlayerCharacter player) {
 //		player.health = 100;
 //		int bullets = player.currentWeapon.clipAmmo;
 //		int ammo = player.currentWeapon.ammo;
@@ -34,31 +32,34 @@ public class GameUI {
 //		
 		int xPos = 80;
 		int yPos = 750;
-		drawReloadDisplay(xPos, yPos, player);
-		drawHealthDisplay(xPos+65, yPos+70, player);
+		drawReloadDisplay(drawEngine, xPos, yPos, player);
+		drawHealthDisplay(drawEngine, xPos+65, yPos+70, player);
 
 	}
 	
 	/**
 	 * Display the player health part of the UI.
+	 * @param drawEngine - The draw engine.
 	 * @param xPos - x position of this UI element.
 	 * @param yPos - y position of this UI element.
 	 * @param player - Player whose health is being displayed.
 	 */
-	private void drawHealthDisplay(int xPos, int yPos, PlayerCharacter player) {
+	private void drawHealthDisplay(DrawEngine drawEngine, int xPos, int yPos, PlayerCharacter player) {
 		float health = Math.min(100, player.health);
 		float healthDisplay = scaleDisplay(health, 100, PConstants.HALF_PI, PConstants.TWO_PI);
 		
-		drawArcDisplay(parent.color(255,0,0), xPos, yPos, healthDisplay, player.health+"/100");
+		drawArcDisplay(drawEngine, drawEngine.parent.color(255,0,0), xPos, yPos, 
+				healthDisplay, player.health+"/100");
 	}
 	
 	/**
 	 * Display the ammunition and reloading part of the UI.
+	 * @param drawEngine - The draw engine.
 	 * @param xPos - x position of this UI element.
 	 * @param yPos - y position of this UI element.
 	 * @param player - Player whose ammunition is being displayed.
 	 */
-	private void drawReloadDisplay(int xPos, int yPos, PlayerCharacter player) {
+	private void drawReloadDisplay(DrawEngine drawEngine, int xPos, int yPos, PlayerCharacter player) {
 		float ammoDisplay = scaleDisplay(player.currentWeapon.clipAmmo, 
 										 player.currentWeapon.clipSize, 
 										 PConstants.HALF_PI, PConstants.TWO_PI); 
@@ -69,18 +70,20 @@ public class GameUI {
 											  PConstants.HALF_PI, PConstants.TWO_PI);
 		}
 		
-		drawArcDisplay(parent.color(0,191,255), xPos, yPos, ammoDisplay, player.currentWeapon.clipAmmo+"/"+player.currentWeapon.ammo);
+		drawArcDisplay(drawEngine, drawEngine.parent.color(0,191,255), xPos, yPos, 
+				ammoDisplay, player.currentWeapon.clipAmmo+"/"+player.currentWeapon.ammo);
 	}
 	
 	/**
 	 * Generic display function for an arc UI element.
+	 * @param drawEngine - The draw engine.
 	 * @param col - Colour of the arc.
 	 * @param xPos - x position of the arc.
 	 * @param yPos - y position of the arc.
 	 * @param displayValue - Value to be displayed.
 	 * @param displayString - String to be displayed next to the arc.
 	 */
-	private void drawArcDisplay(int col, float xPos, float yPos, float displayValue, String displayString) {
+	private void drawArcDisplay(DrawEngine drawEngine, int col, float xPos, float yPos, float displayValue, String displayString) {
 		float arcSize = 100;
 		float opacity = 100;
 		

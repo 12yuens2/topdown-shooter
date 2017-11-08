@@ -2,6 +2,8 @@ package game;
 
 import java.awt.event.KeyEvent;
 
+import game.states.GameState;
+import game.states.impl.GameOverState;
 import game.states.impl.StartState;
 import network.MessageType;
 import objs.characters.PlayerCharacter;
@@ -9,12 +11,15 @@ import processing.core.PApplet;
 
 
 public class ShooterClient extends ShooterGame {
+
+	public boolean started;
 	
 	public void setup() {
 		super.setup();
+		
+		started = false;
 	}
 
-	
 	public void draw() {
 		super.draw();
 		
@@ -36,15 +41,17 @@ public class ShooterClient extends ShooterGame {
 	}
 
 	@Override
-	protected void handleContextMessage(GameContext context) {
-		gameController.state.context = context;
-		gameController.state.ui.context = context;
-		
-		/* Update the game controller's player object */
-		PlayerCharacter player = getPlayer(gameController.player);
-		if (player != null) gameController.player = player;
-		
-		System.out.println(gameController.state.context.score);
+	protected void handleStateMessage(GameState state) {
+		if (started) {
+			gameController.state = state;
+			
+			/* Update the game controller's player object */
+			PlayerCharacter player = getPlayer(gameController.player);
+			if (player != null) gameController.player = player;
+			
+			
+			if (gameController.state instanceof GameOverState) started = false;
+		}
 	}
 
 	@Override
@@ -76,14 +83,16 @@ public class ShooterClient extends ShooterGame {
 	private void sendInput(int mouseButton, boolean mouseDown, int keyCode, boolean keyDown) {
 		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, mouseDown, keyCode, keyDown);
 
-		if (input.keyCode == KeyEvent.VK_ENTER && gameController.state instanceof StartState) {
-			
-			/* Send this new player to server */
-			System.out.println(gameController.player);
+
+		/* Send this new player to server */
+		if (input.keyCode == KeyEvent.VK_ENTER && !started && !(gameController.state instanceof GameOverState)) {
 			socket.sendMessage(MessageType.PLAYER, gameController.player, SERVER_IP, PORT);
+			started = true;
 		}
-		
+
 		gameController.handleInput(input, gameController.player);
+
+		
 		
 		socket.sendClientMessage(MessageType.INPUT, input, gameController.player, SERVER_IP, PORT);
 	}

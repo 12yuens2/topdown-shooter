@@ -1,5 +1,6 @@
 package game;
 
+import game.states.GameState;
 import network.MessageType;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
@@ -14,16 +15,15 @@ public class ShooterServer extends ShooterGame {
 		
 		gameController.handleInput(mouseX, mouseY, mouseButton, mousePressed, 0, false);
 		
+		/* Multicast the new game context to all clients atomically. */
 		synchronized(this) {
-			
-			/* Multicast the new game context to all clients atomically. */
-			socket.sendMessage(MessageType.CONTEXT, gameController.state.context, SERVER_IP, PORT);
+			socket.sendMessage(MessageType.STATE, gameController.state, SERVER_IP, PORT);
 		}
 	}
 
 	@Override
 	protected void handlePlayerMessage(PlayerCharacter player) {
-		gameController.state.context.players.add(player);		
+		gameController.state.context.players.add(player);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ShooterServer extends ShooterGame {
 	}
 
 	@Override
-	protected void handleContextMessage(GameContext context) {
+	protected void handleStateMessage(GameState state) {
 		/* 
 		 * No implementation needed.
 		 * Server does not update its own context even if it receives a context message.

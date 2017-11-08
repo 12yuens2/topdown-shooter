@@ -1,5 +1,6 @@
 package game.states;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -24,30 +25,24 @@ import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public abstract class GameState {
+public abstract class GameState implements Serializable {
 
 	public Random random;
-	public PApplet parent;
 	
 	public GameContext context;
 	public GameUI ui;
-	public DrawEngine drawEngine;
 	
-	public GameState(GameContext context, DrawEngine drawEngine) {
+	public GameState(GameContext context) {
 		this.random = new Random();
-		this.parent = drawEngine.parent;
-		
 		this.context = context;
-		this.drawEngine = drawEngine;
-
-		this.ui = new GameUI(context, drawEngine);
+		this.ui = new GameUI(context);
 	}
 	
 	/**
 	 * Display this GameState to the screen.
 	 * @param player - The character that this client controls.
 	 */
-	public abstract void display(PlayerCharacter player);
+	public abstract void display(DrawEngine drawEngine, PlayerCharacter player);
 	
 	
 	/**
@@ -72,8 +67,8 @@ public abstract class GameState {
 	/**
 	 * Display all drawable game objects in the game.
 	 */
-	public void displayGame() {
-		parent.background(0);
+	public void displayGame(DrawEngine drawEngine) {
+		drawEngine.parent.background(0);
 		
 		drawEngine.displayDrawables(context.explosions, context.particles, context.pickups, context.players, context.enemies);
 	}
@@ -165,6 +160,8 @@ public abstract class GameState {
 			}
 			
 			player.currentWeapon.integrate();
+			
+			if (player.health <= 0) playerIt.remove();
 		}
 		
 	}

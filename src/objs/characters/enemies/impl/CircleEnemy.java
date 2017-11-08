@@ -31,22 +31,16 @@ public class CircleEnemy extends Enemy {
 
 	@Override
 	public void integrate() {
-//		PVector velocity = new PVector((target.position.x - position.x), (target.position.y - position.y));
-		
-		
-//		if (PVector.dist(position, target.position) < 300) {
-//			velocity = new PVector(-velocity.y, velocity.x);
-//		}
-//		
-//		position.add(velocity.normalize().mult(3f));
-		
 		PVector targetPosition = getClosestTargetPosition();
-		PVector linear = PVector.sub(targetPosition, position);
-		linear.normalize().mult(linearMag);
-		velocity.add(linear);
 		
-		if (velocity.mag() > 2f) {
-			velocity.normalize().mult(2f);
+		if (targetPosition != null) {
+			PVector linear = PVector.sub(targetPosition, position);
+			linear.normalize().mult(linearMag);
+			velocity.add(linear);
+			
+			if (velocity.mag() > 2f) {
+				velocity.normalize().mult(2f);
+			}
 		}
 		
 		position.add(velocity);

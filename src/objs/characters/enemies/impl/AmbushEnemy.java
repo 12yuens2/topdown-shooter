@@ -41,21 +41,25 @@ public class AmbushEnemy extends Enemy {
 
 	@Override
 	public void integrate() {
-		PVector velocity = getVelocityToTarget(targetPosition);
-		
-		/* Random chance to update target position*/
-		Random r = new Random();
-		if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
-			PlayerCharacter targetPlayer = getClosestTarget();
+		if (targetPosition != null) {
+			PVector velocity = getVelocityToTarget(targetPosition);
 			
-			/* Target position is based on the direction the player is currently heading */
-			float targetX = getX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);
-			float targetY = getY(targetPlayer.position.y + (targetPlayer.down - targetPlayer.up) * DISTANCE);
-			
-			targetPosition = new PVector(targetX, targetY);
+			/* Random chance to update target position*/
+			Random r = new Random();
+			if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
+				PlayerCharacter targetPlayer = getClosestTarget();
+				
+				if (targetPlayer != null) {
+					/* Target position is based on the direction the player is currently heading */
+					float targetX = getX(targetPlayer.position.x + (targetPlayer.right - targetPlayer.left) * DISTANCE);
+					float targetY = getY(targetPlayer.position.y + (targetPlayer.down - targetPlayer.up) * DISTANCE);
+					
+					targetPosition = new PVector(targetX, targetY);
+				}
+			}
+	
+			move(velocity);
 		}
-
-		move(velocity);
 	}
 
 }

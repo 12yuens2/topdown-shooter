@@ -11,12 +11,12 @@ import objs.characters.PlayerCharacter;
 
 public class StartState extends GameState {
 
-	public StartState(GameContext context, DrawEngine drawEngine) {
-		super(context, drawEngine);
+	public StartState(GameContext context) {
+		super(context);
 	}
 
 	@Override
-	public void display(PlayerCharacter player) {
+	public void display(DrawEngine drawEngine, PlayerCharacter player) {
 		drawEngine.parent.background(0);
 		drawEngine.drawText(64, "Press Enter to start.", ShooterGame.SCREEN_X/2, ShooterGame.SCREEN_Y/2, 255);
 		
@@ -30,7 +30,7 @@ public class StartState extends GameState {
 	@Override
 	public GameState handleInput(GameInput input, PlayerCharacter player) {
 		if (input.keyCode == KeyEvent.VK_ENTER) {
-			return new PlayingState(context, drawEngine);
+			return new PlayingState(context);
 		}
 		
 		return this;

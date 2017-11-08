@@ -25,6 +25,7 @@ public class PlayerCharacter extends Character {
 
 	public static final float SPEED = 5.0f;
 	public static final int DAMAGE = 5;
+	public static final int HEALTH = 100;
 
 	public final String name;
 	
@@ -41,9 +42,22 @@ public class PlayerCharacter extends Character {
 	
 	public ArrayList<Effect> powerups;
 	
-	public PlayerCharacter(String name, float xPos, float yPos, float radius, int health) {
-		super(xPos, yPos, radius, health);
+	public PlayerCharacter(String name, float xPos, float yPos, float radius) {
+		super(xPos, yPos, radius, HEALTH);
 		this.name = name;
+		
+		resetPlayer(xPos, yPos);
+	}
+	
+	public void resetPlayer(float xPos, float yPos) {
+		this.up = 0;
+		this.down = 0;
+		this.left = 0;
+		this.right = 0;
+		
+		this.health = HEALTH;
+		this.position = new PVector(xPos, yPos);
+		
 		this.friendly = true;
 		this.attacking = false;
 		
@@ -60,7 +74,7 @@ public class PlayerCharacter extends Character {
 		currentWeapon = weapons.get(0);
 		
 		this.powerups = new ArrayList<>();
-	}	
+	}
 
 	@Override
 	public void display(DrawEngine drawEngine) {

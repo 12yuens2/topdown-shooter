@@ -9,7 +9,7 @@ public enum MessageType {
 	/**
 	 * Indicates the message being sent contains a 'GameContext' as data. 
 	 */
-	CONTEXT, 
+	STATE, 
 	
 	/**
 	 * Indicates the message being sent contains a 'GameInput' as data.

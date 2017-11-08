@@ -45,7 +45,7 @@ public class PatrolEnemy extends Enemy {
 		PlayerCharacter target = getClosestTarget();
 		
 		/* Run directly towards the player */
-		if (chase) {
+		if (chase && target != null) {
 			PVector velocity = getVelocityToTarget(target.position);
 			move(velocity);
 			
@@ -55,7 +55,7 @@ public class PatrolEnemy extends Enemy {
 		
 		/* Patrol */
 		else {
-			if (detectPlayer(target)) {
+			if (target != null && detectPlayer(target)) {
 				chase = true; 
 			}
 			else {

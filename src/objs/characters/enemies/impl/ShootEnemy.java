@@ -58,8 +58,10 @@ public class ShootEnemy extends Enemy {
 		if (shootInterval <= 0) {
 			shootInterval = INTERVAL;
 			
-			Particle bullet = gun.shoot(target.position.x, target.position.y);
-			if (bullet != null) context.particles.add(bullet);
+			if (target != null) {
+				Particle bullet = gun.shoot(target.position.x, target.position.y);
+				if (bullet != null) context.particles.add(bullet);
+			}
 		}
 		else {
 			shootInterval--;

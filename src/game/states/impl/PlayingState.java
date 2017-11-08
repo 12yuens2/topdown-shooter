@@ -36,11 +36,11 @@ public class PlayingState extends GameState {
 	public int difficulty;
 	public int timer;
 	
-	public EnemySpawnFactory enemySpawnFactory;
-	public PickupSpawnFactory pickupSpawnFactory;
+	public transient EnemySpawnFactory enemySpawnFactory;
+	public transient PickupSpawnFactory pickupSpawnFactory;
 	
-	public PlayingState(GameContext context, DrawEngine drawEngine) {
-		super(context, drawEngine);
+	public PlayingState(GameContext context) {
+		super(context);
 		
 		this.difficulty = 0;
 		this.timer = 0;
@@ -49,9 +49,9 @@ public class PlayingState extends GameState {
 	}
 
 	@Override
-	public void display(PlayerCharacter player) {
-		displayGame();
-		ui.display(player);
+	public void display(DrawEngine drawEngine, PlayerCharacter player) {
+		displayGame(drawEngine);
+		ui.display(drawEngine, player);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class PlayingState extends GameState {
 		}
 		
 		
-		return this;
+		return context.players.size() > 0 ? this : new GameOverState(context);
 	}
 
 	@Override
