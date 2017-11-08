@@ -41,8 +41,6 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		this.flockEnemySpawnParameter = new EnemySpawnParameter(5, enemyHealth/2, Math.max(1, enemyDamage/2), Math.max(1, enemyScore/2));
 		
 		setSpawnFunctions();
-		
-		System.out.println("hp: " + enemyHealth);
 	}
 	
 	@Override

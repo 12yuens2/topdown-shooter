@@ -1,4 +1,4 @@
-package game.director;
+package game.director.states;
 
 import game.GameContext;
 import game.factories.EnemySpawnFactory;

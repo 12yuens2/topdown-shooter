@@ -1,6 +1,7 @@
-package game.director;
+package game.director.states.impl;
 
 import game.GameContext;
+import game.director.states.DirectorState;
 
 public class RestState extends DirectorState {
 

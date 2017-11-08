@@ -1,6 +1,8 @@
 package game.director;
 
 import game.GameContext;
+import game.director.states.DirectorState;
+import game.director.states.impl.BuildupState;
 import objs.characters.PlayerCharacter;
 
 public class Director {
@@ -34,7 +36,7 @@ public class Director {
 			timer = 0;
 		}
 		
-//		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
+		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
 	}
 	
 	public void increaseIntensityOnDamage(float damageTaken) {
