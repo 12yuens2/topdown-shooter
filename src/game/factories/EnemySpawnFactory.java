@@ -48,10 +48,10 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		spawnMap.put(spawnRate/2, () -> spawnChaseEnemy(basicEnemySpawnParameter));
 		spawnMap.put(spawnRate, () -> spawnCircleEnemy(basicEnemySpawnParameter));
 		spawnMap.put(spawnRate*2, () -> spawnAmbushEnemy(basicEnemySpawnParameter));
+		
 		int spawn = spawnRate*(5 / Math.max(1, difficulty % 3));
 		spawnMap.put(spawn, () -> spawnShootEnemy(basicEnemySpawnParameter));
 		
-		System.out.println(spawn);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package game;
 
-import game.states.impl.PlayingState;
+import java.awt.event.KeyEvent;
+
+import game.states.impl.StartState;
 import network.MessageType;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
@@ -10,9 +12,6 @@ public class ShooterClient extends ShooterGame {
 	
 	public void setup() {
 		super.setup();
-		
-		/* Send this new player to server */
-		socket.sendMessage(MessageType.PLAYER, gameController.player, SERVER_IP, PORT);
 	}
 
 	
@@ -38,11 +37,14 @@ public class ShooterClient extends ShooterGame {
 
 	@Override
 	protected void handleContextMessage(GameContext context) {
-		gameController.state = new PlayingState(context, gameController.drawEngine);
+		gameController.state.context = context;
+		gameController.state.ui.context = context;
 		
 		/* Update the game controller's player object */
 		PlayerCharacter player = getPlayer(gameController.player);
 		if (player != null) gameController.player = player;
+		
+		System.out.println(gameController.state.context.score);
 	}
 
 	@Override
@@ -73,6 +75,15 @@ public class ShooterClient extends ShooterGame {
 	 */
 	private void sendInput(int mouseButton, boolean mouseDown, int keyCode, boolean keyDown) {
 		GameInput input = gameController.getInput(mouseX, mouseY, mouseButton, mouseDown, keyCode, keyDown);
+
+		if (input.keyCode == KeyEvent.VK_ENTER && gameController.state instanceof StartState) {
+			
+			/* Send this new player to server */
+			System.out.println(gameController.player);
+			socket.sendMessage(MessageType.PLAYER, gameController.player, SERVER_IP, PORT);
+		}
+		
+		gameController.handleInput(input, gameController.player);
 		
 		socket.sendClientMessage(MessageType.INPUT, input, gameController.player, SERVER_IP, PORT);
 	}

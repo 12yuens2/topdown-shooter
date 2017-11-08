@@ -6,13 +6,19 @@ import processing.core.PApplet;
 
 public class ShooterServer extends ShooterGame {
 
+	boolean lock;
+	
 	@Override
 	public void draw() {
 		super.draw();
 		
 		gameController.handleInput(mouseX, mouseY, mouseButton, mousePressed, 0, false);
-		/* Multicast the new game context to all clients */
-		socket.sendMessage(MessageType.CONTEXT, gameController.state.context, SERVER_IP, PORT);
+		
+		synchronized(this) {
+			
+			/* Multicast the new game context to all clients atomically. */
+			socket.sendMessage(MessageType.CONTEXT, gameController.state.context, SERVER_IP, PORT);
+		}
 	}
 
 	@Override
@@ -24,7 +30,9 @@ public class ShooterServer extends ShooterGame {
 	protected void handleInputMessage(GameInput input, PlayerCharacter player) {
 		PlayerCharacter clientPlayer = getPlayer(player);
 		
-		gameController.handleInput(input, clientPlayer);		
+		synchronized(this) {
+			gameController.handleInput(input, clientPlayer);
+		}
 	}
 
 	@Override

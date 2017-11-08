@@ -2,6 +2,7 @@ package game;
 
 import game.states.GameState;
 import game.states.impl.PlayingState;
+import game.states.impl.StartState;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 
@@ -25,7 +26,7 @@ public class GameController {
 										  (float) Math.random() * ShooterServer.SCREEN_Y, 
 										  15, 100);
 		
-		this.state = new PlayingState(new GameContext(player), drawEngine);
+		this.state = new StartState(new GameContext(player), drawEngine);
 	}
 
 	public void step(int mouseX, int mouseY) {
@@ -43,6 +44,6 @@ public class GameController {
 	}
 	
 	public void handleInput(GameInput input, PlayerCharacter player) {
-		state.handleInput(input, player);
+		state = state.handleInput(input, player);
 	}
 }
