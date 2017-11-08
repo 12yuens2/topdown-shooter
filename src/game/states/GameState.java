@@ -12,6 +12,7 @@ import game.GameInput;
 import game.GameObject;
 import game.GameUI;
 import game.ShooterGame;
+import game.director.Director;
 import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
@@ -21,6 +22,7 @@ import objs.particles.Missile;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
 import objs.pickups.effects.Effect;
+import objs.pickups.impl.BombPickup;
 import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -31,11 +33,15 @@ public abstract class GameState implements Serializable {
 	
 	public GameContext context;
 	public GameUI ui;
+
+	public transient Director aiDirector;
 	
 	public GameState(GameContext context) {
 		this.random = new Random();
 		this.context = context;
 		this.ui = new GameUI(context);
+		
+		this.aiDirector = new Director(context);
 	}
 	
 	/**
@@ -122,6 +128,8 @@ public abstract class GameState implements Serializable {
 				@Override
 				public Boolean apply(Enemy enemy) {
 					player.health -= enemy.damage;
+					aiDirector.increaseIntensityOnDamage(enemy.damage);
+					
 					if (enemy instanceof FlockEnemy) {
 						context.flockEnemies.remove(enemy);
 					}
@@ -141,6 +149,8 @@ public abstract class GameState implements Serializable {
 					}
 					else {
 						player.health -= p.damage;
+						aiDirector.increaseIntensityOnDamage(p.damage);
+						
 						return true;
 					}
 				}
@@ -196,6 +206,7 @@ public abstract class GameState implements Serializable {
 			
 			/* Remove enemies with no health */
 			if (enemy.health <= 0) {
+				aiDirector.increaseIntensityOnKill(enemy.score);
 				try {
 					enemyIt.remove();
 				} catch (IllegalStateException e) {

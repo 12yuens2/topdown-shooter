@@ -7,6 +7,7 @@ import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
 import game.ShooterServer;
+import game.director.Director;
 import game.factories.EnemySpawnFactory;
 import game.factories.PickupSpawnFactory;
 import game.states.GameState;
@@ -33,19 +34,14 @@ import processing.core.PVector;
 
 public class PlayingState extends GameState {
 	
-	public int difficulty;
-	public int timer;
-	
-	public transient EnemySpawnFactory enemySpawnFactory;
-	public transient PickupSpawnFactory pickupSpawnFactory;
+//	public transient EnemySpawnFactory enemySpawnFactory;
+//	public transient PickupSpawnFactory pickupSpawnFactory;
 	
 	public PlayingState(GameContext context) {
 		super(context);
 		
-		this.difficulty = 0;
-		this.timer = 0;
-		this.enemySpawnFactory = new EnemySpawnFactory(difficulty, context);
-		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
+//		this.enemySpawnFactory = new EnemySpawnFactory(difficulty, context);
+//		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
 	}
 
 	@Override
@@ -58,21 +54,15 @@ public class PlayingState extends GameState {
 	public GameState update(int mouseX, int mouseY, PlayerCharacter player) {
 		updateStep(mouseX, mouseY, player);
 		
-		enemySpawnFactory.spawnEntities();
-		pickupSpawnFactory.spawnEntities();
-		
-		if (++timer > 1000) {
-			difficulty++;
-			System.out.println(difficulty);
-			timer = 0;
-		}
-		
-		if (timer == 500) {
-			int entities = context.enemies.size();
-			if (entities < 10) difficulty += 3;
-			if (entities >= 10 && entities < 30) difficulty += 1;
-			if (entities > 50) difficulty -= 1;
-		}
+		aiDirector.step();
+
+//		
+//		if (timer == 500) {
+//			int entities = context.enemies.size();
+//			if (entities < 10) difficulty += 3;
+//			if (entities >= 10 && entities < 30) difficulty += 1;
+//			if (entities > 50) difficulty -= 1;
+//		}
 		
 		
 		return context.players.size() > 0 ? this : new GameOverState(context);

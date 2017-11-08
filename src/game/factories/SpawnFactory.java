@@ -19,7 +19,7 @@ import game.ShooterGame;
  */
 public abstract class SpawnFactory<T extends GameObject> {
 
-	protected int difficulty, spawnRate;
+	public int difficulty, spawnRate;
 	
 	protected GameContext context;
 	protected Random random;

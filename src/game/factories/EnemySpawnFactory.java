@@ -34,13 +34,15 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		this.spawnRate = Enemy.SPAWN_RATE - (difficulty*3);
 		
 		this.enemyHealth = Math.max(Enemy.BASE_HP, Enemy.BASE_HP + (difficulty*2));
-		this.enemyDamage = Enemy.BASE_DMG;
+		this.enemyDamage = Enemy.BASE_DMG + (difficulty/5);
 		this.enemyScore = Math.max(Enemy.BASE_SCORE, Enemy.BASE_SCORE + (difficulty/2));
 		
 		this.basicEnemySpawnParameter = new EnemySpawnParameter(ENEMY_RADIUS, enemyHealth, enemyDamage, enemyScore);
 		this.flockEnemySpawnParameter = new EnemySpawnParameter(5, enemyHealth/2, Math.max(1, enemyDamage/2), Math.max(1, enemyScore/2));
 		
 		setSpawnFunctions();
+		
+		System.out.println("hp: " + enemyHealth);
 	}
 	
 	@Override
@@ -89,14 +91,11 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	}
 
 	private void spawnFlockEnemy(EnemySpawnParameter spawnParam) {
-		if (random.nextInt(spawnRate/12) == 0) {
+		if (random.nextInt(spawnRate/10) == 0) {
 			FlockEnemy boid = new FlockEnemy(randomX(), randomY(), spawnParam, context.players);
 			context.enemies.add(boid);
 			context.flockEnemies.add(boid);
 		}
 	}
 
-
-	
-	
 }
