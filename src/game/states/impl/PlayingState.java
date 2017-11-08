@@ -80,39 +80,42 @@ public class PlayingState extends GameState {
 
 	@Override
 	public GameState handleInput(GameInput input, PlayerCharacter player) {
-		player.facingDirection((int)input.mouseX, (int)input.mouseY);
-		
-		if (input.keyDown) {
-			player.directionPress(input.keyCode);
+		if (player != null) {
+			player.facingDirection((int)input.mouseX, (int)input.mouseY);
 			
-			if (input.keyCode == KeyEvent.VK_R) {
-				player.currentWeapon.reload();
-			}
-			
-			if (input.keyCode == KeyEvent.VK_1) {
-				player.currentWeapon = player.weapons.get(0);
-			}
-			if (input.keyCode == KeyEvent.VK_2) {
-				player.currentWeapon = player.weapons.get(1);
-			}
-			if (input.keyCode == KeyEvent.VK_3) {
-				player.currentWeapon = player.weapons.get(2);
-			}
-		}
-		else {
-			player.directionRelease(input.keyCode);
-		}
-		
-		if (input.mouseButton == PConstants.LEFT) {
-			player.attacking = input.mouseDown;
-			if (player.attacking) {
-				Particle bullet = player.attack(input.mouseX, input.mouseY);
-				if (bullet != null) {
-					context.particles.add(bullet);
+			if (input.keyDown) {
+				player.directionPress(input.keyCode);
+				
+				if (input.keyCode == KeyEvent.VK_R) {
+					player.currentWeapon.reload();
+				}
+				
+				if (input.keyCode == KeyEvent.VK_1) {
+					player.currentWeapon = player.weapons.get(0);
+				}
+				if (input.keyCode == KeyEvent.VK_2) {
+					player.currentWeapon = player.weapons.get(1);
+				}
+				if (input.keyCode == KeyEvent.VK_3) {
+					player.currentWeapon = player.weapons.get(2);
 				}
 			}
+			else {
+				player.directionRelease(input.keyCode);
+			}
 			
+			if (input.mouseButton == PConstants.LEFT) {
+				player.attacking = input.mouseDown;
+				if (player.attacking) {
+					Particle bullet = player.attack(input.mouseX, input.mouseY);
+					if (bullet != null) {
+						context.particles.add(bullet);
+					}
+				}
+				
+			}
 		}
+		
 		
 		return this;
 	}
