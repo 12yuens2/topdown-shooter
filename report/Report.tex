@@ -74,7 +74,7 @@ To run the server or a single player game, run \texttt{ant server}
 \noindent
 To run the client, run \texttt{ant -Darg0="Name" client} where ``Name" can be any name.
 \section{Game overview}
-In this game the player controls a character, running away and shooting at the enemies. The player has different weapons and can pickup different power-ups to help them.
+In this game the player controls a character, running away and shooting at the enemies. The player has different weapons and can pickup different power-ups to help them. The player moves with a set of movement keys (WASD) and aims and shoots with the mouse.
 \figimg{1}{imgs/Screenshot.png}{Screenshot of the game}
 The HUD on the bottom left shows the player's ammunition and health. Enemies who collide with the player deal damage to them and are destroyed. The player should try to avoid and shoot the enemies while picking up the powerups. It is important to get the pickups because they provide useful benefits like more health and damage, which is needed as the difficulty increases.
 \section{Game features and design}
@@ -123,11 +123,11 @@ The AI director uses an adaptive pacing algorithm following the system used in L
 If the intensity is too high, no shooting enemies are spawned to make the game a little easier for the players.
 
 \figimg{0.7}{imgs/DirectorFSM.png}{State machine of the AI director.}
-The \textbf{Build up} and \textbf{Sustain Peak} states have a higher spawn rate of enemies. The director moves from build up to sustain peak when the intensity is greater than the threshold. The sustain peak state is there to ensure there is some minimum time spent with high spawn rates of enemies. 
+The \textbf{Build up} and \textbf{Sustain Peak} states have a higher spawn rate of enemies. The director moves from build up to sustain peak when the intensity is greater than the threshold. The sustain peak state is there to ensure there is some minimum time spent with high spawn rates of enemies. \textbf{Fade} and \textbf{Rest} states are the opposite side to build up and peak. The director moves out of fade when the intensity is below the threshold and rest acts the same as peak, ensuring a minimum period of rest before the next build up.
 \n
-\textbf{Fade} and \textbf{Rest} states are the opposite side to build up and peak. The director moves out of fade when the intensity is below the threshold and rest acts the same as peak, ensuring a minimum period of rest before the next build up.
+This simple system of moving between high and low spawn rates makes the game more interesting and can be quite effective despite its simplicity. It also gives players a little bit of rest rather than a constant stream of enemies.
 \subsubsection{Difficulty}
-At regular intervals, the state of the game is sampled to see how well the players are doing and adjust the difficulty accordingly. By default, the difficulty slowly increases at each interval to make the game progressively harder.
+At regular intervals, the state of the game is sampled to see how well the players are doing and adjust the difficulty accordingly. By default, the difficulty slowly increases at each interval to make the game progressively harder. This makes getting pickups such as increased damage and health early on in the game important to continued survival.
 \n
 An increase in the difficulty value of the game affects the following parameters:
 \begin{itemize}
@@ -144,7 +144,7 @@ The difficulty is adjusted based on the player health and the number of enemies 
 The player is equipped with three different weapons that can be quickly swapped at any point. Each weapon has a separate ammo and reload system, making it convenient if the player runs out of ammunition on one weapon to switch to another rather than wait for the reload time.
 \subsubsection{Pistol}
 \figimg{0.1}{imgs/Gun.png}{Player with pistol equipped}
-The pistol is a simple weapon with low clip size and low fire rate and faster reload.
+The pistol is a simple weapon with low clip size and low fire rate and faster reload. Initially, the player may choose to use the pistol when the game is easier to conserve ammunition on the other guns.
 
 \subsubsection{Rocket}
 \figimg{0.1}{imgs/Rocket.png}{Player with rocket equipped}
@@ -179,7 +179,7 @@ This pickup permanently increases the player's damage. This helps the player dea
 
 \subsubsection{Bullet radius pickup}
 \figimg{0.1}{imgs/RadiusPickup.png}{Bullet radius pickup}
-This pickup permanently increases the player's bullet's radius. This helps the player with easily aim as the larger bullets will catch enemies easier, especially when trying to shoot the flocking enemies. This increased radius also affects the rocket's explosion size, as it scales off the rocket bullet's radius.
+This pickup permanently increases the player's bullet's radius. This helps the player with aim easily as the larger bullets will catch enemies easier, especially when trying to shoot the flocking enemies. This increased radius also affects the rocket's explosion size, as it scales off the rocket bullet's radius.
 
 \subsubsection{Bomb pickup}
 \figimg{0.1}{imgs/BombPickup.png}{Bomb pickup}
@@ -197,7 +197,7 @@ The factory design pattern was used to spawn enemies and pickups. An abstract \t
 Pickups are split in a \texttt{Pickup} class and \texttt{Effect} class. A \texttt{Pickup} is the actual pickup object displayed in the game while the \texttt{Effect} is stored on the player characters. Once the pickup is taken by the player, the effect is stored and applied on the integration step of the player. If an effect has a duration, it will also be un-applied at the end of its duration. 
 
 \subsection{Network}
-To implement the networking in the game, I use a processing UDP library (https://ubaa.net/shared/processing/udp/).
+To implement the networking in the game, I use a Processing UDP library (https://ubaa.net/shared/processing/udp/).
 \n
 UDP packets are sent on every frame of the game. The server will send the entire game state and let the client render the state. The Server uses multicast so every state packet reaches all connected clients. Clients only send the player input to the server to process. This means the server is always correct and would prevent client players from cheating their attributes such as position and health. The trade off is the server has to do a lot more processing and so the game cannot scale to having many players at once.
 \n
@@ -210,9 +210,9 @@ The network has only been tested over a multicast group on the lab machines and 
 \subsubsection{Game states}
 The game states deal with most of the game logic and update steps. They contain the update function to update all game objects and the AI director to control the spawning of entities. Similar to the last practical, the game states form a state machine, but unlike the previous practical, this is only used for the start and end game states. There are not any different states of the game like pausing or end of wave.
 \subsubsection{Game objects and classes}
-All game objects such as enemies, pickups and bullets extend the \texttt{GameObject} abstract class. This allows the game state and controller to use polymorphic data structures over any game object. For example the spawn factories can be of any type that extends game object. 
+All game objects such as enemies, pickups and bullets extend the \texttt{GameObject} abstract class. This allows the game state and controller to use polymorphic data structures over any game object. For example the spawn factories can be of any type that extends game object. This is also very useful for resolving collision between any two game objects as only the lambda function for what happens after the collision is passed and any collision detection code can be reused. 
 \n
-Classes such as \texttt{GameContext} and \texttt{GameInput} are wrapper classes that contain lots of information. For example the context contains all the game objects and the input contains all the various input. 
+Classes such as \texttt{GameContext} and \texttt{GameInput} are wrapper classes that contain lots of information. For example the context contains all the game objects and the input contains all the various input. These classes are used commonly to prevent the need for long constructors and ability to easily pass around all the information. 
 \section{Conclusion}
 In conclusion, I have implemented a 2D shooter game with a variety of AI enemies. To make the game more interesting, different powerups and weapons have also been implemented along with an AI director that controls the difficulty and pacing of the game. The ability to play cooperatively over the network is also implemented.
 
