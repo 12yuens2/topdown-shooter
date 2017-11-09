@@ -50,7 +50,7 @@
 	  <path refid="ShooterGame.classpath" />
 	  <path location="${server}" />
 	</classpath>
-	<arg value="${arg0}"/>
+	<arg value="Server"/>
       </java>
     </target>
 
