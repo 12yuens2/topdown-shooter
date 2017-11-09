@@ -3,6 +3,11 @@ package objs.weapons;
 import game.GameObject;
 import objs.particles.Particle;
 
+/**
+ * Weapon abstract class that contains all attributes such as clip size, ammo and fire rate.
+ * @author sy35
+ *
+ */
 public abstract class Weapon extends GameObject {
 
 	public static final int BASE_DMG = 5;
@@ -52,10 +57,10 @@ public abstract class Weapon extends GameObject {
 	}
 
 	/**
-	 * 
+	 * Fire the weapon
 	 * @param targetX
 	 * @param targetY
-	 * @return
+	 * @return - The bullet if the weapon successfully fired, null otherwise.
 	 */
 	public abstract Particle shoot(float targetX, float targetY);
 	
@@ -72,7 +77,9 @@ public abstract class Weapon extends GameObject {
 		}
 	}
 	
-	
+	/**
+	 * Reload the weapon.
+	 */
 	public void reload() {
 		if (reloading <= 0 && clipAmmo < clipSize && ammo > 0) {
 			clipAmmo = 0;

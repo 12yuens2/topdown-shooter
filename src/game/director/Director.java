@@ -4,7 +4,7 @@ import java.util.Random;
 
 import game.GameContext;
 import game.director.states.DirectorState;
-import game.director.states.impl.BuildupState;
+import game.director.states.impl.RestState;
 import objs.characters.PlayerCharacter;
 
 /**
@@ -31,7 +31,7 @@ public class Director {
 		
 		this.context = context;
 		this.random = new Random();
-		this.state = new BuildupState(difficulty, intensity, context);
+		this.state = new RestState(difficulty, intensity, context);
 	}
 	
 	public void step() {
@@ -47,8 +47,6 @@ public class Director {
 			state.setDifficulty(difficulty);
 			timer = 0;
 		}
-		
-		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
 	}
 	
 	/**
@@ -75,14 +73,9 @@ public class Director {
 	private void updateDifficulty() {
 		difficulty++;
 		
+		/* Adjust difficulty based on number of enemies */
 		if (context.enemies.size() < 10) difficulty++;
 		if (context.enemies.size() > 50) difficulty--;
-		
-		/* Adjust difficulty based on how much score was gained since last difficulty update */
-//		System.out.println("increase: " + scoreIncrease + " diff: " + difficulty);
-//		if (scoreIncrease > 6 * difficulty) difficulty++;
-//		if (scoreIncrease < 3 * difficulty) difficulty--;
-//		scoreIncrease = 0;
 		
 		/* Adjust difficulty based on player health */
 		for (PlayerCharacter player : context.players) {

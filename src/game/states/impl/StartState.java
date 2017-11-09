@@ -29,7 +29,6 @@ public class StartState extends GameState {
 	@Override
 	public GameState handleInput(GameInput input, PlayerCharacter player) {
 		if (input.keyCode == KeyEvent.VK_ENTER) {
-			System.out.println("start");
 			return new PlayingState(context);
 		}
 		

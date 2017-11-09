@@ -1,5 +1,10 @@
 package game.factories.parameters;
 
+/**
+ * Wrapper class for all parameters needed to create an enemy.
+ * @author sy35
+ *
+ */
 public class EnemySpawnParameter extends Parameter {
 
 	public int health, damage, score;

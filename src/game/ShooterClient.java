@@ -18,7 +18,7 @@ public class ShooterClient extends ShooterGame {
 		super.setup();
 		
 		if (args[0].equals("Server")) {
-			System.out.println("Client name cannot be 'Server'");
+			System.err.println("Client name cannot be 'Server'");
 			System.exit(0);
 		}
 		
@@ -96,8 +96,6 @@ public class ShooterClient extends ShooterGame {
 		}
 
 		gameController.handleInput(input, gameController.player);
-
-		
 		
 		socket.sendClientMessage(MessageType.INPUT, input, gameController.player, SERVER_IP, PORT);
 	}
