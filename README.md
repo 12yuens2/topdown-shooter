@@ -2,7 +2,7 @@
 
 ## Run instructions
 - To build the game, run `ant` in the submission directory.
-- To run the server, run `ant server`
+- To run the server or a single player game, run `ant server`
 - To run the client, run `ant -Darg0="name" client` where name can be any unique name.
 
 For network play, start the game on the server before connecting with a client. Clients must each have a unique name.
