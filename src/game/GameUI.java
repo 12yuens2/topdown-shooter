@@ -27,7 +27,7 @@ public class GameUI implements Serializable {
 	
 	
 	private void drawDamagedDisplay(DrawEngine drawEngine, PlayerCharacter player) {
-		drawEngine.drawRectangle(drawEngine.parent.color(150,0,0), 0, 0, ShooterGame.SCREEN_X, ShooterGame.SCREEN_Y, player.damaged);
+		drawEngine.drawRectangle(drawEngine.parent.color(200,0,0), 0, 0, ShooterGame.SCREEN_X, ShooterGame.SCREEN_Y, player.damaged);
 	}
 
 

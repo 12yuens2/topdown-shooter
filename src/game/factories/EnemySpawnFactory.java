@@ -33,7 +33,7 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		this.difficulty = difficulty;
 		
 		/* Adjust spawn rate and enemy stats with difficulty */
-		this.spawnRate = Math.max(1, Enemy.SPAWN_RATE - (difficulty*3));
+		this.spawnRate = Math.max(1, Enemy.SPAWN_RATE - (difficulty*2));
 		this.enemyHealth = Math.max(Enemy.BASE_HP, Enemy.BASE_HP + (difficulty*2));
 		this.enemyDamage = (int) Math.max(1, Enemy.BASE_DMG + (difficulty/7f));
 		this.enemyScore = (int) Math.max(Enemy.BASE_SCORE, Enemy.BASE_SCORE + (difficulty/2f));

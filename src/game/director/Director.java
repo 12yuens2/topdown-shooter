@@ -48,7 +48,7 @@ public class Director {
 			timer = 0;
 		}
 		
-//		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
+		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
 	}
 	
 	/**
@@ -76,9 +76,10 @@ public class Director {
 		difficulty++;
 		
 		if (context.enemies.size() < 10) difficulty++;
+		if (context.enemies.size() > 50) difficulty--;
 		
 		/* Adjust difficulty based on how much score was gained since last difficulty update */
-		System.out.println("increase: " + scoreIncrease + " diff: " + difficulty);
+//		System.out.println("increase: " + scoreIncrease + " diff: " + difficulty);
 //		if (scoreIncrease > 6 * difficulty) difficulty++;
 //		if (scoreIncrease < 3 * difficulty) difficulty--;
 //		scoreIncrease = 0;

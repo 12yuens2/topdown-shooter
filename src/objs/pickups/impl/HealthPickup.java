@@ -15,6 +15,7 @@ public class HealthPickup extends Pickup {
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
 		drawEngine.drawEllipse(drawEngine.parent.color(255,0,0), position.x, position.y, size, size, lifespan);
+		drawEngine.drawText(16, "H", position.x, position.y, 255);
 	}
 
 }

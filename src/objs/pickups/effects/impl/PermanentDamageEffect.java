@@ -9,7 +9,7 @@ public class PermanentDamageEffect extends Effect {
 	@Override
 	public <T extends PlayerCharacter> void apply(T character) {
 		for (Weapon w : character.weapons) {
-			w.damage += 2;
+			w.damage += 3;
 		}
 
 	}

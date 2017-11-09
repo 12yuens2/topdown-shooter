@@ -49,6 +49,7 @@ public class PlayingState extends GameState {
 		updateStep(mouseX, mouseY, player);
 		aiDirector.step();
 		
+		/* Game over if no players alive */
 		return context.players.size() > 0 ? this : new GameOverState(context);
 	}
 

@@ -16,7 +16,7 @@ public class BombPickup extends Pickup {
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;
 		drawEngine.drawEllipse(drawEngine.parent.color(75), position.x, position.y, size, size, lifespan);
-		drawEngine.drawText(15, "B", (int) position.x, (int) position.y, drawEngine.parent.color(255), lifespan);
+		drawEngine.drawText(15, "B", (int) position.x, (int) position.y, drawEngine.parent.color(255));
 	}
 
 }
