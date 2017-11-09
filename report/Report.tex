@@ -73,6 +73,10 @@ To run the server, run \texttt{ant server}
 \\
 \noindent
 To run the client, run \texttt{ant -Darg0="Name" client} where ``Name" can be any name.
+\section{Game overview}
+In this game the player controls a character, running away and shooting at the enemies. The player has different weapons and can pickup different power-ups to help them.
+\figimg{1}{imgs/Screenshot.png}{Screenshot of the game}
+The HUD on the bottom left shows the player's ammunition and health. Enemies who collide with the player deal damage to them and are destroyed. The player should try to avoid and shoot the enemies while picking up the powerups. It is important to get the pickups because they provide useful benefits like more health and damage, which is needed as the difficulty increases.
 \section{Game features and design}
 \subsection{AI Enemies}
 \subsubsection{Basic chase}
@@ -183,6 +187,8 @@ This is a powerful pickup that will clear the entire screen of enemies, giving p
 
 \subsection{Networking}
 The game can be played over the network, allowing multiple players to play cooperatively. Different players must have a unique name as this is how they are differentiated. 
+\n
+The server game should be launched and be in the playing state. From that point on, any client can drop-in connect to the same game. Multiple different games have not been implemented, as all servers and clients use the same multicast group to transmit messages.
 
 \section{Implementation details}
 \subsection{Factories}
@@ -196,15 +202,18 @@ To implement the networking in the game, I use a processing UDP library (https:/
 UDP packets are sent on every frame of the game. The server will send the entire game state and let the client render the state. The Server uses multicast so every state packet reaches all connected clients. Clients only send the player input to the server to process. This means the server is always correct and would prevent client players from cheating their attributes such as position and health. The trade off is the server has to do a lot more processing and so the game cannot scale to having many players at once.
 \n
 Because the game is relatively small, it was okay to send the entire game state over the network without much loss in performance and perform all calculations on the server side. For a larger scalable game, it would have been more appropriate to send the changes in the game state and let the client perform calculations based on those changes.
+\n
+The network has only been tested over a multicast group on the lab machines and not across different networks.
 
 \subsection{Class Structure}
 
 \subsubsection{Game states}
-
-\subsubsection{Characters}
+The game states deal with most of the game logic and update steps. They contain the update function to update all game objects and the AI director to control the spawning of entities. Similar to the last practical, the game states form a state machine, but unlike the previous practical, this is only used for the start and end game states. There are not any different states of the game like pausing or end of wave.
+\subsubsection{Game objects}
+All game objects such as enemies, pickups and bullets extend the \texttt{GameObject} abstract class. This allows the game state and controller to use polymorphic data structures over any game object. For example the spawn factories can be of any type that extends game object. 
 
 \section{Conclusion}
-
+In conclusion, 
 
 \printbibliography
 
