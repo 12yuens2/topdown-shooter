@@ -52,8 +52,8 @@ public abstract class DirectorState {
 	 * No shooter enemies will spawn.
 	 */
 	protected void minThreatSpawn() {
-		enemySpawnFactory.spawnRate =  (4 * Enemy.SPAWN_RATE) - (difficulty*3);
-		pickupSpawnFactory.spawnRate = (Pickup.SPAWN_RATE / 4) + (difficulty * 3);
+		enemySpawnFactory.spawnRate =  (3 * Enemy.SPAWN_RATE) - (difficulty*3);
+		pickupSpawnFactory.spawnRate = (Pickup.SPAWN_RATE / 3) + (difficulty * 3);
 		
 		enemySpawnFactory.setEasySpawns();
 		spawnEntities();
@@ -67,7 +67,7 @@ public abstract class DirectorState {
 		enemySpawnFactory.spawnRate = (Enemy.SPAWN_RATE/3) - (difficulty*3);		
 		pickupSpawnFactory.spawnRate = (3 * Pickup.SPAWN_RATE) + (difficulty * 3);
 		
-		if (intensity > MAX_INTENSITY) enemySpawnFactory.setEasySpawns();
+		if (intensity > MAX_INTENSITY + (difficulty * 10)) enemySpawnFactory.setEasySpawns();
 		
 		spawnEntities();
 	}

@@ -13,10 +13,6 @@ public class MachineGun extends Gun {
 		super(xPos, yPos, radius, ammo, damage, CLIP_SIZE, RELOAD_TIME, BASE_FIRERATE, Gun.BULLET_RADIUS);
 	}
 	
-//	public MachineGun(float xPos, float yPos, float radius, int clipSize, int ammo, int maxAmmo, int reloadTime, boolean friendly) {
-//		this(xPos, yPos, radius, clipSize, ammo, maxAmmo, reloadTime);
-//	}
-	
 	@Override
 	public void display(DrawEngine drawEngine) {
 		float size = radius * 2;

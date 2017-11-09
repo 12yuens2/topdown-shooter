@@ -34,7 +34,7 @@ public abstract class GameState implements Serializable {
 	public GameContext context;
 	public GameUI ui;
 
-	public Director aiDirector;
+	public transient Director aiDirector;
 	
 	public GameState(GameContext context) {
 		this.random = new Random();
@@ -127,14 +127,15 @@ public abstract class GameState implements Serializable {
 
 				@Override
 				public Boolean apply(Enemy enemy) {
-					player.health -= enemy.damage;
+					player.takeDamage(enemy.damage);
 					aiDirector.increaseIntensityOnDamage(enemy.damage);
 					
 					if (enemy instanceof FlockEnemy) {
 						context.flockEnemies.remove(enemy);
 					}
 					
-					return enemy instanceof FlockEnemy;
+					/* Remove enemy after collision */
+					return true;
 				}
 				
 			});
@@ -148,7 +149,7 @@ public abstract class GameState implements Serializable {
 						return false;
 					}
 					else {
-						player.health -= p.damage;
+						player.takeDamage(p.damage);
 						aiDirector.increaseIntensityOnDamage(p.damage);
 						
 						return true;

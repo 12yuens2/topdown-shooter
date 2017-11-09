@@ -3,6 +3,11 @@ package objs.particles;
 import game.DrawEngine;
 import processing.core.PVector;
 
+/**
+ * Explosion from the previous practical.
+ * @author sy35
+ *
+ */
 public class Explosion extends Particle{
 	
 	public float initialRadius;

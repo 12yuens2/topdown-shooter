@@ -36,6 +36,7 @@ public class PlayerCharacter extends Character {
 	
 	public boolean attacking;
 	public int damage;
+	public int damaged;
 	
 	public Weapon currentWeapon;
 	public ArrayList<Weapon> weapons;
@@ -69,6 +70,7 @@ public class PlayerCharacter extends Character {
 		
 		this.speedMultiplier = SPEED;
 		this.damage = DAMAGE;
+		this.damaged = 0;
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 		
@@ -111,7 +113,14 @@ public class PlayerCharacter extends Character {
 		for (Weapon w : weapons) {
 			w.position = facing.copy();
 		}
+		
+		damaged--;
 
+	}
+	
+	public void takeDamage(int damage) {
+		health -= damage;
+		damaged = 100;
 	}
 	
 	/**

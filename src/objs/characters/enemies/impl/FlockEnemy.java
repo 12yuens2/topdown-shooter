@@ -87,7 +87,7 @@ public class FlockEnemy extends Enemy {
 	 * @return Direction to steer towards.
 	 */
 	private PVector separate(ArrayList<FlockEnemy> flock) {
-		float separation = radius * 5;
+		float separation = radius * 4;
 		PVector sum = getSum(flock, separation);
 
 		/* Limit maximum magnitude for separation */

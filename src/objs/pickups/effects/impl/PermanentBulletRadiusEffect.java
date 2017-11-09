@@ -9,7 +9,7 @@ public class PermanentBulletRadiusEffect extends Effect {
 	@Override
 	public <T extends PlayerCharacter> void apply(T character) {
 		for (Weapon w : character.weapons) {
-			w.bulletRadius += 0.5f;
+			w.bulletRadius += 1f;
 		}
 	}
 
