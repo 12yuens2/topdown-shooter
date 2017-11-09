@@ -16,7 +16,6 @@ import processing.core.PVector;
  */
 public class BasicChaseEnemy extends Enemy {
 
-	
 	public BasicChaseEnemy(float xPos, float yPos, EnemySpawnParameter spawnParam, ArrayList<PlayerCharacter> targets) {
 		super(xPos, yPos, spawnParam, targets);
 	}

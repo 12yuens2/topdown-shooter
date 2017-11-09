@@ -9,6 +9,11 @@ import objs.characters.PlayerCharacter;
 import objs.weapons.Weapon;
 import processing.core.PVector;
 
+/**
+ * Abstract class to represent all enemy characters.
+ * @author sy35
+ *
+ */
 public abstract class Enemy extends Character {
 
 	public static final int BASE_HP = Weapon.BASE_DMG;

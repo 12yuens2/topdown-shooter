@@ -11,6 +11,11 @@ import objs.particles.Particle;
 import objs.weapons.Gun;
 import processing.core.PVector;
 
+/**
+ * Enemy that shoots at the player and moves randomly.
+ * @author sy35
+ *
+ */
 public class ShootEnemy extends Enemy {
 	
 	public static final int INTERVAL = 80;
@@ -40,6 +45,7 @@ public class ShootEnemy extends Enemy {
 
 	@Override
 	public void integrate() {
+		/* Change target position to move to after random delay */
 		if (random.nextInt(100) == 0) targetPosition = PVector.random2D();
 		
 		PlayerCharacter target = getClosestTarget();
@@ -48,11 +54,6 @@ public class ShootEnemy extends Enemy {
 		
 		gun.position = position.copy();
 	}
-	
-//	private void move(PlayerCharacter target) {
-////		PVector velocity = getVelocityToTarget(PVector.add(PVector.random2D(), position));
-//		move(PVector.random2D());
-//	}
 	
 	private void shoot(PlayerCharacter target) {
 		if (shootInterval <= 0) {

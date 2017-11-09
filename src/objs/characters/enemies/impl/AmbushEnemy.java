@@ -21,7 +21,6 @@ public class AmbushEnemy extends Enemy {
 	public static final float DISTANCE = 200f;
 	public static final int DELAY = 75;
 	
-	
 	public PVector targetPosition;
 	
 	
@@ -34,9 +33,6 @@ public class AmbushEnemy extends Enemy {
 	@Override
 	public void display(DrawEngine drawEngine) {		
 		drawCircularObject(drawEngine.parent.color(0, 180, 180), drawEngine);
-		
-		//draw target
-//		drawEngine.drawEllipse(drawEngine.parent.color(255), targetPosition.x, targetPosition.y, 5, 5);
 	}
 
 	@Override
@@ -45,8 +41,7 @@ public class AmbushEnemy extends Enemy {
 			PVector velocity = getVelocityToTarget(targetPosition);
 			
 			/* Random chance to update target position*/
-			Random r = new Random();
-			if (r.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
+			if (random.nextInt(DELAY) == 0 || velocity.mag() < 1f) {
 				PlayerCharacter targetPlayer = getClosestTarget();
 				
 				if (targetPlayer != null) {

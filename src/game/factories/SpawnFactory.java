@@ -71,17 +71,6 @@ public abstract class SpawnFactory<T extends GameObject> {
 		}
 		
 		return null;
-		
-//		if (random.nextInt(spawnRate) == 0) {
-//			try {
-//				T t = spawnMap.get(random.nextInt(spawnMap.size())).call();
-//				return t;
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		return null;
 	}
 
 	

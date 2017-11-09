@@ -7,6 +7,7 @@ import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 
 
@@ -30,6 +31,7 @@ public class FlockEnemy extends Enemy {
 		
 		PVector targetPosition = getClosestTargetPosition();
 		
+		/* Initially move towards a target player or randomly if no valid targets */
 		if (targetPosition != null) {		
 			this.velocity = PVector.sub(getClosestTargetPosition(), position).normalize().mult(MAX_SPEED);
 		}
@@ -42,25 +44,25 @@ public class FlockEnemy extends Enemy {
 
 	@Override
 	public void display(DrawEngine drawEngine) {
-		
 		PApplet parent = drawEngine.parent;
 		
-		float theta = velocity.heading() + parent.radians(90);
-	    // heading2D() above is now heading() but leaving old syntax until Processing.js catches up
+		/* 
+		 * Following display code if from the Processing example.
+		 * It allows the flocking enemies to more clearly display their flocking behaviour.
+		 */
+		float theta = velocity.heading() + PApplet.radians(90);
 	    
 	    parent.fill(200, 100);
 	    parent.stroke(255);
 	    parent.pushMatrix();
 	    parent.translate(position.x, position.y);
 	    parent.rotate(theta);
-	    parent.beginShape(parent.TRIANGLES);
+	    parent.beginShape(PConstants.TRIANGLES);
 	    parent.vertex(0, -radius);
 	    parent.vertex(-radius, radius);
 	    parent.vertex(radius, radius);
 	    parent.endShape();
 	    parent.popMatrix();
-//		float size = radius * 2;
-//		drawEngine.drawEllipse(drawEngine.parent.color(250, 10, 250), position.x, position.y, size, size);
 	}
 
 	@Override
@@ -88,6 +90,7 @@ public class FlockEnemy extends Enemy {
 		float separation = radius * 5;
 		PVector sum = getSum(flock, separation);
 
+		/* Limit maximum magnitude for separation */
 		if (sum.mag() > 0) {
 			sum.setMag(MAX_SPEED);
 			sum.sub(velocity);
@@ -106,6 +109,7 @@ public class FlockEnemy extends Enemy {
 		float neighbourDistance = radius * 10;
 		PVector sum = getSum(flock, neighbourDistance);
 		
+		/* Align with nearby boids */
 		if (sum.mag() > 0) {			
 			sum.normalize().mult(MAX_SPEED);
 			PVector direction = PVector.sub(sum, velocity);
@@ -113,7 +117,7 @@ public class FlockEnemy extends Enemy {
 			return direction;
 		}
 		else {
-			return seekPlayer();
+			return defaultDirection();
 		}
 	}
 
@@ -127,6 +131,7 @@ public class FlockEnemy extends Enemy {
 		float neighourDistance = radius * 10;
 		PVector sum = getSum(flock, neighourDistance);
 		
+		/* Cohese with nearby boids */
 		if (sum.mag() > 0) {
 			PVector target = PVector.sub(position, sum);
 			target.normalize().mult(MAX_SPEED);
@@ -136,7 +141,7 @@ public class FlockEnemy extends Enemy {
 			return direction;
 		}
 		else {
-			return seekPlayer();
+			return defaultDirection();
 		}
 	}
 	
@@ -152,12 +157,15 @@ public class FlockEnemy extends Enemy {
 		int count = 0;
 		for (FlockEnemy boid : flock) {
 			float distance = PVector.dist(position, boid.position);
+			
+			/* Add to sum if the boid is near to us */
 			if (distance > 0 && distance < neighbourDistance) {
 				sum.add(boid.position);
 				count++;
 			}
 		}
 		
+		/* Get average sum */
 		if (count > 0) sum.div(count);
 		
 		return sum;
@@ -167,15 +175,8 @@ public class FlockEnemy extends Enemy {
 	 * Default direction for flocking behaviour when there are no nearby flockmates.
 	 * @return Direction to steer towards.
 	 */
-	private PVector seekPlayer() {
-//		PVector direction = PVector.sub(target.position, position);
-//		
-//		direction.normalize().mult(MAX_SPEED);
-//		
-//		return direction;
-		
+	private PVector defaultDirection() {
 		return new PVector(0,0);
-		
 	}
 
 

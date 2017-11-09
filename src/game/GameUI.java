@@ -16,25 +16,12 @@ public class GameUI implements Serializable {
 	
 	
 	public void display(DrawEngine drawEngine, PlayerCharacter player) {
-//		player.health = 100;
-//		int bullets = player.currentWeapon.clipAmmo;
-//		int ammo = player.currentWeapon.ammo;
-//		
-//		drawEngine.drawText(16, bullets+"/"+ammo, 50, 50, 255);
-//		drawEngine.drawRectangle(drawEngine.parent.color(200), 100, 50, player.currentWeapon.reloading, 20);
-		
 		drawEngine.drawText(16, "Score: " + context.score, 50, 75, 255);
-//		drawEngine.drawText(16, "HP: " + player.health, 50, 100, 255);
-//		
-//		int health = Math.min(100, player.health);
-//		drawEngine.drawRectangle(drawEngine.parent.color(255,0,0), 100, 90, health, 20);
-//		drawEngine.drawText(16, player.health+"/100", 145, 100, 255);
-//		
+		
 		int xPos = 80;
 		int yPos = 750;
 		drawReloadDisplay(drawEngine, xPos, yPos, player);
 		drawHealthDisplay(drawEngine, xPos+65, yPos+70, player);
-
 	}
 	
 	/**

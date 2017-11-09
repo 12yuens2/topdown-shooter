@@ -22,7 +22,6 @@ public class GameOverState extends GameState {
 		ui.display(drawEngine, player);
 
 		drawEngine.drawText(64, "Game Over", ShooterGame.SCREEN_X/2, ShooterGame.SCREEN_Y/2, 255);
-		
 	}
 
 	@Override
@@ -34,6 +33,7 @@ public class GameOverState extends GameState {
 
 	@Override
 	public GameState handleInput(GameInput input, PlayerCharacter player) {
+		/* Reset and make a new game */
 		if (input.keyCode == KeyEvent.VK_ENTER && player != null) {
 			Random r = new Random();
 			player.resetPlayer(r.nextInt(ShooterGame.SCREEN_X), r.nextInt(ShooterGame.SCREEN_Y));

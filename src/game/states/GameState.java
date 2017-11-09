@@ -34,7 +34,7 @@ public abstract class GameState implements Serializable {
 	public GameContext context;
 	public GameUI ui;
 
-	public transient Director aiDirector;
+	public Director aiDirector;
 	
 	public GameState(GameContext context) {
 		this.random = new Random();
@@ -244,7 +244,6 @@ public abstract class GameState implements Serializable {
 						
 						return !p.pierce;
 					}
-
 				}
 				
 			});
@@ -256,6 +255,7 @@ public abstract class GameState implements Serializable {
 				public Boolean apply(Explosion e) {
 					enemy.health -= e.damage;
 					
+					/* Remove explosion if lifespan is over */
 					return e.lifespan <= 0;
 				}
 				

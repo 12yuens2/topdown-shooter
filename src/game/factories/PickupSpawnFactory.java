@@ -34,16 +34,19 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 	@Override
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+		
+		/* Adjust spawn rate of pickups and patrols with difficulty */
 		this.spawnRate = Math.max(1, Pickup.SPAWN_RATE + (difficulty*3));
-		this.patrolSpawnRate = Math.max(1, Pickup.PATROL_SPAWN_RATE - (difficulty/2));
-		this.pickupLifespan = Math.max(Pickup.MIN_LIFESPAN, Pickup.LIFESPAN - (difficulty*3)) + 1000;
+		this.patrolSpawnRate = Math.max(1, Pickup.PATROL_SPAWN_RATE - (difficulty/3));
+		this.pickupLifespan = Math.max(Pickup.MIN_LIFESPAN, Pickup.LIFESPAN - (difficulty*3));
 		
 		setSpawnFunctions();
 	}
 	
-
+	
 	@Override
 	public void setSpawnFunctions() {
+		/* Each pickup has a different spawn rate, making some more common and others rare */
 		spawnMap.put(this :: spawnHealthPickup, spawnRate/3);
 		spawnMap.put(this :: spawnAmmoPickup, spawnRate/2);
 		spawnMap.put(this :: spawnSpeedPickup, spawnRate);

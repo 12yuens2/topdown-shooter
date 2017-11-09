@@ -6,6 +6,11 @@ import java.util.function.Function;
 
 import processing.core.PVector;
 
+/**
+ * Abstract class representing any object in the game.
+ * @author sy35
+ *
+ */
 public abstract class GameObject implements Serializable {
 
 	public PVector position;

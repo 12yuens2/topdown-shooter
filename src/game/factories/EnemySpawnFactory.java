@@ -31,8 +31,9 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	@Override
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
-		this.spawnRate = Math.max(1, Enemy.SPAWN_RATE - (difficulty*3));
 		
+		/* Adjust spawn rate and enemy stats with difficulty */
+		this.spawnRate = Math.max(1, Enemy.SPAWN_RATE - (difficulty*3));
 		this.enemyHealth = Math.max(Enemy.BASE_HP, Enemy.BASE_HP + (difficulty*2));
 		this.enemyDamage = Math.max(1, Enemy.BASE_DMG + (difficulty/5));
 		this.enemyScore = Math.max(Enemy.BASE_SCORE, Enemy.BASE_SCORE + (difficulty/2));
@@ -47,6 +48,7 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	public void setSpawnFunctions() {
 		setEasySpawns();
 		
+		/* Spawn increasingly more shooter enemies as difficulty increases */
 		int spawn = spawnRate*(5 / Math.max(1, difficulty % 3));
 		spawnMap.put(() -> spawnShootEnemy(basicEnemySpawnParameter), spawn);
 	}
@@ -59,6 +61,9 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 		spawnFlockEnemy(flockEnemySpawnParameter);
 	}
 
+	/**
+	 * Do not spawn any shooter enemies.
+	 */
 	public void setEasySpawns() {
 		spawnMap.clear();
 		

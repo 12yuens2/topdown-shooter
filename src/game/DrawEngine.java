@@ -20,11 +20,11 @@ public class DrawEngine {
      */
     public void displayDrawables(ArrayList<? extends GameObject>... drawables) {  	
         for (ArrayList<? extends GameObject> drawList : drawables) {
-        	ArrayList<? extends GameObject> drawListCopy = new ArrayList<>(drawList);
-        	
-        	for (GameObject drawable : drawListCopy) {
-        		drawable.display(this);
-        	}
+	        	ArrayList<? extends GameObject> drawListCopy = new ArrayList<>(drawList);
+	        	
+	        	for (GameObject drawable : drawListCopy) {
+	        		drawable.display(this);
+	        	}
         }
     }
 

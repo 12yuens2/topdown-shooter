@@ -6,6 +6,12 @@ import game.factories.PickupSpawnFactory;
 import objs.characters.enemies.Enemy;
 import objs.pickups.Pickup;
 
+/**
+ * Represents a state of the AI director.
+ * The state controls the spawning rate of enemies.
+ * @author sy35
+ *
+ */
 public abstract class DirectorState {
 
 	public static final float THRESHOLD = 40f;
@@ -31,11 +37,20 @@ public abstract class DirectorState {
 		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
 	}
 
-	
+	/**
+	 * Update function for each state.
+	 * An enemy spawning function should be called on each update step.
+	 * The state should also check if it should transition to another state or stay in this state.
+	 * @return - The next state.
+	 */
 	public abstract DirectorState update();
 	
 	
-	
+	/**
+	 * Minimum threat spawning.
+	 * Decreased enemy spawn rates and increased pickup spawn rates.
+	 * No shooter enemies will spawn.
+	 */
 	protected void minThreatSpawn() {
 		enemySpawnFactory.spawnRate =  (4 * Enemy.SPAWN_RATE) - (difficulty*3);
 		pickupSpawnFactory.spawnRate = (Pickup.SPAWN_RATE / 4) + (difficulty * 3);
@@ -44,6 +59,10 @@ public abstract class DirectorState {
 		spawnEntities();
 	}
 	
+	/**
+	 * Maximum threat spawning.
+	 * Increased enemy spawn rates and decreased pickup spawn rates.
+	 */
 	protected void maxThreatSpawn() {
 		enemySpawnFactory.spawnRate = (Enemy.SPAWN_RATE/3) - (difficulty*3);		
 		pickupSpawnFactory.spawnRate = (3 * Pickup.SPAWN_RATE) + (difficulty * 3);
@@ -58,11 +77,13 @@ public abstract class DirectorState {
 		pickupSpawnFactory.spawnEntities();
 	}
 
-
+	/**
+	 * Set the difficulty of the state's factories.
+	 * @param difficulty
+	 */
 	public void setDifficulty(int difficulty) {
 		enemySpawnFactory.setDifficulty(difficulty);
-		pickupSpawnFactory.setDifficulty(difficulty);
-		
+		pickupSpawnFactory.setDifficulty(difficulty);		
 	}
 
 }

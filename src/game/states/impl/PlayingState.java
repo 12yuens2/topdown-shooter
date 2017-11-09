@@ -34,14 +34,8 @@ import processing.core.PVector;
 
 public class PlayingState extends GameState {
 	
-//	public transient EnemySpawnFactory enemySpawnFactory;
-//	public transient PickupSpawnFactory pickupSpawnFactory;
-	
 	public PlayingState(GameContext context) {
 		super(context);
-		
-//		this.enemySpawnFactory = new EnemySpawnFactory(difficulty, context);
-//		this.pickupSpawnFactory = new PickupSpawnFactory(difficulty, context, enemySpawnFactory);
 	}
 
 	@Override
@@ -53,17 +47,7 @@ public class PlayingState extends GameState {
 	@Override
 	public GameState update(int mouseX, int mouseY, PlayerCharacter player) {
 		updateStep(mouseX, mouseY, player);
-		
 		aiDirector.step();
-
-//		
-//		if (timer == 500) {
-//			int entities = context.enemies.size();
-//			if (entities < 10) difficulty += 3;
-//			if (entities >= 10 && entities < 30) difficulty += 1;
-//			if (entities > 50) difficulty -= 1;
-//		}
-		
 		
 		return context.players.size() > 0 ? this : new GameOverState(context);
 	}
@@ -96,6 +80,8 @@ public class PlayingState extends GameState {
 			
 			if (input.mouseButton == PConstants.LEFT) {
 				player.attacking = input.mouseDown;
+				
+				/* Continue attacking if the player is holding down left click */
 				if (player.attacking) {
 					Particle bullet = player.attack(input.mouseX, input.mouseY);
 					if (bullet != null) {
@@ -106,13 +92,6 @@ public class PlayingState extends GameState {
 			}
 		}
 		
-		
 		return this;
 	}
-	
-//	private void spawnPatrolEnemy(PVector position) {
-//		context.enemies.add(new PatrolEnemy(position.x, position.y,
-//											15, Enemy.BASE_HP, Enemy.BASE_DMG, Enemy.BASE_SCORE,
-//											context.players));
-//		}
 }

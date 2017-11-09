@@ -9,6 +9,11 @@ import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import processing.core.PVector;
 
+/**
+ * Enemy that patrols around a given point. Typically around a pickup.
+ * @author sy35
+ *
+ */
 public class PatrolEnemy extends Enemy {
 
 	public static final float DETECT_RADIUS = 200f;
@@ -79,6 +84,7 @@ public class PatrolEnemy extends Enemy {
 	}
 	
 	private boolean detectPlayer(PlayerCharacter target) {
+		/* Player detection is simply collision detection with a large radius */
 		float collide = target.radius + detectRadius;
 		float distance = PVector.dist(target.position, position);
 		

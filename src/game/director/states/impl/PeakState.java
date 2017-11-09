@@ -3,6 +3,11 @@ package game.director.states.impl;
 import game.GameContext;
 import game.director.states.DirectorState;
 
+/**
+ * PeakState ensures there is a minimum build up time where there is maximum threat spawning.
+ * @author sy35
+ *
+ */
 public class PeakState extends DirectorState {
 
 	public static final int LIFESPAN = 200;

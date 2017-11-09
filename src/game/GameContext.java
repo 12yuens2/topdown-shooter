@@ -12,7 +12,7 @@ import objs.particles.Particle;
 import objs.pickups.Pickup;
 
 /**
- * 
+ * Context of the game, containing all game objects.
  * @author sy35
  *
  */
@@ -29,7 +29,6 @@ public class GameContext implements Serializable {
 	public int score;
 	
 	public GameContext() {
-		
 		this.score = 0;
 		
 		players = new ArrayList<>();
@@ -38,23 +37,10 @@ public class GameContext implements Serializable {
 		particles = new ArrayList<>();
 		pickups = new ArrayList<>();
 		explosions = new ArrayList<>();
-		
-//		players.add(new PlayerCharacter(
-//				(float) Math.random() * ShooterGame.SCREEN_X, 
-//				(float) Math.random() * ShooterGame.SCREEN_Y, 
-//				15, 100, false));
-//		
-//		players.add(new PlayerCharacter(
-//				(float) Math.random() * ShooterGame.SCREEN_X, 
-//				(float) Math.random() * ShooterGame.SCREEN_Y, 
-//				15, 100, true));
-//		
-//		enemies.add(new PatrolCharacter(500, 500, 15, 100f, 150f, player));
 	}
 
 	public GameContext(PlayerCharacter player) {
 		this();
-		
 		players.add(player);
 	}
 }

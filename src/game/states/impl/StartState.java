@@ -19,7 +19,6 @@ public class StartState extends GameState {
 	public void display(DrawEngine drawEngine, PlayerCharacter player) {
 		drawEngine.parent.background(0);
 		drawEngine.drawText(64, "Press Enter to start.", ShooterGame.SCREEN_X/2, ShooterGame.SCREEN_Y/2, 255);
-		
 	}
 
 	@Override
@@ -30,6 +29,7 @@ public class StartState extends GameState {
 	@Override
 	public GameState handleInput(GameInput input, PlayerCharacter player) {
 		if (input.keyCode == KeyEvent.VK_ENTER) {
+			System.out.println("start");
 			return new PlayingState(context);
 		}
 		

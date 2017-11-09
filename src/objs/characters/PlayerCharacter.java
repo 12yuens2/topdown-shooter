@@ -49,7 +49,13 @@ public class PlayerCharacter extends Character {
 		resetPlayer(xPos, yPos);
 	}
 	
+	/**
+	 * Reset player attributes to start.
+	 * @param xPos - x position of the player.
+	 * @param yPos - y position of the player.
+	 */
 	public void resetPlayer(float xPos, float yPos) {
+		/* Reset all movement directions */
 		this.up = 0;
 		this.down = 0;
 		this.left = 0;
@@ -66,6 +72,7 @@ public class PlayerCharacter extends Character {
 		this.orientation = 0f;
 		this.facing = new PVector(xPos + 10 * PApplet.cos(orientation), yPos + 10 * PApplet.sin(orientation));
 		
+		/* Create weapons */
 		this.weapons = new ArrayList<>();
 		weapons.add(new Gun(facing.x, facing.y, radius/2f, 96, damage));
 		weapons.add(new Rocket(facing.x, facing.y, radius/2f, 16, damage*10));
@@ -88,25 +95,38 @@ public class PlayerCharacter extends Character {
 	
 	@Override
 	public void integrate() {
+		/* Limit maximum and minimum player speed */
 		if (speedMultiplier > 10f) speedMultiplier = 10f;
 		if (speedMultiplier < SPEED) speedMultiplier = SPEED;
+		
+		/* Update position */
 		position.x = getX(position.x + (right - left) * speedMultiplier);
 		position.y = getY(position.y + (down - up) * speedMultiplier);
 		
+		/* Update facing, code from lectures */
 		facing.x = position.x + 10 * PApplet.cos(orientation);
 		facing.y = position.y + 10 * PApplet.sin(orientation);
 		
+		/* Set weapon positions to be facing properly */
 		for (Weapon w : weapons) {
 			w.position = facing.copy();
 		}
 
 	}
 	
-	
+	/**
+	 * Key press for changing direction.
+	 * @param keyCode
+	 */
 	public void directionPress(int keyCode) {
 		changeDirection(1, keyCode);
 	}
 	
+	/**
+	 * Key release for changing direction.
+	 * In other words, no long moving in that direction.
+	 * @param keyCode
+	 */
 	public void directionRelease(int keyCode) {
 		changeDirection(0, keyCode);
 	}
@@ -128,14 +148,27 @@ public class PlayerCharacter extends Character {
 		}
 	}
 
+	/**
+	 * Update player orientation following lecture code.
+	 * @param mouseX - x position of the mouse cursor.
+	 * @param mouseY - y position of the mouse cursor.
+	 */
 	public void facingDirection(int mouseX, int mouseY) {
 		orientation = PApplet.atan2(mouseY - position.y , mouseX - position.x);
 	}
 
+	/**
+	 * Attack with the current weapon.
+	 * @param targetX - x position of the target.
+	 * @param targetY - y position of the target.
+	 * @return the particle that was fired from the weapon. Null if unable to fire.
+	 */
 	public Particle attack(float targetX, float targetY) {
 		if (currentWeapon.firing <= 0) {
 			currentWeapon.firing = currentWeapon.fireRate;
 			Particle bullet = currentWeapon.shoot(targetX, targetY);
+			
+			/* Reload for the player if they tried to attack with no ammo */
 			if (bullet == null) currentWeapon.reload();
 			
 			return bullet;
@@ -145,7 +178,9 @@ public class PlayerCharacter extends Character {
 		}
 	}
 	
-	
+	/**
+	 * Override equals so that players with the same name are the same.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) return true;
@@ -156,6 +191,9 @@ public class PlayerCharacter extends Character {
 		return this.name.equals(player.name);
 	}
 	
+	/**
+	 * Override hashcode so that players with the same name are the same.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
