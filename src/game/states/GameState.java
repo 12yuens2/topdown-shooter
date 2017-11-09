@@ -27,6 +27,12 @@ import objs.weapons.Weapon;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+/**
+ * Abstract game state class that deals with most of the game logic.
+ * The states also form a state machine between start -> playing -> end
+ * @author sy35
+ *
+ */
 public abstract class GameState implements Serializable {
 
 	public Random random;

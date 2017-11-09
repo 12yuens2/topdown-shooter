@@ -6,14 +6,16 @@ import game.states.impl.StartState;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;
 
+/**
+ * Controller for the game. Interfaces between the main class and game state.
+ * @author sy35
+ *
+ */
 public class GameController {
 
 	public PApplet parent;
-	
 	public DrawEngine drawEngine; 
-	
 	public PlayerCharacter player;
-	
 	public GameState state;
 
 	

@@ -67,6 +67,7 @@ public abstract class DirectorState {
 		enemySpawnFactory.spawnRate = (Enemy.SPAWN_RATE/3) - (difficulty * 2);		
 		pickupSpawnFactory.spawnRate = (3 * Pickup.SPAWN_RATE) + (difficulty * 2);
 		
+		/* Set easy spawns if intensity is too high */
 		if (intensity > MAX_INTENSITY + (difficulty * 10)) enemySpawnFactory.setEasySpawns();
 		
 		spawnEntities();
