@@ -69,7 +69,7 @@ In this practical we were tasked to implement a top-down shooter game, similar t
 To build the game, run \texttt{ant} in the submission directory.
 \\
 \noindent
-To run the server, run \texttt{ant server}
+To run the server or a single player game, run \texttt{ant server}
 \\
 \noindent
 To run the client, run \texttt{ant -Darg0="Name" client} where ``Name" can be any name.
@@ -138,7 +138,7 @@ An increase in the difficulty value of the game affects the following parameters
 \item Decreased pickup spawn rate
 \item Decreased pickup lifespan
 \end{itemize}
-The difficulty is adjusted based on the player health and the score they gained since the last sample time. If the players have high health or gained lots of score, it indicates they are doing well since they are healthy or killed lots of enemies recently so the difficulty is increased. The difficulty is decreased in the opposite case, as it indicates the player is struggling to kill enemies or stay alive.
+The difficulty is adjusted based on the player health and the number of enemies on screen. If the players have high health or there are few enemies, it indicates they are doing well since they are healthy or killed lots of enemies recently so the difficulty is increased. The difficulty is decreased in the opposite case, as it indicates the player is struggling to kill enemies or stay alive.
 
 \subsection{Weapons}
 The player is equipped with three different weapons that can be quickly swapped at any point. Each weapon has a separate ammo and reload system, making it convenient if the player runs out of ammunition on one weapon to switch to another rather than wait for the reload time.
@@ -209,11 +209,12 @@ The network has only been tested over a multicast group on the lab machines and 
 
 \subsubsection{Game states}
 The game states deal with most of the game logic and update steps. They contain the update function to update all game objects and the AI director to control the spawning of entities. Similar to the last practical, the game states form a state machine, but unlike the previous practical, this is only used for the start and end game states. There are not any different states of the game like pausing or end of wave.
-\subsubsection{Game objects}
+\subsubsection{Game objects and classes}
 All game objects such as enemies, pickups and bullets extend the \texttt{GameObject} abstract class. This allows the game state and controller to use polymorphic data structures over any game object. For example the spawn factories can be of any type that extends game object. 
-
+\n
+Classes such as \texttt{GameContext} and \texttt{GameInput} are wrapper classes that contain lots of information. For example the context contains all the game objects and the input contains all the various input. 
 \section{Conclusion}
-In conclusion, 
+In conclusion, I have implemented a 2D shooter game with a variety of AI enemies. To make the game more interesting, different powerups and weapons have also been implemented along with an AI director that controls the difficulty and pacing of the game. The ability to play cooperatively over the network is also implemented.
 
 \printbibliography
 
