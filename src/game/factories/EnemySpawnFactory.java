@@ -75,22 +75,22 @@ public class EnemySpawnFactory extends SpawnFactory<Enemy> {
 	}
 	
 	private BasicChaseEnemy spawnChaseEnemy(EnemySpawnParameter spawnParam) {
-		return new BasicChaseEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
+		return new BasicChaseEnemy(randomX(), randomY(), 
 				spawnParam, context.players);
 	}
 	
 	private CircleEnemy spawnCircleEnemy(EnemySpawnParameter spawnParam) {
-		return new CircleEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
+		return new CircleEnemy(randomX(), randomY(), 
 				spawnParam, context.players);
 	}
 	
 	private AmbushEnemy spawnAmbushEnemy(EnemySpawnParameter spawnParam) {
-		return new AmbushEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
+		return new AmbushEnemy(randomX(), randomY(), 
 				spawnParam, context.players);
 	}
 	
 	private ShootEnemy spawnShootEnemy(EnemySpawnParameter spawnParam) {
-		return new ShootEnemy(random.nextInt(ShooterServer.SCREEN_X), random.nextInt(ShooterServer.SCREEN_Y), 
+		return new ShootEnemy(randomX(), randomY(), 
 				spawnParam, context);
 	}
 	
