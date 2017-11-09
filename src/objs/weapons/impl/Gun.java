@@ -1,7 +1,8 @@
-package objs.weapons;
+package objs.weapons.impl;
 
 import game.DrawEngine;
 import objs.particles.Particle;
+import objs.weapons.Weapon;
 
 public class Gun extends Weapon {
 

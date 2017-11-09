@@ -1,9 +1,6 @@
 package objs.pickups.effects.impl;
 
-import java.util.ArrayList;
-
 import game.GameContext;
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.pickups.effects.Effect;
 

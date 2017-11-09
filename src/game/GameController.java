@@ -1,7 +1,6 @@
 package game;
 
 import game.states.GameState;
-import game.states.impl.PlayingState;
 import game.states.impl.StartState;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;

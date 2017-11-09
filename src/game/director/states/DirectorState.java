@@ -14,7 +14,7 @@ import objs.pickups.Pickup;
  */
 public abstract class DirectorState {
 
-	public static final float THRESHOLD = 40f;
+	public static final float THRESHOLD = 45f;
 	public static final float MAX_INTENSITY = THRESHOLD * 2;
 	
 	public int difficulty;

@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 
 import game.states.GameState;
 import game.states.impl.GameOverState;
-import game.states.impl.StartState;
 import network.MessageType;
 import objs.characters.PlayerCharacter;
 import processing.core.PApplet;

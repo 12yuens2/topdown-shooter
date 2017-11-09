@@ -3,7 +3,6 @@ package game;
 import java.io.Serializable;
 
 import objs.characters.PlayerCharacter;
-import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class GameUI implements Serializable {

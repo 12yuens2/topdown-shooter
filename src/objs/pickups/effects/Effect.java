@@ -2,7 +2,6 @@ package objs.pickups.effects;
 
 import java.io.Serializable;
 
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 
 /**

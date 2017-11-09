@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import game.DrawEngine;
 import game.factories.parameters.EnemySpawnParameter;
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import processing.core.PVector;

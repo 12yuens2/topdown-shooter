@@ -13,7 +13,6 @@ import game.GameObject;
 import game.GameUI;
 import game.ShooterGame;
 import game.director.Director;
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import objs.characters.enemies.impl.FlockEnemy;
@@ -22,9 +21,6 @@ import objs.particles.Missile;
 import objs.particles.Particle;
 import objs.pickups.Pickup;
 import objs.pickups.effects.Effect;
-import objs.pickups.impl.BombPickup;
-import objs.weapons.Weapon;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 /**

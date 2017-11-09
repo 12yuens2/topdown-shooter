@@ -1,7 +1,5 @@
 package game.factories;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -60,7 +58,7 @@ public abstract class SpawnFactory<T extends GameObject> {
 	 */
 	protected T spawnRandomEntity() {
 		for (Entry<Callable<T>, Integer> entry : spawnMap.entrySet()) {
-			if (random.nextInt(entry.getValue()) == 0) {
+			if (random.nextInt(Math.max(1, entry.getValue())) == 0) {
 				try {
 					T t = entry.getKey().call();
 					return t;

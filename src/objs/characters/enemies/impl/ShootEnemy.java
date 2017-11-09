@@ -1,14 +1,12 @@
 package objs.characters.enemies.impl;
 
-import java.util.ArrayList;
-
 import game.DrawEngine;
 import game.GameContext;
 import game.factories.parameters.EnemySpawnParameter;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import objs.particles.Particle;
-import objs.weapons.Gun;
+import objs.weapons.impl.Gun;
 import processing.core.PVector;
 
 /**

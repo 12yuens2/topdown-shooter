@@ -1,4 +1,4 @@
-package objs.weapons;
+package objs.weapons.impl;
 
 import game.DrawEngine;
 

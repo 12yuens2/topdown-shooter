@@ -2,17 +2,15 @@ package objs.characters;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 import game.DrawEngine;
-import game.ShooterServer;
 import objs.particles.Particle;
 import objs.pickups.effects.Effect;
-import objs.weapons.Gun;
-import objs.weapons.MachineGun;
-import objs.weapons.Rocket;
 import objs.weapons.Weapon;
+import objs.weapons.impl.Gun;
+import objs.weapons.impl.MachineGun;
+import objs.weapons.impl.Rocket;
 import processing.core.PApplet;
 import processing.core.PVector;
 

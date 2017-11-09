@@ -6,31 +6,10 @@ import com.sun.glass.events.KeyEvent;
 import game.DrawEngine;
 import game.GameContext;
 import game.GameInput;
-import game.ShooterServer;
-import game.director.Director;
-import game.factories.EnemySpawnFactory;
-import game.factories.PickupSpawnFactory;
 import game.states.GameState;
-import javafx.util.converter.PercentageStringConverter;
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
-import objs.characters.enemies.Enemy;
-import objs.characters.enemies.impl.AmbushEnemy;
-import objs.characters.enemies.impl.BasicChaseEnemy;
-import objs.characters.enemies.impl.CircleEnemy;
-import objs.characters.enemies.impl.FlockEnemy;
-import objs.characters.enemies.impl.PatrolEnemy;
-import objs.characters.enemies.impl.ShootEnemy;
 import objs.particles.Particle;
-import objs.pickups.Pickup;
-import objs.pickups.effects.impl.PermanentDamageEffect;
-import objs.pickups.impl.AmmoPickup;
-import objs.pickups.impl.BombPickup;
-import objs.pickups.impl.HealthPickup;
-import objs.pickups.impl.PermanentDamagePickup;
-import objs.pickups.impl.SpeedPickup;
 import processing.core.PConstants;
-import processing.core.PVector;
 
 public class PlayingState extends GameState {
 	

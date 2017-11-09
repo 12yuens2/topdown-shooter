@@ -3,7 +3,6 @@ package game;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import objs.characters.Character;
 import objs.characters.PlayerCharacter;
 import objs.characters.enemies.Enemy;
 import objs.characters.enemies.impl.FlockEnemy;

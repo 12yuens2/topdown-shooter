@@ -16,7 +16,7 @@ public class PeakState extends DirectorState {
 	
 	public PeakState(int difficulty, float intensity, GameContext context) {
 		super(difficulty, intensity, context);
-		this.lifespan = LIFESPAN;
+		this.lifespan = LIFESPAN + (difficulty * 3);
 	}
 
 	@Override
