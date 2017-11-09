@@ -16,4 +16,6 @@ The goal of the game is to try and survive as long as possible. Avoid and shoot 
 - Switch to rocket: 2
 - Switch to machine gun: 3
 
+While a weapon is reloading, it cannot be fired. Only the current active weapon will be reloading, so switching weapons will halt the reloading.
+
 Press Enter to start the game.
