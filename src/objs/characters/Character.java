@@ -28,7 +28,6 @@ public abstract class Character extends GameObject {
 		this.speedMultiplier = BASE_SPEED;
 	}
 	
-	
 	/**
 	 * Get the velocity vector towards a target position.
 	 * @param target - Target position to head towards.

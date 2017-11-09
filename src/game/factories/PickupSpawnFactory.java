@@ -1,10 +1,7 @@
 package game.factories;
 
-import java.util.concurrent.Callable;
-
 import game.GameContext;
 import objs.characters.enemies.Enemy;
-import objs.characters.enemies.impl.PatrolEnemy;
 import objs.pickups.Pickup;
 import objs.pickups.impl.AmmoPickup;
 import objs.pickups.impl.BombPickup;
@@ -37,7 +34,7 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 		
 		/* Adjust spawn rate of pickups and patrols with difficulty */
 		this.spawnRate = Math.max(1, Pickup.SPAWN_RATE + (difficulty*3));
-		this.patrolSpawnRate = Math.max(1, Pickup.PATROL_SPAWN_RATE - (difficulty/3));
+		this.patrolSpawnRate = (int) Math.max(2, Pickup.PATROL_SPAWN_RATE - (difficulty/4f));
 		this.pickupLifespan = Math.max(Pickup.MIN_LIFESPAN, Pickup.LIFESPAN - (difficulty*3));
 		
 		setSpawnFunctions();
@@ -47,8 +44,8 @@ public class PickupSpawnFactory extends SpawnFactory<Pickup> {
 	@Override
 	public void setSpawnFunctions() {
 		/* Each pickup has a different spawn rate, making some more common and others rare */
-		spawnMap.put(this :: spawnHealthPickup, spawnRate/3);
-		spawnMap.put(this :: spawnAmmoPickup, spawnRate/2);
+		spawnMap.put(this :: spawnHealthPickup, (int) (spawnRate/3f));
+		spawnMap.put(this :: spawnAmmoPickup, (int) (spawnRate/1.5f));
 		spawnMap.put(this :: spawnSpeedPickup, spawnRate);
 		spawnMap.put(this :: spawnPiercePickup, spawnRate*2);
 		spawnMap.put(this :: spawnPermanentDamagePickup, spawnRate*2);

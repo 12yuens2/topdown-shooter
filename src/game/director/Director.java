@@ -16,7 +16,7 @@ public class Director {
 
 	public static final int SAMPLE_INTERVAL = 600;
 	
-	public int difficulty, timer;
+	public int difficulty, timer, scoreIncrease;
 	public float intensity;
 	
 	public GameContext context;
@@ -26,10 +26,11 @@ public class Director {
 	public Director(GameContext context) {
 		this.timer = 0;
 		this.difficulty = 0;
+		this.scoreIncrease = 0;
 		this.intensity = 0f;
 		
 		this.context = context;
-		
+		this.random = new Random();
 		this.state = new BuildupState(difficulty, intensity, context);
 	}
 	
@@ -47,7 +48,7 @@ public class Director {
 			timer = 0;
 		}
 		
-		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
+//		System.out.println("inenstiy: " + intensity + " difficulty: " + difficulty + " -> " + state);
 	}
 	
 	/**
@@ -63,6 +64,7 @@ public class Director {
 	 * @param score
 	 */
 	public void increaseIntensityOnKill(float score) {
+		scoreIncrease += score;
 		intensity += score;
 	}
 	
@@ -73,9 +75,18 @@ public class Director {
 	private void updateDifficulty() {
 		difficulty++;
 		
+		if (context.enemies.size() < 10) difficulty++;
+		
+		/* Adjust difficulty based on how much score was gained since last difficulty update */
+		System.out.println("increase: " + scoreIncrease + " diff: " + difficulty);
+//		if (scoreIncrease > 6 * difficulty) difficulty++;
+//		if (scoreIncrease < 3 * difficulty) difficulty--;
+//		scoreIncrease = 0;
+		
+		/* Adjust difficulty based on player health */
 		for (PlayerCharacter player : context.players) {
 			if (player.health < PlayerCharacter.HEALTH/2) difficulty--;
-			if (player.health > PlayerCharacter.HEALTH*2) difficulty++;
+			if (player.health > PlayerCharacter.HEALTH) difficulty += 1 + (player.health / (PlayerCharacter.HEALTH));
 		}
 	}
 	

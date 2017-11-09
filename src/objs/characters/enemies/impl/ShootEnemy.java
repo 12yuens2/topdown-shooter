@@ -28,7 +28,7 @@ public class ShootEnemy extends Enemy {
 	
 	public ShootEnemy(float xPos, float yPos, EnemySpawnParameter spawnParam, GameContext context) {
 		super(xPos, yPos, spawnParam, context.players);
-		
+		this.damage *= 2;
 		this.shootInterval = 20;
 		
 		this.context = context;

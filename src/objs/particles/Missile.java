@@ -2,6 +2,11 @@ package objs.particles;
 
 import processing.core.PVector;
 
+/**
+ * Missiles will cause an explosion.
+ * @author sy35
+ *
+ */
 public class Missile extends Particle {
 
 	public Missile(float xPos, float yPos, float radius, int damage) {

@@ -22,8 +22,15 @@ public class GameUI implements Serializable {
 		int yPos = 750;
 		drawReloadDisplay(drawEngine, xPos, yPos, player);
 		drawHealthDisplay(drawEngine, xPos+65, yPos+70, player);
+		drawDamagedDisplay(drawEngine, player);
 	}
 	
+	
+	private void drawDamagedDisplay(DrawEngine drawEngine, PlayerCharacter player) {
+		drawEngine.drawRectangle(drawEngine.parent.color(150,0,0), 0, 0, ShooterGame.SCREEN_X, ShooterGame.SCREEN_Y, player.damaged);
+	}
+
+
 	/**
 	 * Display the player health part of the UI.
 	 * @param drawEngine - The draw engine.
@@ -36,7 +43,7 @@ public class GameUI implements Serializable {
 		float healthDisplay = scaleDisplay(health, 100, PConstants.HALF_PI, PConstants.TWO_PI);
 		
 		drawArcDisplay(drawEngine, drawEngine.parent.color(255,0,0), xPos, yPos, 
-				healthDisplay, player.health+"/100");
+				healthDisplay, Math.max(0, player.health)+"/100");
 	}
 	
 	/**

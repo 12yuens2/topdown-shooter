@@ -4,12 +4,21 @@ import game.DrawEngine;
 import game.GameObject;
 import processing.core.PVector;
 
+/**
+ * Represents the bullets from a gun. Other types of bullets extend this class.
+ * @author sy35
+ *
+ */
 public class Particle extends GameObject {
 
 	public PVector velocity;
 	public int damage;
 	
-	public boolean friendly, pierce;
+	/* Unfriendly particles for enemy bullets */
+	public boolean friendly;
+	
+	/* Pierce particles are not removed when they hit */
+	public boolean pierce;
 
 	public Particle(float xPos, float yPos, float radius, int damage) {
 		super(xPos, yPos, radius);

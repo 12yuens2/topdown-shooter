@@ -11,13 +11,13 @@ import game.director.states.DirectorState;
  */
 public class RestState extends DirectorState {
 
-	public static final int LIFESPAN = 600;
+	public static final int LIFESPAN = 800;
 	
 	public int lifespan;
 	
 	public RestState(int difficulty, float intensity, GameContext context) {
 		super(difficulty, intensity, context);
-		this.lifespan = LIFESPAN;
+		this.lifespan = LIFESPAN - (3 * difficulty);
 	}
 
 	@Override
