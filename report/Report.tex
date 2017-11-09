@@ -9,6 +9,7 @@
 \usepackage{enumitem}
 \usepackage{syntax}
 \usepackage{csquotes}
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
 
@@ -68,7 +69,7 @@ In this practical we were tasked to implement a top-down shooter game, similar t
 To build the game, run \texttt{ant} in the submission directory.
 \\
 \noindent
-To run the server, run \texttt{ant -Darg0="Server" server}
+To run the server, run \texttt{ant server}
 \\
 \noindent
 To run the client, run \texttt{ant -Darg0="Name" client} where ``Name" can be any name.
@@ -84,13 +85,15 @@ This AI is similar to the basic chase AI except they use acceleration in their m
 
 \subsubsection{Ambush}
 \figimg{0.1}{imgs/AmbushEnemy.png}{Ambush Enemy}
-This AI attempts to move towards where it predicts the player will be based on the direction the player is moving in. It will move to a position in front of the player. 
+This AI attempts to move towards where it predicts the player will be based on the direction the player is moving in. It will try to move to a position in front of the player. 
 \n
-I found when first creating this AI that if it implements this behaviour and there are a lot of them, they will all move synchronously when the player changes direction, making them easy to predict for a player. To deal with this, I added a random delay before they change their target position making each of them act more independent.
+I found when first creating this AI that if it implements this behaviour and there are a lot of them, they will all move synchronously when the player changes direction, making them easy to predict for a player. To deal with this, I added a random delay before they change their target position making each of them act more independent and seemingly somewhat randomly.
 
 \subsubsection{Patrol}
 \figimg{0.1}{imgs/PatrolEnemy.png}{Patrol Enemy}
-These AI spawn in with the generated pickups and will patrol in a square around the pickups. If the player comes near they will chase the player for a certain distance before moving back to their patrol locations. 
+These AI spawn in with the generated pickups and will patrol in a square around the pickups. If the player comes near they will chase the player for a certain distance before moving back to their patrol locations.
+\n
+This adds a dynamic to the game as the players can avoid these enemies or shoot them from far away without retaliation, but may be forced to go near them to get the pickup or from trying to avoid other enemies.
 
 \subsubsection{Shoot}
 \figimg{0.1}{imgs/ShootEnemy.png}{Shooting Enemy}
@@ -100,9 +103,9 @@ This AI will shoot back at the player, making it more difficult. I chose to make
 \figimg{0.1}{imgs/FlockingEnemy.png}{Flocking enemy}
 The flocking algorithm was implemented following the example on https://processing.org/examples/flocking.html \cite{flocking}. 
 \n
-Initially these enemies moved towards the player position if there were no nearby flockmates but this made the game very hard as they would all flock towards the player. Instead, their initial target position is the player's current position and there is no other target direction or velocity when there are no nearby flockmates. 
+Initially these enemies moved towards the player position if there were no nearby flockmates but this made the game very hard as they would all flock towards the player. Instead, their initial target position is the player's current position and there is no other target direction or velocity when there are no nearby flockmates. So although they initially move towards the player, they will ignore where the player goes afterwards and simply follow their flock.
 \n
-These AI are also smaller and more are spawned in the game to show off their flocking behaviour without filling the whole screen.
+These AI are also smaller and more are spawned in the game to show off their flocking behaviour without filling the whole screen. As a result, they have less health and deal less damage compared to all other enemies.
 
 \subsection{AI Director}
 \subsubsection{Pacing}
@@ -120,7 +123,7 @@ The \textbf{Build up} and \textbf{Sustain Peak} states have a higher spawn rate 
 \n
 \textbf{Fade} and \textbf{Rest} states are the opposite side to build up and peak. The director moves out of fade when the intensity is below the threshold and rest acts the same as peak, ensuring a minimum period of rest before the next build up.
 \subsubsection{Difficulty}
-At regular intervals, the state of the game is sampled to see how well the players are doing and adjust the difficulty accordingly. By default, the difficulty slowly increases at each interval to progressively make the game harder.
+At regular intervals, the state of the game is sampled to see how well the players are doing and adjust the difficulty accordingly. By default, the difficulty slowly increases at each interval to make the game progressively harder.
 \n
 An increase in the difficulty value of the game affects the following parameters:
 \begin{itemize}
@@ -131,9 +134,10 @@ An increase in the difficulty value of the game affects the following parameters
 \item Decreased pickup spawn rate
 \item Decreased pickup lifespan
 \end{itemize}
+The difficulty is adjusted based on the player health and the score they gained since the last sample time. If the players have high health or gained lots of score, it indicates they are doing well since they are healthy or killed lots of enemies recently so the difficulty is increased. The difficulty is decreased in the opposite case, as it indicates the player is struggling to kill enemies or stay alive.
 
 \subsection{Weapons}
-The player is equipped with three different weapons that can be quickly swapped at any point. Each weapon has a separate ammo and reload system, making it convenient if the player runs out of ammunition on one weapon to switch to another rather than wait for the reload.
+The player is equipped with three different weapons that can be quickly swapped at any point. Each weapon has a separate ammo and reload system, making it convenient if the player runs out of ammunition on one weapon to switch to another rather than wait for the reload time.
 \subsubsection{Pistol}
 \figimg{0.1}{imgs/Gun.png}{Player with pistol equipped}
 The pistol is a simple weapon with low clip size and low fire rate and faster reload.
@@ -148,13 +152,14 @@ The machine gun shoots bullets quickly with a larger clip size and high fire rat
 
 
 \subsection{Pickups}
+Pickups in the game help the player by giving them either some kind of temporary or permanent boost. These pickups only last for a certain duration on the ground before they disappear, which is indicated by their reduced opacity.
 \subsubsection{Health pickup}
 \figimg{0.1}{imgs/HealthPickup.png}{Health pickup}
 The health pickup gives the player more health. A player is able to go over the maximum 100 health when picking up these pickups to act as a buffer for more health, but this will signal to the AI director that the player is doing well.
 
 \subsubsection{Ammo pickup}
 \figimg{0.1}{imgs/AmmoPickup.png}{Ammunition pickup}
-The ammo pickup increases the ammo of each of the player's weapon by one clip. It is important to pick up these, otherwise the players will eventually run out of ammunition.
+The ammo pickup increases the ammo of each of the player's weapon by one clip. It is important to pick up these, otherwise the players will eventually run out of ammunition. Players have a maximum number of clips they can carry, so picking this up at that limit will not increase their ammo.
 
 \subsubsection{Speed pickup}
 \figimg{0.1}{imgs/SpeedPickup.png}{Speed pickup}
@@ -177,20 +182,26 @@ This pickup permanently increases the player's bullet's radius. This helps the p
 This is a powerful pickup that will clear the entire screen of enemies, giving players a brief respite. 
 
 \subsection{Networking}
-The game can be played over the network, allowing multiple players to play cooperatively.
+The game can be played over the network, allowing multiple players to play cooperatively. Different players must have a unique name as this is how they are differentiated. 
 
 \section{Implementation details}
-
-
 \subsection{Factories}
+The factory design pattern was used to spawn enemies and pickups. An abstract \texttt{SpawnFactory} is defined so factory implementations can take care of spawning game objects. The factories have a map of \texttt{<Function, Integer>} where the function is a function to spawn an exact type of game object and the integer is the spawn rate. The factories will take care of spawning entities into the game, scaling the spawn rate and object attributes with difficulty. The AI director can use the factories to spawn entities as it needs.
+\subsection{Pickups}
+Pickups are split in a \texttt{Pickup} class and \texttt{Effect} class. A \texttt{Pickup} is the actual pickup object displayed in the game while the \texttt{Effect} is stored on the player characters. Once the pickup is taken by the player, the effect is stored and applied on the integration step of the player. If an effect has a duration, it will also be un-applied at the end of its duration. 
 
 \subsection{Network}
 To implement the networking in the game, I use a processing UDP library (https://ubaa.net/shared/processing/udp/).
 \n
-UDP packets are sent on every frame of the game. The server will send the entire game state and let the client render the state. Clients only send the player input to the server to process. This means the server is always correct and would prevent client players from cheating their attributes such as position and health. The trade off is the server has to do a lot more processing and so the game cannot scale to having many players at once.
+UDP packets are sent on every frame of the game. The server will send the entire game state and let the client render the state. The Server uses multicast so every state packet reaches all connected clients. Clients only send the player input to the server to process. This means the server is always correct and would prevent client players from cheating their attributes such as position and health. The trade off is the server has to do a lot more processing and so the game cannot scale to having many players at once.
+\n
+Because the game is relatively small, it was okay to send the entire game state over the network without much loss in performance and perform all calculations on the server side. For a larger scalable game, it would have been more appropriate to send the changes in the game state and let the client perform calculations based on those changes.
 
+\subsection{Class Structure}
 
-\subsection{Pickups}
+\subsubsection{Game states}
+
+\subsubsection{Characters}
 
 \section{Conclusion}
 
