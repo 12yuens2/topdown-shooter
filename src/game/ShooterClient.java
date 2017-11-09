@@ -48,7 +48,7 @@ public class ShooterClient extends ShooterGame {
 			/* Update the game controller's player object */
 			PlayerCharacter player = getPlayer(gameController.player);
 			if (player != null) gameController.player = player;
-			
+			else gameController.player.health = 0;
 			
 			if (gameController.state instanceof GameOverState) started = false;
 		}
