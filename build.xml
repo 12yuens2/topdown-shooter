@@ -59,7 +59,8 @@
 	<classpath>
 	  <path refid="ShooterGame.classpath" />
 	  <path location="${client}" />
-	</classpath>
+        </classpath>
+	<arg value="${arg0}" />
       </java>
     </target>
 
