@@ -17,6 +17,11 @@ public class ShooterClient extends ShooterGame {
 	public void setup() {
 		super.setup();
 		
+		if (args[0].equals("Server")) {
+			System.out.println("Client name cannot be 'Server'");
+			System.exit(0);
+		}
+		
 		started = false;
 	}
 
